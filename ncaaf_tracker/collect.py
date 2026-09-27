@@ -158,7 +158,7 @@ def probe(session) -> int:
             except Exception as e:
                 print(f"espn {host} {label} ERR {e}")
     try:
-        r = session.get(espn.HOSTS[0] + espn.SUMMARY_PATH, params={"event": "401754557"}, timeout=20)
+        r = session.get(espn.HOSTS[0] + espn.SUMMARY_PATH, params={"event": "401858242"}, timeout=20)
         pc = r.json().get("pickcenter") if r.ok else None
         print("espn summary", r.status_code, "pickcenter:", str(pc)[:300])
     except Exception as e:
