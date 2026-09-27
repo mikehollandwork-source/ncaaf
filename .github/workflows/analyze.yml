@@ -1,0 +1,55 @@
+name: analyze
+
+# Daily rebuild of the analysis tables + report from everything collected so far.
+on:
+  schedule:
+    - cron: "41 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect   # never overlap with a collector push to the data branch
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-analysis.txt
+
+      - run: pip install -r requirements-analysis.txt
+
+      - name: Check out data branch
+        run: |
+          git fetch --depth=1 origin data:refs/remotes/origin/data
+          git worktree add -B data store origin/data
+
+      - run: python -m ncaaf_tracker.analyze --data-dir store/data --out store/reports --aliases aliases.csv
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ncaaf-analysis
+          path: store/reports
+          retention-days: 30
+
+      # Only the small files go in git; the big tables live in the artifact above
+      # (committing them daily would bloat the repo by GBs over a season).
+      - name: Commit summary + report
+        working-directory: store
+        run: |
+          mkdir -p summary
+          cp reports/report.md reports/games_summary.csv reports/unmatched.csv summary/
+          git add -A summary
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name="ncaaf-collector" -c user.email="actions@users.noreply.github.com" \
+            commit -q -m "reports $(date -u +%Y-%m-%d)"
+          git push origin HEAD:data
