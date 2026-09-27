@@ -28,7 +28,7 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
             if failures >= 3:  # endpoint is down; don't burn the run's time budget
                 log.error("espn: 3 consecutive failures, giving up this run")
                 return list(rows.values())
-            params = {"dates": day.strftime("%Y%m%d"), "groups": g, "limit": 1000}
+            params = {"dates": day.strftime("%Y%m%d"), "groups": g, "limit": 300}  # >300 silently caps at 25
             try:
                 data = _scoreboard(session, params)
                 failures = 0
@@ -42,6 +42,25 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
                     rows[row["espn_id"]] = row
         day += timedelta(days=1)
     return list(rows.values())
+
+
+def fill_closed_odds(session, games: list[dict]) -> int:
+    """The scoreboard drops odds once a game is final; the per-game summary
+    ('pickcenter') still has the provider's open/close. Used by backfill."""
+    n = 0
+    for g in games:
+        if g.get("status_state") != "post" or g.get("espn_details"):
+            continue
+        try:
+            data = get_json(session, HOSTS[0] + SUMMARY_PATH, {"event": g["espn_id"]})
+        except Exception as e:
+            log.warning("espn summary %s failed: %s", g["espn_id"], e)
+            continue
+        odds = parse_odds(data.get("pickcenter") or [])
+        if odds:
+            g.update(odds)
+            n += 1
+    return n
 
 
 def _scoreboard(session, params: dict) -> dict:

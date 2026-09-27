@@ -57,8 +57,8 @@ def kickoff_estimate(m: dict) -> datetime | None:
             return t
     exp = parse_time(m.get("expected_expiration_time"))
     if exp:
-        # Game markets expect to settle ~3-4h after kickoff.
-        return exp - timedelta(hours=3, minutes=30)
+        # Calibrated against ESPN kickoffs (94 games): expiration = kickoff + 3h (median).
+        return exp - timedelta(hours=3)
     return None
 
 
@@ -115,7 +115,7 @@ def in_window(row: dict, now: datetime, horizon: datetime | None) -> bool:
         if td is None:
             return horizon is None
         ko = td + timedelta(hours=23, minutes=59)
-    if ko < now - timedelta(hours=1):
+    if ko < now - timedelta(minutes=30):
         return False
     return horizon is None or ko <= horizon
 

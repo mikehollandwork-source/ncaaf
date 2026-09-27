@@ -62,6 +62,7 @@ def main(argv=None) -> int:
     if mode == "backfill":
         since = parse_time(f"{args.since}T00:00:00Z") if args.since else now - timedelta(days=45)
         games = espn.fetch_games(session, since, now + timedelta(days=14))
+        log.info("filled ESPN open/close for %d finished games", espn.fill_closed_odds(session, games))
         for g in games:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
