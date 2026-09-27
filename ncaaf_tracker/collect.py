@@ -140,6 +140,29 @@ def probe(session) -> int:
             print(f"{name:18} {r.status_code}  {r.text[:160]!r}")
         except Exception as e:
             print(f"{name:18} ERR  {e}")
+    # ESPN slate completeness: how many events each query variant returns.
+    variants = {
+        "date+g80": {"dates": "20260926", "groups": "80", "limit": 1000},
+        "date+g80 lim300": {"dates": "20260926", "groups": "80", "limit": 300},
+        "week5+g80": {"seasontype": 2, "week": 5, "groups": "80", "limit": 1000},
+        "week5+g80+yr": {"seasontype": 2, "week": 5, "year": 2026, "groups": "80", "limit": 1000},
+        "range+g80": {"dates": "20260924-20260927", "groups": "80", "limit": 1000},
+        "date+g81": {"dates": "20260926", "groups": "81", "limit": 1000},
+    }
+    for host in espn.HOSTS:
+        for label, params in variants.items():
+            try:
+                r = session.get(host + espn.SCOREBOARD_PATH, params=params, timeout=20)
+                n = len(r.json().get("events", [])) if r.ok else None
+                print(f"espn {host.split('//')[1][:13]} {label:16} {r.status_code} events={n}")
+            except Exception as e:
+                print(f"espn {host} {label} ERR {e}")
+    try:
+        r = session.get(espn.HOSTS[0] + espn.SUMMARY_PATH, params={"event": "401754557"}, timeout=20)
+        pc = r.json().get("pickcenter") if r.ok else None
+        print("espn summary", r.status_code, "pickcenter:", str(pc)[:300])
+    except Exception as e:
+        print("espn summary ERR", e)
     return 0
 
 

@@ -11,6 +11,7 @@ from typing import Any
 from ..util import get_json, iso, log, parse_time, to_float
 
 SCOREBOARD_PATH = "/apis/site/v2/sports/football/college-football/scoreboard"
+SUMMARY_PATH = "/apis/site/v2/sports/football/college-football/summary"
 # site.api.espn.com 403s GitHub Actions runners; site.web.api works from there.
 HOSTS = ["https://site.web.api.espn.com", "https://site.api.espn.com"]
 SCOREBOARD = HOSTS[0] + SCOREBOARD_PATH
