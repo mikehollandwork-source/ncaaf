@@ -60,7 +60,7 @@ jobs:
           if [ -z "$MODE" ]; then
             if [ "${{ github.event.schedule }}" = "7 * * * *" ]; then MODE=full; else MODE=closing; fi
           fi
-          if [ "$MODE" = "probe" ]; then python -m ncaaf_tracker.collect --probe; exit 0; fi
+          if [ "$MODE" = "probe" ]; then python -m ncaaf_tracker.collect --probe --data-dir store/data; exit 0; fi
           ARGS="--mode $MODE --data-dir store/data"
           if [ -n "${{ inputs.since }}" ]; then ARGS="$ARGS --since ${{ inputs.since }}"; fi
           python -m ncaaf_tracker.collect $ARGS
@@ -68,8 +68,8 @@ jobs:
       - name: Commit snapshot
         working-directory: store
         run: |
-          if [ ! -d data ]; then echo "nothing collected"; exit 0; fi
-          git add -A data
+          if [ ! -d data ] && [ ! -d probe ]; then echo "nothing collected"; exit 0; fi
+          git add -A -- $(ls -d data probe 2>/dev/null)
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git -c user.name="ncaaf-collector" -c user.email="actions@users.noreply.github.com" \
             commit -q -m "snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
