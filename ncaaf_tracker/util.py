@@ -18,7 +18,9 @@ from urllib3.util.retry import Retry
 
 log = logging.getLogger("ncaaf")
 
-USER_AGENT = "ncaaf-line-tracker/1.0 (research; hourly polling)"
+# Some public endpoints (ESPN) 403 non-browser user agents from cloud IPs.
+USER_AGENT = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
 
 
 def make_session() -> requests.Session:
@@ -32,7 +34,8 @@ def make_session() -> requests.Session:
     )
     s.mount("https://", HTTPAdapter(max_retries=retry, pool_maxsize=16))
     s.headers["User-Agent"] = USER_AGENT
-    s.headers["Accept"] = "application/json"
+    s.headers["Accept"] = "application/json, text/plain, */*"
+    s.headers["Accept-Language"] = "en-US,en;q=0.9"
     return s
 
 

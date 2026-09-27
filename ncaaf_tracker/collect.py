@@ -32,6 +32,8 @@ def main(argv=None) -> int:
     ap.add_argument("--sources", default="espn,odds,kalshi,poly",
                     help="comma list of sources to poll")
     ap.add_argument("--since", help="backfill start date YYYY-MM-DD")
+    ap.add_argument("--probe", action="store_true",
+                    help="hit one endpoint per source, print HTTP status, and exit")
     ap.add_argument("--discover", action="store_true",
                     help="print Kalshi CFB series + Polymarket CFB series ids and exit")
     args = ap.parse_args(argv)
@@ -42,6 +44,9 @@ def main(argv=None) -> int:
         print(json.dumps({"kalshi_series": kalshi.discover_series(session),
                           "polymarket_series_ids": polymarket._cfb_series_ids(session)}, indent=2))
         return 0
+
+    if args.probe:
+        return probe(session)
 
     now = utcnow()
     data_dir = Path(args.data_dir)
@@ -113,6 +118,28 @@ def main(argv=None) -> int:
             log.info("wrote %s (%d rows)", path, len(rows))
     write_table(data_dir, "runs", [meta], now)
     log.info("run meta: %s", json.dumps(meta))
+    return 0
+
+
+PROBES = {
+    "espn": espn.SCOREBOARD,
+    "espn_alt": espn.HOSTS[1] + espn.SCOREBOARD_PATH,
+    "odds_api": "https://api.the-odds-api.com/v4/sports",
+    "kalshi": kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5",
+    "polymarket_gamma": polymarket.GAMMA + "/sports",
+    "polymarket_clob": polymarket.CLOB + "/time",
+    "polymarket_data": polymarket.DATA + "/trades?limit=1",
+}
+
+
+def probe(session) -> int:
+    """Connectivity check from wherever this runs (e.g. the Actions runner)."""
+    for name, url in PROBES.items():
+        try:
+            r = session.get(url, timeout=20)
+            print(f"{name:18} {r.status_code}  {r.text[:160]!r}")
+        except Exception as e:
+            print(f"{name:18} ERR  {e}")
     return 0
 
 

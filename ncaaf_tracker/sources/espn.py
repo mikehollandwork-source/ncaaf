@@ -10,7 +10,9 @@ from typing import Any
 
 from ..util import get_json, iso, log, parse_time, to_float
 
-SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+SCOREBOARD_PATH = "/apis/site/v2/sports/football/college-football/scoreboard"
+HOSTS = ["https://site.api.espn.com", "https://site.web.api.espn.com"]
+SCOREBOARD = HOSTS[0] + SCOREBOARD_PATH
 GROUPS = {"80": "FBS", "81": "FCS"}
 
 
@@ -26,7 +28,7 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
                 return list(rows.values())
             params = {"dates": day.strftime("%Y%m%d"), "groups": g, "limit": 1000}
             try:
-                data = get_json(session, SCOREBOARD, params)
+                data = _scoreboard(session, params)
                 failures = 0
             except Exception as e:  # keep going; one bad day shouldn't kill the run
                 failures += 1
@@ -38,6 +40,21 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
                     rows[row["espn_id"]] = row
         day += timedelta(days=1)
     return list(rows.values())
+
+
+def _scoreboard(session, params: dict) -> dict:
+    """Try each ESPN host; move whichever works to the front for later calls."""
+    last = None
+    for host in list(HOSTS):
+        try:
+            data = get_json(session, host + SCOREBOARD_PATH, params)
+            if host != HOSTS[0]:
+                HOSTS.remove(host)
+                HOSTS.insert(0, host)
+            return data
+        except Exception as e:
+            last = e
+    raise last
 
 
 def parse_event(ev: dict, division: str | None = None) -> dict | None:
