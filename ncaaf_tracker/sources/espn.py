@@ -10,7 +10,11 @@ from typing import Any
 
 from ..util import get_json, iso, log, parse_time, to_float
 
-SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+SCOREBOARD_PATH = "/apis/site/v2/sports/football/college-football/scoreboard"
+SUMMARY_PATH = "/apis/site/v2/sports/football/college-football/summary"
+# site.api.espn.com 403s GitHub Actions runners; site.web.api works from there.
+HOSTS = ["https://site.web.api.espn.com", "https://site.api.espn.com"]
+SCOREBOARD = HOSTS[0] + SCOREBOARD_PATH
 GROUPS = {"80": "FBS", "81": "FCS"}
 
 
@@ -24,9 +28,9 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
             if failures >= 3:  # endpoint is down; don't burn the run's time budget
                 log.error("espn: 3 consecutive failures, giving up this run")
                 return list(rows.values())
-            params = {"dates": day.strftime("%Y%m%d"), "groups": g, "limit": 1000}
+            params = {"dates": day.strftime("%Y%m%d"), "groups": g, "limit": 300}  # >300 silently caps at 25
             try:
-                data = get_json(session, SCOREBOARD, params)
+                data = _scoreboard(session, params)
                 failures = 0
             except Exception as e:  # keep going; one bad day shouldn't kill the run
                 failures += 1
@@ -38,6 +42,40 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
                     rows[row["espn_id"]] = row
         day += timedelta(days=1)
     return list(rows.values())
+
+
+def fill_closed_odds(session, games: list[dict]) -> int:
+    """The scoreboard drops odds once a game is final; the per-game summary
+    ('pickcenter') still has the provider's open/close. Used by backfill."""
+    n = 0
+    for g in games:
+        if g.get("status_state") != "post" or g.get("espn_details"):
+            continue
+        try:
+            data = get_json(session, HOSTS[0] + SUMMARY_PATH, {"event": g["espn_id"]})
+        except Exception as e:
+            log.warning("espn summary %s failed: %s", g["espn_id"], e)
+            continue
+        odds = parse_odds(data.get("pickcenter") or [])
+        if odds:
+            g.update(odds)
+            n += 1
+    return n
+
+
+def _scoreboard(session, params: dict) -> dict:
+    """Try each ESPN host; move whichever works to the front for later calls."""
+    last = None
+    for host in list(HOSTS):
+        try:
+            data = get_json(session, host + SCOREBOARD_PATH, params)
+            if host != HOSTS[0]:
+                HOSTS.remove(host)
+                HOSTS.insert(0, host)
+            return data
+        except Exception as e:
+            last = e
+    raise last
 
 
 def parse_event(ev: dict, division: str | None = None) -> dict | None:

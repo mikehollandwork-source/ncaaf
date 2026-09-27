@@ -32,6 +32,8 @@ def main(argv=None) -> int:
     ap.add_argument("--sources", default="espn,odds,kalshi,poly",
                     help="comma list of sources to poll")
     ap.add_argument("--since", help="backfill start date YYYY-MM-DD")
+    ap.add_argument("--probe", action="store_true",
+                    help="hit one endpoint per source, print HTTP status, and exit")
     ap.add_argument("--discover", action="store_true",
                     help="print Kalshi CFB series + Polymarket CFB series ids and exit")
     args = ap.parse_args(argv)
@@ -42,6 +44,9 @@ def main(argv=None) -> int:
         print(json.dumps({"kalshi_series": kalshi.discover_series(session),
                           "polymarket_series_ids": polymarket._cfb_series_ids(session)}, indent=2))
         return 0
+
+    if args.probe:
+        return probe(session)
 
     now = utcnow()
     data_dir = Path(args.data_dir)
@@ -57,6 +62,7 @@ def main(argv=None) -> int:
     if mode == "backfill":
         since = parse_time(f"{args.since}T00:00:00Z") if args.since else now - timedelta(days=45)
         games = espn.fetch_games(session, since, now + timedelta(days=14))
+        log.info("filled ESPN open/close for %d finished games", espn.fill_closed_odds(session, games))
         for g in games:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
@@ -113,6 +119,51 @@ def main(argv=None) -> int:
             log.info("wrote %s (%d rows)", path, len(rows))
     write_table(data_dir, "runs", [meta], now)
     log.info("run meta: %s", json.dumps(meta))
+    return 0
+
+
+PROBES = {
+    "espn": espn.HOSTS[0] + espn.SCOREBOARD_PATH,
+    "espn_alt": espn.HOSTS[1] + espn.SCOREBOARD_PATH,
+    "odds_api": "https://api.the-odds-api.com/v4/sports",
+    "kalshi": kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5",
+    "polymarket_gamma": polymarket.GAMMA + "/sports",
+    "polymarket_clob": polymarket.CLOB + "/time",
+    "polymarket_data": polymarket.DATA + "/trades?limit=1",
+}
+
+
+def probe(session) -> int:
+    """Connectivity check from wherever this runs (e.g. the Actions runner)."""
+    for name, url in PROBES.items():
+        try:
+            r = session.get(url, timeout=20)
+            print(f"{name:18} {r.status_code}  {r.text[:160]!r}")
+        except Exception as e:
+            print(f"{name:18} ERR  {e}")
+    # ESPN slate completeness: how many events each query variant returns.
+    variants = {
+        "date+g80": {"dates": "20260926", "groups": "80", "limit": 1000},
+        "date+g80 lim300": {"dates": "20260926", "groups": "80", "limit": 300},
+        "week5+g80": {"seasontype": 2, "week": 5, "groups": "80", "limit": 1000},
+        "week5+g80+yr": {"seasontype": 2, "week": 5, "year": 2026, "groups": "80", "limit": 1000},
+        "range+g80": {"dates": "20260924-20260927", "groups": "80", "limit": 1000},
+        "date+g81": {"dates": "20260926", "groups": "81", "limit": 1000},
+    }
+    for host in espn.HOSTS:
+        for label, params in variants.items():
+            try:
+                r = session.get(host + espn.SCOREBOARD_PATH, params=params, timeout=20)
+                n = len(r.json().get("events", [])) if r.ok else None
+                print(f"espn {host.split('//')[1][:13]} {label:16} {r.status_code} events={n}")
+            except Exception as e:
+                print(f"espn {host} {label} ERR {e}")
+    try:
+        r = session.get(espn.HOSTS[0] + espn.SUMMARY_PATH, params={"event": "401858242"}, timeout=20)
+        pc = r.json().get("pickcenter") if r.ok else None
+        print("espn summary", r.status_code, "pickcenter:", str(pc)[:300])
+    except Exception as e:
+        print("espn summary ERR", e)
     return 0
 
 

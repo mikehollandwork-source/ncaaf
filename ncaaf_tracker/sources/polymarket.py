@@ -65,10 +65,15 @@ def market_kickoff(ev: dict, m: dict) -> datetime | None:
 
 def market_rows(events: list[dict], now: datetime, horizon: datetime | None) -> list[dict]:
     snap = iso(now)
+    # Props (player/team yards, exact margin, halves) are ~2/3 of CFB markets; skip them.
+    keep = {t.strip() for t in env("POLY_MARKET_TYPES", "moneyline,spreads,totals").split(",") if t.strip()}
     rows = []
     for ev in events:
         for m in ev.get("markets", []) or []:
             if m.get("closed"):
+                continue
+            mtype = (m.get("sportsMarketType") or "").lower()
+            if keep and mtype and mtype not in keep:
                 continue
             ko = market_kickoff(ev, m)
             # No game start -> futures (e.g. national title); not a single game.
