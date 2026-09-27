@@ -430,8 +430,42 @@ def build_report(panel: pd.DataFrame, summary: pd.DataFrame) -> str:
                          f"(should be ~50% if closing lines are efficient)")
     else:
         L.append("No finished games yet.")
+    L += espn_line_section(fin)
     L.append("")
     return "\n".join(L)
+
+
+def espn_line_section(fin: pd.DataFrame) -> list[str]:
+    """ESPN's provider (DraftKings) open/close: available for every game incl. backfill."""
+    need = {"espn_spread_home_open", "espn_spread_home_close", "margin_home"}
+    if fin.empty or not need <= set(fin):
+        return []
+    L = ["", "### ESPN provider (DraftKings) open -> close, all finished games", ""]
+    d = fin.dropna(subset=list(need))
+    if {"espn_ml_home_close", "espn_ml_away_close"} <= set(d):
+        m = d.dropna(subset=["espn_ml_home_close", "espn_ml_away_close"])
+        ph, pa = american_to_prob(m["espn_ml_home_close"]), american_to_prob(m["espn_ml_away_close"])
+        p = ph / (ph + pa)
+        if len(m):
+            L.append(f"- Closing ML favorite won {((p > 0.5) == (m['home_won'] == 1)).mean():.1%}; "
+                     f"Brier {((p - m['home_won']) ** 2).mean():.4f} (n={len(m)})")
+    ats_close = d["margin_home"] + d["espn_spread_home_close"]
+    L.append(f"- Home cover rate vs closing spread: {(ats_close > 0)[ats_close != 0].mean():.1%} (n={int((ats_close != 0).sum())})")
+    moved = d[d["espn_spread_home_close"] != d["espn_spread_home_open"]]
+    if len(moved):
+        toward_home = moved["espn_spread_home_close"] < moved["espn_spread_home_open"]
+        ats_open = moved["margin_home"] + moved["espn_spread_home_open"]
+        push = ats_open == 0
+        win = np.where(toward_home, ats_open > 0, ats_open < 0)[~push]
+        L.append(f"- Spread moved in {len(moved)}/{len(d)} games; following the move vs the OPENING "
+                 f"spread went {win.mean():.1%} ATS (n={len(win)}; 52.4% breaks even at -110)")
+        big = moved[(moved["espn_spread_home_close"] - moved["espn_spread_home_open"]).abs() >= 2]
+        if len(big):
+            tb = big["espn_spread_home_close"] < big["espn_spread_home_open"]
+            ao = big["margin_home"] + big["espn_spread_home_open"]
+            w = np.where(tb, ao > 0, ao < 0)[ao != 0]
+            L.append(f"- Moves of 2+ points: following them went {w.mean():.1%} ATS vs opener (n={len(w)})")
+    return L
 
 
 def main(argv=None) -> int:
