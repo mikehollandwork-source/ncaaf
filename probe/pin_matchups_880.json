@@ -8,7 +8,7 @@
     "hasBetshare": false,
     "hasLive": false,
     "hasMarkets": true,
-    "id": 1637154272,
+    "id": 1632356497,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -23,8 +23,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -33,8 +33,8 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
         "name": "Football",
         "primaryMarketType": "spread"
       }
@@ -46,199 +46,14 @@
     "participants": [
       {
         "alignment": "neutral",
-        "id": 1637155464,
-        "name": "Darian Mensah",
-        "order": 0,
-        "rotation": 15586
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155465,
-        "name": "Trinidad Chambliss",
-        "order": 0,
-        "rotation": 15587
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155466,
-        "name": "Jeremiah Smith",
-        "order": 0,
-        "rotation": 15588
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155467,
-        "name": "Arch Manning",
-        "order": 0,
-        "rotation": 15589
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155468,
-        "name": "Malachi Toney",
-        "order": 0,
-        "rotation": 15590
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155469,
-        "name": "Kamario Taylor",
-        "order": 0,
-        "rotation": 15591
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155470,
-        "name": "CJ Carr",
-        "order": 0,
-        "rotation": 15592
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155471,
-        "name": "Keelon Russell",
-        "order": 0,
-        "rotation": 15593
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155472,
-        "name": "Julian Sayin",
-        "order": 0,
-        "rotation": 15594
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155473,
-        "name": "Josh Hoover",
-        "order": 0,
-        "rotation": 15595
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155474,
-        "name": "Jayden Maiava",
-        "order": 0,
-        "rotation": 15596
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155475,
-        "name": "Gunner Stockton",
-        "order": 0,
-        "rotation": 15597
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155476,
-        "name": "Lincoln Kienholz",
-        "order": 0,
-        "rotation": 15598
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155477,
-        "name": "Dante Moore",
-        "order": 0,
-        "rotation": 15599
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155478,
-        "name": "Sam Leavitt",
-        "order": 0,
-        "rotation": 15600
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155479,
-        "name": "Jadan Baugh",
-        "order": 0,
-        "rotation": 15601
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155480,
-        "name": "The Field",
-        "order": 0,
-        "rotation": 15602
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-09-26T00:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 15586,
-    "special": {
-      "category": "Futures",
-      "description": "Heisman Trophy Award Winner"
-    },
-    "startTime": "2026-09-26T00:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Place 1st",
-    "version": 645027746
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1632356519,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1632356520,
+        "id": 1632356498,
         "name": "Yes",
         "order": 0,
         "rotation": 41110
       },
       {
         "alignment": "neutral",
-        "id": 1632356521,
+        "id": 1632356499,
         "name": "No",
         "order": 0,
         "rotation": 41111
@@ -254,7 +69,7 @@
     "rotation": 41110,
     "special": {
       "category": "To Make the Playoffs",
-      "description": "USC To Make the Playoffs"
+      "description": "Mississippi To Make the Playoffs"
     },
     "startTime": "2026-09-26T16:00:00Z",
     "state": {},
@@ -262,7 +77,7 @@
     "totalMarketCount": 1,
     "type": "special",
     "units": "Playoffs",
-    "version": 645357022
+    "version": 645357024
   },
   {
     "ageLimit": 0,
@@ -271,13 +86,13 @@
     "hasAltSpread": false,
     "hasAltTotal": false,
     "hasBetshare": false,
-    "hasLive": true,
+    "hasLive": false,
     "hasMarkets": true,
-    "id": 1637188539,
+    "id": 1632356512,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
-    "isLive": true,
+    "isLive": false,
     "isPromoted": false,
     "league": {
       "ageLimit": 0,
@@ -288,8 +103,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -298,156 +113,131 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
-    "liveMode": "live_delay",
-    "parent": {
-      "hasMarkets": false,
-      "id": 1637152111,
-      "isLive": false,
-      "participants": [
-        {
-          "alignment": "home",
-          "name": "Fresno State",
-          "order": 1,
-          "state": {
-            "hasPossession": false,
-            "score": 14,
-            "scoreByQuarter": [
-              0,
-              14,
-              0,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        },
-        {
-          "alignment": "away",
-          "name": "Rice",
-          "order": 0,
-          "state": {
-            "hasPossession": true,
-            "score": 17,
-            "scoreByQuarter": [
-              7,
-              10,
-              0,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        }
-      ],
-      "startTime": "2026-09-27T02:00:00Z",
-      "state": {
-        "down": 1,
-        "quarter": 3,
-        "timeRemainingInQtr": "15:00",
-        "yardsToFirstDown": 10,
-        "yardsToGoal": 75
-      }
-    },
-    "parentId": 1637152111,
-    "parlayRestriction": "unique_matchups",
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Fresno State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 3
-          },
-          {
-            "period": 0
-          },
-          {
-            "period": 2
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1632356513,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
       },
       {
-        "alignment": "away",
-        "name": "Rice",
+        "alignment": "neutral",
+        "id": 1632356514,
+        "name": "No",
         "order": 0,
-        "stats": [
-          {
-            "period": 3
-          },
-          {
-            "period": 0
-          },
-          {
-            "period": 2
-          }
-        ]
+        "rotation": 41111
       }
     ],
     "periods": [
       {
-        "cutoffAt": null,
-        "period": 3,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": null,
-        "period": 1,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": "2026-09-27T03:39:18Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-09-26T16:00:00Z",
         "period": 0,
-        "status": "open"
-      },
-      {
-        "cutoffAt": "2026-09-27T03:59:04Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 2,
         "status": "open"
       }
     ],
-    "rotation": 9417,
-    "startTime": "2026-09-27T02:00:00Z",
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Texas To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
     "state": {},
-    "status": "started",
-    "totalMarketCount": 3,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 703337330
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645420908
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356439,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356440,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356441,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Alabama To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645357026
   },
   {
     "ageLimit": 0,
@@ -473,8 +263,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -483,8 +273,8 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
         "name": "Football",
         "primaryMarketType": "spread"
       }
@@ -1049,431 +839,6 @@
     "hasBetshare": false,
     "hasLive": false,
     "hasMarkets": true,
-    "id": 1632356439,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1632356440,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41110
-      },
-      {
-        "alignment": "neutral",
-        "id": 1632356441,
-        "name": "No",
-        "order": 0,
-        "rotation": 41111
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-09-26T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41110,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "Alabama To Make the Playoffs"
-    },
-    "startTime": "2026-09-26T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Playoffs",
-    "version": 645357026
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637190837,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": true,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": "live_delay",
-    "parent": {
-      "hasMarkets": false,
-      "id": 1637148550,
-      "isLive": false,
-      "participants": [
-        {
-          "alignment": "home",
-          "name": "Washington",
-          "order": 1,
-          "state": {
-            "hasPossession": true,
-            "score": 10,
-            "scoreByQuarter": [
-              0,
-              10,
-              0,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        },
-        {
-          "alignment": "away",
-          "name": "Minnesota",
-          "order": 0,
-          "state": {
-            "hasPossession": false,
-            "score": 21,
-            "scoreByQuarter": [
-              14,
-              7,
-              0,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        }
-      ],
-      "startTime": "2026-09-27T03:00:00Z",
-      "state": {
-        "down": 4,
-        "quarter": 3,
-        "timeRemainingInQtr": "13:46",
-        "yardsToFirstDown": 5,
-        "yardsToGoal": 70
-      }
-    },
-    "parentId": 1637148550,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Washington",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 2
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Minnesota",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 2
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-09-27T08:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "closed"
-      },
-      {
-        "cutoffAt": null,
-        "period": 1,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": null,
-        "period": 3,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": "2026-09-27T04:52:31Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": false,
-        "hasTotal": true,
-        "period": 2,
-        "status": "closed"
-      }
-    ],
-    "rotation": 9369,
-    "startTime": "2026-09-27T03:00:00Z",
-    "state": {},
-    "status": "started",
-    "totalMarketCount": 0,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 703341777
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1632356512,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1632356513,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41110
-      },
-      {
-        "alignment": "neutral",
-        "id": 1632356514,
-        "name": "No",
-        "order": 0,
-        "rotation": 41111
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-09-26T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41110,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "Texas To Make the Playoffs"
-    },
-    "startTime": "2026-09-26T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Playoffs",
-    "version": 645420908
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1632356497,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1632356498,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41110
-      },
-      {
-        "alignment": "neutral",
-        "id": 1632356499,
-        "name": "No",
-        "order": 0,
-        "rotation": 41111
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-09-26T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41110,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "Mississippi To Make the Playoffs"
-    },
-    "startTime": "2026-09-26T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Playoffs",
-    "version": 645357024
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
     "id": 1632356487,
     "isBetshareEnabled": false,
     "isFeatured": false,
@@ -1489,8 +854,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -1499,8 +864,8 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
         "name": "Football",
         "primaryMarketType": "spread"
       }
@@ -1549,16 +914,16 @@
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
     "hasBetshare": false,
-    "hasLive": true,
+    "hasLive": false,
     "hasMarkets": true,
-    "id": 1637189607,
+    "id": 1637154272,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
-    "isLive": true,
+    "isLive": false,
     "isPromoted": false,
     "league": {
       "ageLimit": 0,
@@ -1569,8 +934,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -1579,171 +944,171 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
-    "liveMode": "live_delay",
-    "parent": {
-      "hasMarkets": false,
-      "id": 1637148862,
-      "isLive": false,
-      "participants": [
-        {
-          "alignment": "home",
-          "name": "Nevada",
-          "order": 1,
-          "state": {
-            "hasPossession": true,
-            "score": 17,
-            "scoreByQuarter": [
-              10,
-              0,
-              7,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        },
-        {
-          "alignment": "away",
-          "name": "Air Force",
-          "order": 0,
-          "state": {
-            "hasPossession": false,
-            "score": 13,
-            "scoreByQuarter": [
-              3,
-              7,
-              3,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        }
-      ],
-      "startTime": "2026-09-27T02:30:00Z",
-      "state": {
-        "down": 2,
-        "quarter": 4,
-        "timeRemainingInQtr": "15:00",
-        "yardsToFirstDown": 15,
-        "yardsToGoal": 94
-      }
-    },
-    "parentId": 1637148862,
-    "parlayRestriction": "unique_matchups",
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Nevada",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 2
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1637155464,
+        "name": "Darian Mensah",
+        "order": 0,
+        "rotation": 15586
       },
       {
-        "alignment": "away",
-        "name": "Air Force",
+        "alignment": "neutral",
+        "id": 1637155465,
+        "name": "Trinidad Chambliss",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 2
-          }
-        ]
+        "rotation": 15587
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155466,
+        "name": "Jeremiah Smith",
+        "order": 0,
+        "rotation": 15588
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155467,
+        "name": "Arch Manning",
+        "order": 0,
+        "rotation": 15589
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155468,
+        "name": "Malachi Toney",
+        "order": 0,
+        "rotation": 15590
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155469,
+        "name": "Kamario Taylor",
+        "order": 0,
+        "rotation": 15591
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155470,
+        "name": "CJ Carr",
+        "order": 0,
+        "rotation": 15592
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155471,
+        "name": "Keelon Russell",
+        "order": 0,
+        "rotation": 15593
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155472,
+        "name": "Julian Sayin",
+        "order": 0,
+        "rotation": 15594
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155473,
+        "name": "Josh Hoover",
+        "order": 0,
+        "rotation": 15595
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155474,
+        "name": "Jayden Maiava",
+        "order": 0,
+        "rotation": 15596
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155475,
+        "name": "Gunner Stockton",
+        "order": 0,
+        "rotation": 15597
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155476,
+        "name": "Lincoln Kienholz",
+        "order": 0,
+        "rotation": 15598
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155477,
+        "name": "Dante Moore",
+        "order": 0,
+        "rotation": 15599
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155478,
+        "name": "Sam Leavitt",
+        "order": 0,
+        "rotation": 15600
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155479,
+        "name": "Jadan Baugh",
+        "order": 0,
+        "rotation": 15601
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155480,
+        "name": "The Field",
+        "order": 0,
+        "rotation": 15602
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-09-27T07:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-09-26T00:00:00Z",
         "period": 0,
-        "status": "open"
-      },
-      {
-        "cutoffAt": null,
-        "period": 1,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": null,
-        "period": 3,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": "2026-09-27T04:18:19Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 2,
         "status": "open"
       }
     ],
-    "rotation": 9367,
-    "startTime": "2026-09-27T02:30:00Z",
+    "rotation": 15586,
+    "special": {
+      "category": "Futures",
+      "description": "Heisman Trophy Award Winner"
+    },
+    "startTime": "2026-09-26T00:00:00Z",
     "state": {},
-    "status": "started",
-    "totalMarketCount": 3,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 703341708
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Place 1st",
+    "version": 645027746
   },
   {
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
     "hasBetshare": false,
-    "hasLive": true,
+    "hasLive": false,
     "hasMarkets": true,
-    "id": 1637189606,
+    "id": 1632356519,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
-    "isLive": true,
+    "isLive": false,
     "isPromoted": false,
     "league": {
       "ageLimit": 0,
@@ -1754,8 +1119,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 12,
-      "matchupCountSE": 12,
+      "matchupCount": 8,
+      "matchupCountSE": 8,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -1764,155 +1129,50 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 41,
-        "matchupCountSE": 41,
+        "matchupCount": 34,
+        "matchupCountSE": 34,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
-    "liveMode": "live_delay",
-    "parent": {
-      "hasMarkets": false,
-      "id": 1637154234,
-      "isLive": false,
-      "participants": [
-        {
-          "alignment": "home",
-          "name": "Stanford",
-          "order": 1,
-          "state": {
-            "hasPossession": true,
-            "score": 13,
-            "scoreByQuarter": [
-              7,
-              3,
-              3,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        },
-        {
-          "alignment": "away",
-          "name": "Georgia Tech",
-          "order": 0,
-          "state": {
-            "hasPossession": false,
-            "score": 20,
-            "scoreByQuarter": [
-              10,
-              10,
-              0,
-              0,
-              0
-            ]
-          },
-          "stats": [
-            {
-              "period": 0
-            },
-            {
-              "period": 1
-            },
-            {
-              "period": 3
-            }
-          ]
-        }
-      ],
-      "startTime": "2026-09-27T02:30:00Z",
-      "state": {
-        "down": 1,
-        "quarter": 3,
-        "timeRemainingInQtr": "08:07",
-        "yardsToFirstDown": 10,
-        "yardsToGoal": 76
-      }
-    },
-    "parentId": 1637154234,
-    "parlayRestriction": "unique_matchups",
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Stanford",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 2
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1632356520,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
       },
       {
-        "alignment": "away",
-        "name": "Georgia Tech",
+        "alignment": "neutral",
+        "id": 1632356521,
+        "name": "No",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 2
-          }
-        ]
+        "rotation": 41111
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-09-27T07:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-09-26T16:00:00Z",
         "period": 0,
-        "status": "open"
-      },
-      {
-        "cutoffAt": null,
-        "period": 1,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": null,
-        "period": 3,
-        "status": "settled"
-      },
-      {
-        "cutoffAt": "2026-09-27T04:30:39Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 2,
         "status": "open"
       }
     ],
-    "rotation": 9419,
-    "startTime": "2026-09-27T02:30:00Z",
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "USC To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
     "state": {},
-    "status": "started",
-    "totalMarketCount": 3,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 703341708
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645357022
   }
 ]
