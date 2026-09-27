@@ -81,6 +81,7 @@ def build_games(data_dir: Path) -> pd.DataFrame:
                                                  and c != "espn_id" and not c.endswith(("provider", "details", "raw"))])
     final = latest["status_state"].eq("post") | latest["completed"].astype(str).str.lower().eq("true")
     latest["final"] = final
+    latest.loc[~final, ["home_score", "away_score"]] = np.nan   # ESPN reports 0-0 before kickoff
     latest["margin_home"] = np.where(final, latest["home_score"] - latest["away_score"], np.nan)
     latest["winner"] = np.select([final & (latest["margin_home"] > 0), final & (latest["margin_home"] < 0)],
                                  [latest["home_name"], latest["away_name"]], default=None)
@@ -91,24 +92,84 @@ def build_games(data_dir: Path) -> pd.DataFrame:
 
 # ------------------------------------------------------------------ sportsbooks
 
-def build_book_lines(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatched: list) -> pd.DataFrame:
+NON_CONSENSUS_BOOKS = {"an_consensus", "an_open"}
+HISTORY_HOURS = 72   # hourly grid built from exact line history for the last N hours pre-kickoff
+
+
+def history_snapshots(h: pd.DataFrame, hours: int = HISTORY_HOURS) -> pd.DataFrame:
+    """Turn change-by-change line history into snapshots comparable with polled data:
+    the opener, every hour for the last `hours` before kickoff, and 1 min before kickoff."""
+    if h.empty:
+        return h
+    h = h.copy()
+    h["t"] = ts(h["updated_at"])
+    h["ko"] = ts(h["commence_time"])
+    h = h[h["t"].notna() & (h["t"] < h["ko"])].sort_values("t")
+    grids = []
+    for eid, d in h.groupby("event_id"):
+        ko, first = d["ko"].iloc[0], d["t"].min()
+        pts = pd.date_range(max(first, ko - pd.Timedelta(hours=hours)).ceil("h"), ko, freq="h", inclusive="left")
+        # each book's own opener (sides post ms apart, so +5s), plus the close
+        openers = d.groupby("book")["t"].min() + pd.Timedelta(seconds=5)
+        pts = pts.append(pd.DatetimeIndex(list(openers) + [ko - pd.Timedelta(minutes=1)]))
+        grids.append(pd.DataFrame({"event_id": eid, "snap": pts.unique().sort_values()}))
+    grid = pd.concat(grids, ignore_index=True)
+    series = h[["event_id", "book", "market", "outcome"]].drop_duplicates()
+    grid = grid.merge(series, on="event_id").sort_values("snap")
+    out = pd.merge_asof(grid, h.rename(columns={"t": "snap"}).sort_values("snap"), on="snap",
+                        by=["event_id", "book", "market", "outcome"], direction="backward")
+    out = out.dropna(subset=["price"])
+    out["snapshot_ts"] = out["snap"].dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return out.drop(columns=["snap", "ko"], errors="ignore")
+
+
+def load_book_rows(data_dir: Path) -> pd.DataFrame:
+    """Every sportsbook source in one frame: Odds API (optional), Action Network
+    live snapshots, Pinnacle, and Action Network exact history."""
+    frames = []
     o = load(data_dir, "odds")
-    if o.empty:
+    if not o.empty:
+        frames.append(o.rename(columns={"oddsapi_id": "event_id"}).assign(source="oddsapi"))
+    for t in ("an_odds", "pinnacle_odds"):
+        f = load(data_dir, t)
+        if not f.empty:
+            frames.append(f)
+    hist = load(data_dir, "an_history")
+    if not hist.empty:
+        hist = hist.drop_duplicates(["event_id", "book", "market", "outcome", "updated_at"])
+        frames.append(history_snapshots(hist))
+    if not frames:
         return pd.DataFrame()
-    num(o, ["price", "point"])
-    o["snap"] = ts(o["snapshot_ts"])
-    ev = o.drop_duplicates("oddsapi_id")[["oddsapi_id", "home_team", "away_team", "commence_time"]]
+    cols = ["event_id", "snapshot_ts", "commence_time", "home_team", "away_team", "book", "market",
+            "outcome", "price", "point", "source"]
+    return pd.concat([f.reindex(columns=cols) for f in frames], ignore_index=True)
+
+
+def map_events(o: pd.DataFrame, matcher: Matcher, unmatched: list) -> dict:
+    """event_id -> (espn_id, source home == ESPN home)."""
     mapping = {}
+    ev = o.drop_duplicates("event_id")[["event_id", "home_team", "away_team", "commence_time", "source"]]
     for _, e in ev.iterrows():
-        gid, sides = matcher.match(e["home_team"], e["away_team"], ts(pd.Series([e["commence_time"]]))[0], 3)
+        gid, sides = matcher.match(e["home_team"], e["away_team"], ts(pd.Series([e["commence_time"]]))[0], 12)
         if gid is None:
-            unmatched.append({"source": "oddsapi", "id": e["oddsapi_id"], "team_a": e["home_team"],
+            unmatched.append({"source": e["source"], "id": e["event_id"], "team_a": e["home_team"],
                               "team_b": e["away_team"], "time": e["commence_time"]})
             continue
-        mapping[e["oddsapi_id"]] = (gid, sides[e["home_team"]] == "home")
-    o = o[o["oddsapi_id"].isin(mapping)].copy()
-    o["espn_id"] = o["oddsapi_id"].map(lambda k: mapping[k][0])
-    o["aligned"] = o["oddsapi_id"].map(lambda k: mapping[k][1])
+        mapping[e["event_id"]] = (gid, sides[e["home_team"]] == "home")
+    return mapping
+
+
+def build_book_lines(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatched: list):
+    o = load_book_rows(data_dir)
+    if o.empty:
+        return pd.DataFrame(), {}, set()
+    num(o, ["price", "point"])
+    o["snap"] = ts(o["snapshot_ts"])
+    mapping = map_events(o, matcher, unmatched)
+    o = o[o["event_id"].isin(mapping)].copy()
+    o["espn_id"] = o["event_id"].map(lambda k: mapping[k][0])
+    o["aligned"] = o["event_id"].map(lambda k: mapping[k][1])
+    history_ids = set(o.loc[o["source"] == "an_history", "espn_id"])
     # which ESPN side is this outcome?
     is_src_home = o["outcome"] == o["home_team"]
     o["side"] = np.where(o["market"] == "totals", o["outcome"].str.lower(),
@@ -126,10 +187,10 @@ def build_book_lines(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unma
         out["home_prob"] = pd.Series(ph / (ph + pa), index=h2h.index)
     out["spread_home"], out["spread_price"] = spr["point"], spr["price"]
     out["total"], out["total_over_price"] = tot["point"], tot["price"]
-    return out.reset_index()
+    return out.reset_index(), mapping, history_ids
 
 
-def book_open_close(lines: pd.DataFrame, first_run) -> pd.DataFrame:
+def book_open_close(lines: pd.DataFrame, first_run, history_ids: set = frozenset()) -> pd.DataFrame:
     if lines.empty:
         return lines
     rows = []
@@ -145,7 +206,8 @@ def book_open_close(lines: pd.DataFrame, first_run) -> pd.DataFrame:
                 "move": s[col].iloc[-1] - s[col].iloc[0],
                 "n_obs": len(s), "n_changes": int((s[col].diff().fillna(0) != 0).sum()),
                 # Line already existed when tracking began -> true opener unknown.
-                "opener_censored": s["snap"].iloc[0] <= first_run + pd.Timedelta(hours=1),
+                "opener_censored": (book != "an_open" and gid not in history_ids
+                                    and s["snap"].iloc[0] <= first_run + pd.Timedelta(hours=1)),
             })
     return pd.DataFrame(rows)
 
@@ -153,12 +215,36 @@ def book_open_close(lines: pd.DataFrame, first_run) -> pd.DataFrame:
 def consensus(lines: pd.DataFrame) -> pd.DataFrame:
     if lines.empty:
         return lines
-    c = lines.groupby(["espn_id", "snap"]).agg(
+    real = lines[~lines["book"].isin(NON_CONSENSUS_BOOKS)]
+    c = real.groupby(["espn_id", "snap"]).agg(
         book_home_prob=("home_prob", "median"), book_spread=("spread_home", "median"),
         book_total=("total", "median"), n_books=("book", "nunique")).reset_index()
     sharp = lines[lines["book"] == SHARP_BOOK][["espn_id", "snap", "home_prob", "spread_home"]]
     sharp = sharp.rename(columns={"home_prob": "sharp_home_prob", "spread_home": "sharp_spread"})
     return c.merge(sharp, on=["espn_id", "snap"], how="left")
+
+
+def build_splits(data_dir: Path, mapping: dict) -> pd.DataFrame:
+    """Action Network public betting splits -> % of money / tickets on the ESPN home side."""
+    sp = load(data_dir, "an_splits")
+    if sp.empty or not mapping:
+        return pd.DataFrame()
+    num(sp, ["tickets_pct", "money_pct"])
+    sp = sp[sp["event_id"].isin(mapping) & sp["side"].isin(["home", "away"])].copy()
+    sp["espn_id"] = sp["event_id"].map(lambda k: mapping[k][0])
+    aligned = sp["event_id"].map(lambda k: mapping[k][1])
+    sp["espn_side"] = np.where((sp["side"] == "home") == aligned, "home", "away")
+    sp = sp[sp["espn_side"] == "home"]
+    sp["snap"] = ts(sp["snapshot_ts"])
+    p = sp.pivot_table(index=["espn_id", "snap"], columns="market", values=["money_pct", "tickets_pct"],
+                       aggfunc="last")
+    out = pd.DataFrame(index=p.index)
+    if ("money_pct", "spreads") in p:
+        out["an_money_home_pct"] = p[("money_pct", "spreads")]
+        out["an_tickets_home_pct"] = p[("tickets_pct", "spreads")]
+    if ("money_pct", "h2h") in p:
+        out["an_ml_money_home_pct"] = p[("money_pct", "h2h")]
+    return out.reset_index()
 
 
 # ------------------------------------------------------------------ Kalshi
@@ -331,8 +417,12 @@ def build_report(panel: pd.DataFrame, summary: pd.DataFrame) -> str:
         return "\n".join(L + ["No panel data yet."])
     p = panel.sort_values(["espn_id", "hour"]).copy()
     gap = p.groupby("espn_id")["hour"].diff() == pd.Timedelta(hours=1)
+    if {"an_money_home_pct", "an_tickets_home_pct"} <= set(p):
+        # money% well above tickets% on a side = bigger (sharper) bettors on that side
+        p["an_sharp_home"] = p["an_money_home_pct"] - p["an_tickets_home_pct"]
+        p["an_money_home_lean"] = p["an_money_home_pct"] - 50
     for c in ("book_home_prob", "book_spread", "book_total", "kalshi_home_prob", "poly_home_prob",
-              "kalshi_book_imbalance", "poly_book_imbalance"):
+              "kalshi_book_imbalance", "poly_book_imbalance", "an_money_home_pct", "an_sharp_home"):
         if c in p:
             p["d_" + c] = p.groupby("espn_id")[c].diff().where(gap)
     for c in ("kalshi_flow", "poly_flow"):
@@ -347,7 +437,9 @@ def build_report(panel: pd.DataFrame, summary: pd.DataFrame) -> str:
              ("d_book_home_prob", "kalshi_flow"), ("d_book_home_prob", "poly_flow"),
              ("d_book_home_prob", "d_kalshi_book_imbalance"), ("d_book_home_prob", "d_poly_book_imbalance"),
              ("d_book_spread", "d_kalshi_home_prob"), ("d_book_spread", "d_poly_home_prob"),
-             ("d_book_spread", "kalshi_flow"), ("d_book_spread", "poly_flow")]
+             ("d_book_spread", "kalshi_flow"), ("d_book_spread", "poly_flow"),
+             ("d_book_home_prob", "an_money_home_lean"), ("d_book_home_prob", "d_an_money_home_pct"),
+             ("d_book_home_prob", "an_sharp_home"), ("d_book_spread", "an_sharp_home")]
     for a, b in pairs:
         if a in p and b in p:
             pr, sp, n = corr(p[a], p[b])
@@ -358,7 +450,8 @@ def build_report(panel: pd.DataFrame, summary: pd.DataFrame) -> str:
           "market moved FIRST (books followed); k>0 => books led.", "",
           "| market signal | " + " | ".join(f"k={k}" for k in range(-3, 4)) + " |",
           "|---|" + "---|" * 7]
-    for b in ("d_kalshi_home_prob", "d_poly_home_prob", "kalshi_flow", "poly_flow"):
+    for b in ("d_kalshi_home_prob", "d_poly_home_prob", "kalshi_flow", "poly_flow",
+              "d_an_money_home_pct", "an_sharp_home"):
         if b not in p or "d_book_home_prob" not in p:
             continue
         cells = []
@@ -374,7 +467,9 @@ def build_report(panel: pd.DataFrame, summary: pd.DataFrame) -> str:
         direction = -np.sign(big["d_book_spread"]).where(big["d_book_spread"] != 0,
                                                           np.sign(big.get("d_book_home_prob", 0)))
         for c, label in (("kalshi_flow", "Kalshi net taker flow"), ("poly_flow", "Polymarket net taker flow"),
-                         ("d_kalshi_home_prob", "Kalshi price change"), ("d_poly_home_prob", "Polymarket price change")):
+                         ("d_kalshi_home_prob", "Kalshi price change"), ("d_poly_home_prob", "Polymarket price change"),
+                         ("an_sharp_home", "Public splits: money% minus tickets% (big-bettor side)"),
+                         ("an_money_home_lean", "Public splits: side with majority of money")):
             if c not in big:
                 continue
             prev = p.groupby("espn_id")[c].shift(1).reindex(big.index).fillna(0) if "flow" in c else 0
@@ -487,15 +582,16 @@ def main(argv=None) -> int:
     runs = load(data_dir, "runs")
     first_run = ts(runs["run_ts"]).min() if not runs.empty else pd.Timestamp.min.tz_localize("UTC")
 
-    lines = build_book_lines(data_dir, games, matcher, unmatched)
-    boc = book_open_close(lines, first_run)
+    lines, mapping, history_ids = build_book_lines(data_dir, games, matcher, unmatched)
+    boc = book_open_close(lines, first_run, history_ids)
     cons = hourly(consensus(lines), games)
+    splits = hourly(build_splits(data_dir, mapping), games)
     k_snaps, k_flows = build_kalshi(data_dir, games, matcher, unmatched)
     p_snaps, p_flows = build_poly(data_dir, games, matcher, unmatched)
     k_h, p_h = hourly(k_snaps, games), hourly(p_snaps, games)
 
     panel = pd.DataFrame(columns=["espn_id", "hour"])
-    for part in (cons, k_h, p_h):
+    for part in (cons, splits, k_h, p_h):
         if not part.empty:
             panel = panel.merge(part, on=["espn_id", "hour"], how="outer")
     ko = games.set_index("espn_id")["kickoff_dt"]
@@ -510,6 +606,7 @@ def main(argv=None) -> int:
 
     summary = games.copy()
     for part, cols in ((cons, ["book_home_prob", "book_spread", "book_total", "sharp_home_prob", "sharp_spread"]),
+                       (splits, ["an_money_home_pct", "an_tickets_home_pct", "an_ml_money_home_pct"]),
                        (k_h, ["kalshi_home_prob", "kalshi_volume", "kalshi_oi"]),
                        (p_h, ["poly_home_prob", "poly_volume"])):
         cols = [c for c in cols if c in part]
@@ -524,7 +621,14 @@ def main(argv=None) -> int:
                    f"{name}_traded_usd_total": (f"{name}_traded_usd", "sum")}).reset_index()
             summary = summary.merge(f, on="espn_id", how="left")
     if "book_first_seen" in summary:
-        summary["opener_censored"] = summary["book_first_seen"] <= first_run + pd.Timedelta(hours=1)
+        summary["opener_censored"] = ((summary["book_first_seen"] <= first_run + pd.Timedelta(hours=1))
+                                      & ~summary["espn_id"].isin(history_ids))
+    if not boc.empty:
+        mo = boc[boc["book"] == "an_open"].pivot_table(index="espn_id", columns="market", values="open",
+                                                       aggfunc="first")
+        mo = mo.rename(columns={"spread_home": "market_open_spread", "total": "market_open_total",
+                                "home_prob": "market_open_home_prob", "ml_home": "market_open_ml_home"})
+        summary = summary.merge(mo.reset_index(), on="espn_id", how="left")
     if {"book_spread_close", "margin_home"} <= set(summary):
         ats = summary["margin_home"] + summary["book_spread_close"]
         summary["home_cover_close"] = np.select([ats > 0, ats < 0, ats == 0], ["cover", "no_cover", "push"], None)

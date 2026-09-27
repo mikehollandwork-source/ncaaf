@@ -31,6 +31,7 @@ SYNONYMS = {
     "sam houston state": "sam houston", "texas a and m": "texas aandm",
     "university at albany": "albany", "ualbany": "albany",
     "tennessee martin": "ut martin", "se louisiana": "southeastern louisiana",
+    "north carolina state": "nc state",
 }
 
 
@@ -50,7 +51,13 @@ def norm(name: str | None) -> str:
     s = " ".join(out)
     s = re.sub(r"\s+", " ", s).strip()
     s = s.replace("texas a and m", "texas aandm")
-    return SYNONYMS.get(s, s)
+    if s in SYNONYMS:
+        return SYNONYMS[s]
+    # synonyms also apply with a mascot after them: "umass minutemen" -> "massachusetts minutemen"
+    for k in sorted(SYNONYMS, key=len, reverse=True):
+        if s.startswith(k + " "):
+            return SYNONYMS[k] + s[len(k):]
+    return s
 
 
 def load_aliases(path: Path) -> dict[str, str]:

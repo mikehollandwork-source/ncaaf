@@ -6,26 +6,34 @@ goal is to test whether line moves line up with prediction-market money.
 
 ## What gets collected
 
-| Source | What | Key | Table(s) |
-|---|---|---|---|
-| ESPN scoreboard | schedule, kickoff, final score / winner, ESPN's own **open & close** spread / total / ML | none | `espn_games` |
-| [The Odds API](https://the-odds-api.com) | every US book (DK, FD, MGM, Caesars, ...), Pinnacle (`eu`), Novig / ProphetX exchanges (`us_ex`): moneyline, spread, total | `ODDS_API_KEY` | `odds` |
-| Kalshi | `KXNCAAFGAME` / `KXNCAAFSPREAD` / `KXNCAAFTOTAL` quotes, volume, OI; moneyline order book (top 10) + trades with taker side | none | `kalshi_markets`, `kalshi_books`, `kalshi_trades` |
-| Polymarket | CFB game markets: price, volume, liquidity; moneyline order book (top 10) + trades with side | none | `poly_markets`, `poly_books`, `poly_trades` |
+No API keys needed. Sportsbook lines come from the public feeds that betting sites' own pages load.
 
-- **Earliest lines:** the hourly run pulls every game any book has posted, with no
-  upper date limit, so a line gets captured within an hour of being posted.
-- **Stops at kickoff:** sportsbook rows are filtered to games that haven't started.
-  Prediction-market kickoff times are estimates, so those are collected with 1h of
-  slack, and the analysis step trims everything to the exact ESPN kickoff.
-- **Opening/closing lines:** opener = first snapshot seen, closer = last snapshot
-  before kickoff, for each book and for the consensus. ESPN's provider open/close
-  is stored separately. Games whose line already existed when tracking started are
-  flagged `opener_censored`.
-- **Closing-line precision:** on top of the hourly snapshot there are extra
-  15-minute runs in the Saturday and weeknight kickoff windows. Those runs poll
-  only games kicking off in the next 100 minutes, so the closing line is at most
-  about 15 minutes old.
+| Source | What | Table(s) |
+|---|---|---|
+| ESPN scoreboard | schedule, kickoff, final score / winner, DraftKings open & close | `espn_games` |
+| Action Network (hourly) | DraftKings, FanDuel, BetMGM, Caesars, BetRivers, bet365 moneyline / spread / total, the **market opener** (`an_open`), and **public betting splits** (% of tickets and % of money per side) | `an_odds`, `an_splits` |
+| Action Network (daily + backfill) | **exact line history**: every line change per book with a timestamp, opener to kickoff | `an_history` |
+| Pinnacle web feed (hourly) | the sharp reference line | `pinnacle_odds` |
+| Kalshi | `KXNCAAFGAME` / `KXNCAAFSPREAD` / `KXNCAAFTOTAL` quotes, volume, OI; moneyline order book (top 10) + trades with taker side | `kalshi_markets`, `kalshi_books`, `kalshi_trades` |
+| Polymarket | CFB moneyline / spread / total markets: price, volume, liquidity; moneyline order book + trades with side | `poly_markets`, `poly_books`, `poly_trades` |
+| The Odds API (optional) | only used if the `ODDS_API_KEY` secret is set | `odds` |
+
+- **Earliest lines:** Action Network's history starts at each book's opener, so
+  openers are exact even for games that were listed before tracking began.
+  Hourly polling covers the current week and the next two.
+- **Stops at kickoff:** live lines are skipped, history is cut at kickoff, and the
+  analysis trims everything to the exact ESPN kickoff.
+- **Opening/closing lines:** the per-book opener is the history's `opener` entry.
+  The closer is the last line before kickoff. `market_open_*` is Action Network's
+  market-opener line.
+- **Money signals** to compare against line moves: Kalshi and Polymarket taker
+  flow ($) and order-book imbalance, plus Action Network's public money% vs
+  tickets%. Money% well above tickets% on a side means bigger bettors are on it.
+
+These feeds are unofficial. They can change or block access without notice.
+`collect.py --probe` (workflow mode `probe`) saves raw responses from every
+source to `probe/` on the data branch so a broken parser can be fixed against
+the new format.
 
 Data is stored append-only as `data/<table>/<date>/<table>_<timestamp>.csv.gz` on
 the **`data` branch**, one file per table per run, which keeps the code branch clean.
@@ -33,16 +41,12 @@ the **`data` branch**, one file per table per run, which keeps the code branch c
 ## Setup (one time)
 
 1. Merge this to `main`. GitHub only runs scheduled workflows from the default branch.
-2. Get an Odds API key and add it as the repo secret `ODDS_API_KEY`
-   (Settings → Secrets and variables → Actions).
-   - Hourly polling across 3 markets × 3 regions uses about **9 credits per call,
-     roughly 11k credits a month**. That fits the 20K plan; the 500-credit free
-     tier can't support hourly polling.
-   - To cut cost, set the repo variable `ODDS_API_REGIONS=us` (3 credits a call).
-     This drops Pinnacle, the sharpest reference line.
+2. (Optional) add an Odds API key as the repo secret `ODDS_API_KEY` for extra books.
+   Everything works without it.
 3. Settings → Actions → General → Workflow permissions → **Read and write**.
 4. Actions → `collect` → Run workflow with `mode=backfill`, `since=2026-08-22`.
-   This loads earlier games' results and ESPN open/close lines.
+   This loads earlier games' results, ESPN open/close lines, and Action Network's
+   full line history for every game played so far.
 5. Actions → `collect` → Run workflow with `mode=full` to confirm everything works.
    The `runs` table logs per-source row counts and errors, and the job log shows
    warnings if a source returns nothing.

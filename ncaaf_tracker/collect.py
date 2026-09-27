@@ -5,8 +5,15 @@ Modes
   closing  only games kicking off within CLOSING_WINDOW_MIN; exits without
            writing if there are none. Tightens the closing-line snapshot.
   auto     full if minute < 15, else closing (default)
-  backfill ESPN schedule/results/open-close lines only, from --since to today
-           (use once to pick up games played before tracking started)
+  backfill ESPN schedule/results/open-close lines from --since to today, plus
+           Action Network's full line history (every book's line changes,
+           opener to kickoff) for every game already played this season
+
+Sportsbook lines need no API key: Action Network's public feed (DraftKings,
+FanDuel, BetMGM, Caesars, BetRivers, bet365, the market opener, public
+money/ticket splits) and Pinnacle's web feed. The Odds API is used only if
+ODDS_API_KEY is set. Once a day (the 10:00 UTC full run) the exact line
+history for games that kicked off in the last ~36h is saved too.
 
 Tracking stops at kickoff: every source filters to games that haven't started
 (prediction markets with a +/-1h lenient window because their kickoff time is
@@ -21,7 +28,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from .sources import espn, kalshi, oddsapi, polymarket
+from .sources import espn, kalshi, oddsapi, polymarket, scraped
 from .util import env, iso, log, make_session, parse_time, utcnow, write_table
 
 
@@ -29,7 +36,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill"), default="auto")
     ap.add_argument("--data-dir", default=env("DATA_DIR", "data"))
-    ap.add_argument("--sources", default="espn,odds,kalshi,poly",
+    ap.add_argument("--sources", default="espn,an,pinnacle,odds,kalshi,poly",
                     help="comma list of sources to poll")
     ap.add_argument("--since", help="backfill start date YYYY-MM-DD")
     ap.add_argument("--probe", action="store_true",
@@ -46,7 +53,7 @@ def main(argv=None) -> int:
         return 0
 
     if args.probe:
-        return probe(session)
+        return probe(session, Path(args.data_dir).parent / "probe" if args.data_dir else None)
 
     now = utcnow()
     data_dir = Path(args.data_dir)
@@ -67,6 +74,13 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
         log.info("backfilled %d games since %s", len(games), iso(since))
+        cur = scraped.an_current_week(session)
+        if cur is not None:
+            hist = scraped.an_history_for(session, now, list(range(0, cur + 1)), since, now, meta)
+            write_table(data_dir, "an_history", hist, now)
+            log.info("backfilled Action Network line history: %d rows, %s games",
+                     len(hist), meta.get("an_history_games"))
+        write_table(data_dir, "runs", [meta], now)
         return 0
     if mode == "full":
         games = espn.fetch_games(session, now - timedelta(days=3), now + timedelta(days=14))
@@ -85,9 +99,30 @@ def main(argv=None) -> int:
         horizon = now + window
         log.info("closing mode: %d games kick off within %s", len(soon), window)
     meta["espn_games"] = len(games)
+    kickoff_fn = espn_kickoff_lookup(games)
 
-    # ---- sportsbooks
-    if "odds" in sources:
+    # ---- sportsbooks (keyless site feeds)
+    in_h = (lambda r: parse_time(r["commence_time"]) <= horizon) if horizon else (lambda r: True)
+    if "an" in sources:
+        try:
+            odds, splits = scraped.an_fetch(session, now, meta)
+            tables["an_odds"] = [r for r in odds if in_h(r)]
+            tables["an_splits"] = [r for r in splits if in_h(r)]
+        except Exception as e:
+            log.exception("action network failed")
+            meta["an_error"] = str(e)[:300]
+        if mode == "full" and now.hour == int(env("AN_HISTORY_HOUR_UTC", "10")):
+            cur = scraped.an_current_week(session)
+            if cur is not None:
+                tables["an_history"] = scraped.an_history_for(
+                    session, now, [cur - 1, cur], now - timedelta(hours=36), now - timedelta(minutes=30), meta)
+    if "pinnacle" in sources:
+        try:
+            tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
+        except Exception as e:
+            log.exception("pinnacle failed")
+            meta["pinnacle_error"] = str(e)[:300]
+    if "odds" in sources and env("ODDS_API_KEY"):
         try:
             rows = oddsapi.fetch_odds(session, now, meta)
             if horizon is not None:
@@ -101,13 +136,13 @@ def main(argv=None) -> int:
     pm_horizon = horizon + timedelta(hours=1) if horizon else None
     if "kalshi" in sources:
         try:
-            tables.update(kalshi.collect(session, now, pm_horizon, meta))
+            tables.update(kalshi.collect(session, now, pm_horizon, meta, kickoff_fn))
         except Exception as e:
             log.exception("kalshi failed")
             meta["kalshi_error"] = str(e)[:300]
     if "poly" in sources:
         try:
-            tables.update(polymarket.collect(session, now, pm_horizon, meta))
+            tables.update(polymarket.collect(session, now, pm_horizon, meta, kickoff_fn))
         except Exception as e:
             log.exception("polymarket failed")
             meta["poly_error"] = str(e)[:300]
@@ -122,48 +157,64 @@ def main(argv=None) -> int:
     return 0
 
 
+def espn_kickoff_lookup(games: list[dict]):
+    """(team_a, team_b, approx_time) -> ESPN kickoff, using the analysis name matcher."""
+    import pandas as pd
+    from .matching import Matcher
+    if not games:
+        return None
+    df = pd.DataFrame(games)
+    m = Matcher(df)
+    ko = dict(zip(df["espn_id"], df["kickoff"]))
+
+    def find(a, b, when):
+        if when is None:
+            return None
+        gid, _ = m.match(a, b, when, 30)
+        return parse_time(ko[gid]) if gid is not None else None
+    return find
+
+
+AN = "https://api.actionnetwork.com/web"
+PIN = "https://guest.api.arcadia.pinnacle.com/0.1"
+PIN_WEB_KEY = "CmX2KcMrXuFmNg6YFbmTxE0y9CIrOi0R"  # public key the pinnacle.com web app sends
 PROBES = {
-    "espn": espn.HOSTS[0] + espn.SCOREBOARD_PATH,
-    "espn_alt": espn.HOSTS[1] + espn.SCOREBOARD_PATH,
-    "odds_api": "https://api.the-odds-api.com/v4/sports",
-    "kalshi": kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5",
-    "polymarket_gamma": polymarket.GAMMA + "/sports",
-    "polymarket_clob": polymarket.CLOB + "/time",
-    "polymarket_data": polymarket.DATA + "/trades?limit=1",
+    "espn": (espn.HOSTS[0] + espn.SCOREBOARD_PATH, {}),
+    "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
+    "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
+    "an_week6": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6", {}),
+    "an_week6_season": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6&season=2026", {}),
+    "an_week6_fcs": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&division=FCS&week=6&season=2026", {}),
+    "an_date_dash": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&date=2026-10-03", {}),
+    "an_date_fbs_all": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&division=FBS&date={sat}&tz=America/New_York", {}),
+    "an_game_history": (AN + "/v2/markets/event/289145/history?bookIds=68,30", {}),
+    "an_game": (AN + "/v2/games/289145?bookIds=68,30", {}),
+    "pin_leagues_nokey": (PIN + "/sports/15/leagues?all=false", {}),
+    "pin_leagues_key": (PIN + "/sports/15/leagues?all=false", {"x-api-key": PIN_WEB_KEY}),
+    "pin_matchups_880": (PIN + "/leagues/880/matchups", {"x-api-key": PIN_WEB_KEY}),
+    "pin_markets_880": (PIN + "/leagues/880/markets/straight", {"x-api-key": PIN_WEB_KEY}),
 }
 
 
-def probe(session) -> int:
-    """Connectivity check from wherever this runs (e.g. the Actions runner)."""
-    for name, url in PROBES.items():
+def probe(session, save_dir: Path | None = None) -> int:
+    """Connectivity check from wherever this runs (e.g. the Actions runner).
+    With save_dir, raw response bodies are saved so parsers can be written
+    against real payloads."""
+    now = utcnow()
+    sat = now + timedelta(days=(5 - now.weekday()) % 7)
+    fmt = {"today": now.strftime("%Y%m%d"), "sat": sat.strftime("%Y%m%d")}
+    if save_dir:
+        save_dir.mkdir(parents=True, exist_ok=True)
+    for name, (url, headers) in PROBES.items():
+        url = url.format(**fmt)
         try:
-            r = session.get(url, timeout=20)
-            print(f"{name:18} {r.status_code}  {r.text[:160]!r}")
+            r = session.get(url, headers=headers, timeout=25)
+            print(f"{name:22} {r.status_code} {len(r.content):>9}B  {r.text[:120]!r}")
+            if save_dir:
+                ext = "json" if "json" in r.headers.get("content-type", "") else "txt"
+                (save_dir / f"{name}.{ext}").write_bytes(r.content[:3_000_000])
         except Exception as e:
-            print(f"{name:18} ERR  {e}")
-    # ESPN slate completeness: how many events each query variant returns.
-    variants = {
-        "date+g80": {"dates": "20260926", "groups": "80", "limit": 1000},
-        "date+g80 lim300": {"dates": "20260926", "groups": "80", "limit": 300},
-        "week5+g80": {"seasontype": 2, "week": 5, "groups": "80", "limit": 1000},
-        "week5+g80+yr": {"seasontype": 2, "week": 5, "year": 2026, "groups": "80", "limit": 1000},
-        "range+g80": {"dates": "20260924-20260927", "groups": "80", "limit": 1000},
-        "date+g81": {"dates": "20260926", "groups": "81", "limit": 1000},
-    }
-    for host in espn.HOSTS:
-        for label, params in variants.items():
-            try:
-                r = session.get(host + espn.SCOREBOARD_PATH, params=params, timeout=20)
-                n = len(r.json().get("events", [])) if r.ok else None
-                print(f"espn {host.split('//')[1][:13]} {label:16} {r.status_code} events={n}")
-            except Exception as e:
-                print(f"espn {host} {label} ERR {e}")
-    try:
-        r = session.get(espn.HOSTS[0] + espn.SUMMARY_PATH, params={"event": "401858242"}, timeout=20)
-        pc = r.json().get("pickcenter") if r.ok else None
-        print("espn summary", r.status_code, "pickcenter:", str(pc)[:300])
-    except Exception as e:
-        print("espn summary ERR", e)
+            print(f"{name:22} ERR  {e}")
     return 0
 
 

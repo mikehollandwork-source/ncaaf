@@ -115,7 +115,8 @@ def in_window(row: dict, now: datetime, horizon: datetime | None) -> bool:
         if td is None:
             return horizon is None
         ko = td + timedelta(hours=23, minutes=59)
-    if ko < now - timedelta(minutes=30):
+    slack = timedelta(0) if row.get("kickoff_source") == "espn" else timedelta(minutes=30)
+    if ko <= now - slack:
         return False
     return horizon is None or ko <= horizon
 
@@ -167,14 +168,47 @@ def fetch_trades(session, ticker: str, since: datetime) -> list[dict]:
     return out
 
 
-def collect(session, now: datetime, horizon: datetime | None, meta: dict) -> dict[str, list[dict]]:
+def game_key(event_ticker: str | None) -> str | None:
+    """KXNCAAFSPREAD-26OCT03ARKTXAM -> 26OCT03ARKTXAM (shared by every series for one game)."""
+    return event_ticker.split("-", 1)[1] if event_ticker and "-" in event_ticker else None
+
+
+def apply_espn_kickoffs(rows: list[dict], kickoff_fn) -> int:
+    """Replace the expiration-based estimate with ESPN's kickoff where the game matches.
+    Kalshi's expiration offset isn't reliable for late games, and a wrong
+    estimate means storing in-game trades as if they were pregame."""
+    if kickoff_fn is None:
+        return 0
+    teams: dict[str, list] = {}
+    for r in rows:
+        if r["series"] == GAME_SERIES and r.get("yes_sub_title"):
+            teams.setdefault(game_key(r["event_ticker"]), []).append(r)
+    ko = {}
+    for key, rs in teams.items():
+        names = sorted({r["yes_sub_title"] for r in rs})
+        if len(names) == 2:
+            k = kickoff_fn(names[0], names[1], parse_time(rs[0].get("kickoff_est")))
+            if k is not None:
+                ko[key] = k
+    n = 0
+    for r in rows:
+        k = ko.get(game_key(r["event_ticker"]))
+        r["kickoff_source"] = "espn" if k else "estimate"
+        if k:
+            r["kickoff_est"] = iso(k)
+            n += 1
+    return n
+
+
+def collect(session, now: datetime, horizon: datetime | None, meta: dict,
+            kickoff_fn=None) -> dict[str, list[dict]]:
     snap = iso(now)
     series_list = [s.strip() for s in env("KALSHI_SERIES", DEFAULT_SERIES).split(",") if s.strip()]
     depth = int(env("KALSHI_BOOK_DEPTH", "10"))
     book_series = set(env("KALSHI_BOOK_SERIES", GAME_SERIES).split(","))
     lookback = timedelta(minutes=int(env("TRADE_LOOKBACK_MIN", "75")))
 
-    markets, books, trades = [], [], []
+    all_rows = []
     for series in series_list:
         try:
             raw = list_markets(session, series)
@@ -182,10 +216,15 @@ def collect(session, now: datetime, horizon: datetime | None, meta: dict) -> dic
             log.warning("kalshi list %s failed: %s", series, e)
             meta[f"kalshi_{series}_error"] = str(e)[:200]
             continue
-        rows = [r for r in (market_row(m, series, snap) for m in raw) if in_window(r, now, horizon)]
+        all_rows += [market_row(m, series, snap) for m in raw]
+    meta["kalshi_espn_kickoffs"] = apply_espn_kickoffs(all_rows, kickoff_fn)
+
+    markets, books, trades = [], [], []
+    for series in series_list:
+        rows = [r for r in all_rows if r["series"] == series and in_window(r, now, horizon)]
         meta[f"kalshi_{series}_markets"] = len(rows)
         if not rows:
-            log.warning("kalshi series %s returned no in-window markets (raw=%d)", series, len(raw))
+            log.warning("kalshi series %s returned no in-window markets", series)
         markets.extend(rows)
         if series not in book_series:
             continue
@@ -195,6 +234,7 @@ def collect(session, now: datetime, horizon: datetime | None, meta: dict) -> dic
                 log.error("kalshi: repeated book/trade failures, skipping the rest this run")
                 break
             t = r["ticker"]
+            ko = parse_time(r.get("kickoff_est"))
             try:
                 ob = get_json(session, f"{BASE}/markets/{t}/orderbook", {"depth": depth},
                               min_interval=PAUSE)
@@ -204,7 +244,10 @@ def collect(session, now: datetime, horizon: datetime | None, meta: dict) -> dic
                 failures += 1
                 log.warning("kalshi book %s failed: %s", t, e)
             try:
-                trades.extend(fetch_trades(session, t, now - lookback))
+                got = fetch_trades(session, t, now - lookback)
+                if ko is not None and r.get("kickoff_source") == "espn":
+                    got = [x for x in got if (parse_time(x["created_time"]) or now) < ko]
+                trades.extend(got)
             except Exception as e:
                 failures += 1
                 log.warning("kalshi trades %s failed: %s", t, e)

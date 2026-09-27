@@ -173,3 +173,69 @@ def test_end_to_end(tmp_path):
     assert pd.read_csv(out / "unmatched.csv").empty if (out / "unmatched.csv").stat().st_size > 1 else True
     report = (out / "report.md").read_text()
     assert "Lead / lag" in report and "Brier" in report
+
+
+# ------------------------------------------------------------------ keyless site feeds (real payloads)
+import json
+from pathlib import Path
+
+from ncaaf_tracker import analyze as _an
+from ncaaf_tracker.sources import scraped
+
+FIX = Path(__file__).parent / "fixtures"
+
+
+def test_actionnetwork_scoreboard_real_payload():
+    games = json.loads((FIX / "an_scoreboard.json").read_text())["games"]
+    g = next(x for x in games if x["id"] == 289186)            # Texas @ Tennessee
+    g["status"] = "scheduled"
+    odds, splits = scraped.an_parse_game(g, parse_time("2026-09-26T12:00:00Z"))
+    dk = {(r["market"], r["outcome"]): r for r in odds if r["book"] == "draftkings"}
+    assert dk[("spreads", "Tennessee Volunteers")]["point"] == 5.5
+    assert dk[("h2h", "Texas Longhorns")]["price"] == -205
+    assert dk[("totals", "Over")]["point"] == 54.5
+    opener = {(r["market"], r["outcome"]): r for r in odds if r["book"] == "an_open"}
+    assert opener[("spreads", "Tennessee Volunteers")]["point"] == 6.5
+    sp = {(r["market"], r["side"]): r for r in splits}
+    assert sp[("spreads", "away")]["money_pct"] == 51 and sp[("h2h", "away")]["money_pct"] == 79
+    # stops at kickoff / skips finished games
+    assert scraped.an_parse_game(g, parse_time("2026-09-26T16:00:00Z")) == ([], [])
+
+
+def test_actionnetwork_history_real_payload(tmp_path):
+    games = json.loads((FIX / "an_scoreboard.json").read_text())["games"]
+    g = next(x for x in games if x["id"] == 289145)            # Coastal Carolina @ Liberty
+    hist = json.loads((FIX / "an_history_289145.json").read_text())
+
+    class S:  # fake session returning the saved payload
+        def get(self, *a, **k):
+            class R:
+                status_code = 200
+                def raise_for_status(self): pass
+                def json(self): return hist
+            return R()
+    rows = scraped.an_history(S(), g, parse_time("2026-09-27T00:00:00Z"))
+    dk = [r for r in rows if r["book"] == "draftkings" and r["market"] == "spreads"]
+    assert dk and dk[0]["line_status"] == "opener"
+    snaps = _an.history_snapshots(pd.DataFrame(rows))
+    ko = parse_time("2026-09-24T23:30:00Z")
+    t = pd.to_datetime(snaps["snapshot_ts"], utc=True)
+    assert (t < ko).all() and len(t.unique()) > 50
+    home_spread = snaps[(snaps.book == "draftkings") & (snaps.market == "spreads")
+                        & (snaps.outcome == g["teams"][1]["full_name"] if g["home_team_id"] == g["teams"][1]["id"]
+                           else snaps.outcome == g["teams"][0]["full_name"])]
+    first = home_spread.sort_values("snapshot_ts").iloc[0]
+    assert float(first["point"]) == -1.5                          # DK opener, home side
+
+
+def test_pinnacle_parse_real_shape():
+    matchups = json.loads((FIX / "pin_matchups.json").read_text())
+    markets = json.loads((FIX / "pin_markets.json").read_text())
+    live = next(m for m in matchups if m["id"] == 1637188539)    # Rice @ Fresno State (live copy)
+    pre = dict(live, isLive=False, parentId=None, id=999)
+    mk = [dict(k, matchupId=999, period=0) for k in markets if k["matchupId"] == 1637188539]
+    rows = scraped.pin_parse(matchups + [pre], markets + mk, parse_time("2026-09-26T20:00:00Z"))
+    assert rows and {r["book"] for r in rows} == {"pinnacle"}
+    spread = [r for r in rows if r["market"] == "spreads" and r["outcome"] == "Fresno State"]
+    assert [r["point"] for r in spread] == [-4.5]                  # main line only, no alternates
+    assert not [r for r in rows if "Heisman" in str(r)]            # futures skipped
