@@ -122,7 +122,7 @@ def main(argv=None) -> int:
 
 
 PROBES = {
-    "espn": espn.SCOREBOARD,
+    "espn": espn.HOSTS[0] + espn.SCOREBOARD_PATH,
     "espn_alt": espn.HOSTS[1] + espn.SCOREBOARD_PATH,
     "odds_api": "https://api.the-odds-api.com/v4/sports",
     "kalshi": kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5",
