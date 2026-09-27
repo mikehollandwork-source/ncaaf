@@ -178,7 +178,7 @@ def build_kalshi(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatche
         a, b = teams["yes_sub_title"].tolist()
         ko = ts(d["kickoff_est"]).dropna()
         when = ko.iloc[-1] if len(ko) else ts(d["ticker_date"]).iloc[0] + pd.Timedelta(hours=18)
-        gid, sides = matcher.match(a, b, when, 14 if len(ko) == 0 else 6)
+        gid, sides = matcher.match(a, b, when, 14 if len(ko) == 0 else 12)
         if gid is None:
             unmatched.append({"source": "kalshi", "id": ev_t, "team_a": a, "team_b": b, "time": str(when)})
             continue
@@ -246,7 +246,7 @@ def build_poly(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatched:
         r = d.iloc[-1]
         if pd.isna(r["outcome_0"]) or pd.isna(r["outcome_1"]):
             continue
-        gid, sides = matcher.match(r["outcome_0"], r["outcome_1"], ts(pd.Series([r["game_start_time"]]))[0], 6)
+        gid, sides = matcher.match(r["outcome_0"], r["outcome_1"], ts(pd.Series([r["game_start_time"]]))[0], 12)
         if gid is None:
             unmatched.append({"source": "polymarket", "id": cid, "team_a": r["outcome_0"],
                               "team_b": r["outcome_1"], "time": r["game_start_time"]})

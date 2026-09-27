@@ -29,6 +29,8 @@ SYNONYMS = {
     "miami ohio": "miami oh", "app state": "appalachian state", "ul monroe": "louisiana monroe",
     "ulm": "louisiana monroe", "southern miss": "southern mississippi",
     "sam houston state": "sam houston", "texas a and m": "texas aandm",
+    "university at albany": "albany", "ualbany": "albany",
+    "tennessee martin": "ut martin", "se louisiana": "southeastern louisiana",
 }
 
 
@@ -102,8 +104,11 @@ class Matcher:
             return None, None
         when = pd.Timestamp(when)
         when = when.tz_localize("UTC") if when.tzinfo is None else when.tz_convert("UTC")
-        lo, hi = when - timedelta(hours=window_h), when + timedelta(hours=window_h)
-        cand = self.games[(self.games["kickoff_dt"] >= lo) & (self.games["kickoff_dt"] <= hi)]
+        # ESPN shows kickoff-TBD games at 04:00Z (midnight ET); widen the window for those.
+        ko = self.games["kickoff_dt"]
+        tbd = (ko.dt.hour == 4) & (ko.dt.minute == 0)
+        diff = (ko - when).abs()
+        cand = self.games[(diff <= timedelta(hours=window_h)) | (tbd & (diff <= timedelta(hours=30)))]
         best = (0.0, None, None)
         for _, g in cand.iterrows():
             hn, an, hid, aid = self._names[g["espn_id"]]

@@ -117,6 +117,12 @@ def test_name_matching():
     gid, sides = m.match("Ohio St.", "Michigan", KICK, 6)
     assert gid == "401" and sides == {"Ohio St.": "away", "Michigan": "home"}
     assert m.match("Alabama", "Georgia", KICK, 6) == (None, None)
+    assert norm("Tennessee-Martin") == norm("UT Martin")
+    assert norm("SE Louisiana") == norm("Southeastern Louisiana")
+    # ESPN lists kickoff-TBD games at 04:00Z; still match a same-day market time
+    tbd = games.copy()
+    tbd["kickoff"] = "2026-10-04T04:00:00Z"
+    assert Matcher(tbd).match("Ohio St.", "Michigan", KICK, 6)[0] == "401"
 
 
 def test_espn_odds_parse():
