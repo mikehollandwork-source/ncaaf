@@ -11,6 +11,7 @@ No API keys needed. Sportsbook lines come from the public feeds that betting sit
 | Source | What | Table(s) |
 |---|---|---|
 | ESPN scoreboard | schedule, kickoff, final score / winner, DraftKings open & close | `espn_games` |
+| ESPN (finished games) | one row per completed game: home team, away team, both scores, winner, loser, winner side (home/away), margin, total. Postponed/canceled games excluded | `results` |
 | Action Network (hourly) | DraftKings, FanDuel, BetMGM, Caesars, BetRivers, bet365 moneyline / spread / total, the **market opener** (`an_open`), and **public betting splits** (% of tickets and % of money per side) | `an_odds`, `an_splits` |
 | Action Network (daily + backfill) | **exact line history**: every line change per book with a timestamp, opener to kickoff | `an_history` |
 | Pinnacle web feed (hourly) | the sharp reference line | `pinnacle_odds` |

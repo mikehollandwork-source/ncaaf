@@ -73,6 +73,7 @@ def main(argv=None) -> int:
         for g in games:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
+        write_table(data_dir, "results", espn.results(games), now)
         log.info("backfilled %d games since %s", len(games), iso(since))
         cur = scraped.an_current_week(session)
         if cur is not None:
@@ -87,6 +88,7 @@ def main(argv=None) -> int:
         for g in games:
             g["snapshot_ts"] = iso(now)
         tables["espn_games"] = games
+        tables["results"] = espn.results(games)   # finals from the last 3 days
         horizon = None
     else:
         games = espn.fetch_games(session, now - timedelta(hours=12), now + timedelta(days=1))
