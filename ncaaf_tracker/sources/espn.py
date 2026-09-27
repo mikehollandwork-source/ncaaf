@@ -44,6 +44,32 @@ def fetch_games(session, start: datetime, end: datetime, groups=("80", "81")) ->
     return list(rows.values())
 
 
+def results(games: list[dict]) -> list[dict]:
+    """One clean row per finished game. Only games ESPN marks completed:
+    postponed/canceled games also show state 'post' with a 0-0 score."""
+    out = []
+    for g in games:
+        if g.get("completed") is not True:
+            continue
+        hs, as_ = g.get("home_score"), g.get("away_score")
+        if hs is None or as_ is None:
+            continue
+        side = "home" if hs > as_ else "away" if as_ > hs else "tie"
+        out.append({
+            "espn_id": g["espn_id"], "season": g.get("season"), "week": g.get("week"),
+            "division": g.get("division"), "kickoff": g.get("kickoff"),
+            "home_team": g.get("home_name"), "away_team": g.get("away_name"),
+            "home_abbr": g.get("home_abbr"), "away_abbr": g.get("away_abbr"),
+            "home_score": hs, "away_score": as_,
+            "winner_side": side,
+            "winner": g.get(f"{side}_name") if side != "tie" else None,
+            "loser": g.get("away_name" if side == "home" else "home_name") if side != "tie" else None,
+            "home_margin": hs - as_, "total_points": hs + as_,
+            "neutral_site": g.get("neutral_site"), "status_detail": g.get("status_detail"),
+        })
+    return out
+
+
 def fill_closed_odds(session, games: list[dict]) -> int:
     """The scoreboard drops odds once a game is final; the per-game summary
     ('pickcenter') still has the provider's open/close. Used by backfill."""

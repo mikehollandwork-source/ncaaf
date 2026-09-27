@@ -125,6 +125,19 @@ def test_name_matching():
     assert Matcher(tbd).match("Ohio St.", "Michigan", KICK, 6)[0] == "401"
 
 
+def test_results_table():
+    final = espn.parse_event(espn_event("post", 17, 27))
+    r = espn.results([final, espn.parse_event(espn_event())])
+    assert len(r) == 1
+    r = r[0]
+    assert (r["home_team"], r["away_team"]) == ("Michigan Wolverines", "Ohio State Buckeyes")
+    assert (r["home_score"], r["away_score"], r["winner_side"]) == (17, 27, "away")
+    assert (r["winner"], r["loser"], r["home_margin"]) == ("Ohio State Buckeyes", "Michigan Wolverines", -10)
+    postponed = espn.parse_event(espn_event("post", 0, 0))
+    postponed["completed"] = False
+    assert espn.results([postponed]) == []
+
+
 def test_espn_odds_parse():
     g = espn.parse_event(espn_event())
     assert g["espn_spread_home_open"] == 2.5 and g["espn_total_open"] == 49.5
