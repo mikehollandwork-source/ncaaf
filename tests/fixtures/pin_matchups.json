@@ -1,0 +1,1918 @@
+[
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1637154272,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1637155464,
+        "name": "Darian Mensah",
+        "order": 0,
+        "rotation": 15586
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155465,
+        "name": "Trinidad Chambliss",
+        "order": 0,
+        "rotation": 15587
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155466,
+        "name": "Jeremiah Smith",
+        "order": 0,
+        "rotation": 15588
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155467,
+        "name": "Arch Manning",
+        "order": 0,
+        "rotation": 15589
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155468,
+        "name": "Malachi Toney",
+        "order": 0,
+        "rotation": 15590
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155469,
+        "name": "Kamario Taylor",
+        "order": 0,
+        "rotation": 15591
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155470,
+        "name": "CJ Carr",
+        "order": 0,
+        "rotation": 15592
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155471,
+        "name": "Keelon Russell",
+        "order": 0,
+        "rotation": 15593
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155472,
+        "name": "Julian Sayin",
+        "order": 0,
+        "rotation": 15594
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155473,
+        "name": "Josh Hoover",
+        "order": 0,
+        "rotation": 15595
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155474,
+        "name": "Jayden Maiava",
+        "order": 0,
+        "rotation": 15596
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155475,
+        "name": "Gunner Stockton",
+        "order": 0,
+        "rotation": 15597
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155476,
+        "name": "Lincoln Kienholz",
+        "order": 0,
+        "rotation": 15598
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155477,
+        "name": "Dante Moore",
+        "order": 0,
+        "rotation": 15599
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155478,
+        "name": "Sam Leavitt",
+        "order": 0,
+        "rotation": 15600
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155479,
+        "name": "Jadan Baugh",
+        "order": 0,
+        "rotation": 15601
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637155480,
+        "name": "The Field",
+        "order": 0,
+        "rotation": 15602
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T00:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 15586,
+    "special": {
+      "category": "Futures",
+      "description": "Heisman Trophy Award Winner"
+    },
+    "startTime": "2026-09-26T00:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Place 1st",
+    "version": 645027746
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356519,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356520,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356521,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "USC To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645357022
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1637188539,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": true,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": "live_delay",
+    "parent": {
+      "hasMarkets": false,
+      "id": 1637152111,
+      "isLive": false,
+      "participants": [
+        {
+          "alignment": "home",
+          "name": "Fresno State",
+          "order": 1,
+          "state": {
+            "hasPossession": false,
+            "score": 14,
+            "scoreByQuarter": [
+              0,
+              14,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        },
+        {
+          "alignment": "away",
+          "name": "Rice",
+          "order": 0,
+          "state": {
+            "hasPossession": true,
+            "score": 17,
+            "scoreByQuarter": [
+              7,
+              10,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        }
+      ],
+      "startTime": "2026-09-27T02:00:00Z",
+      "state": {
+        "down": 1,
+        "quarter": 3,
+        "timeRemainingInQtr": "15:00",
+        "yardsToFirstDown": 10,
+        "yardsToGoal": 75
+      }
+    },
+    "parentId": 1637152111,
+    "parlayRestriction": "unique_matchups",
+    "participants": [
+      {
+        "alignment": "home",
+        "name": "Fresno State",
+        "order": 1,
+        "stats": [
+          {
+            "period": 3
+          },
+          {
+            "period": 0
+          },
+          {
+            "period": 2
+          }
+        ]
+      },
+      {
+        "alignment": "away",
+        "name": "Rice",
+        "order": 0,
+        "stats": [
+          {
+            "period": 3
+          },
+          {
+            "period": 0
+          },
+          {
+            "period": 2
+          }
+        ]
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": null,
+        "period": 3,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": null,
+        "period": 1,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": "2026-09-27T03:39:18Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 0,
+        "status": "open"
+      },
+      {
+        "cutoffAt": "2026-09-27T03:59:04Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 2,
+        "status": "open"
+      }
+    ],
+    "rotation": 9417,
+    "startTime": "2026-09-27T02:00:00Z",
+    "state": {},
+    "status": "started",
+    "totalMarketCount": 3,
+    "type": "matchup",
+    "units": "Regular",
+    "version": 703337330
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1628029726,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1628049655,
+        "name": "Indiana",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049656,
+        "name": "Texas",
+        "order": 0,
+        "rotation": 41111
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049657,
+        "name": "Ohio State",
+        "order": 0,
+        "rotation": 41112
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049658,
+        "name": "Notre Dame",
+        "order": 0,
+        "rotation": 41113
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049659,
+        "name": "Oregon",
+        "order": 0,
+        "rotation": 41114
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049660,
+        "name": "Georgia",
+        "order": 0,
+        "rotation": 41115
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049661,
+        "name": "LSU",
+        "order": 0,
+        "rotation": 41116
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049662,
+        "name": "Texas Tech",
+        "order": 0,
+        "rotation": 41117
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049663,
+        "name": "Miami Florida",
+        "order": 0,
+        "rotation": 41118
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049664,
+        "name": "Texas A&M",
+        "order": 0,
+        "rotation": 41119
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049665,
+        "name": "Alabama",
+        "order": 0,
+        "rotation": 41120
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049666,
+        "name": "USC",
+        "order": 0,
+        "rotation": 41121
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049667,
+        "name": "Ole Miss",
+        "order": 0,
+        "rotation": 41122
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049668,
+        "name": "Oklahoma",
+        "order": 0,
+        "rotation": 41123
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049669,
+        "name": "Michigan",
+        "order": 0,
+        "rotation": 41124
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049670,
+        "name": "Penn State",
+        "order": 0,
+        "rotation": 41125
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049671,
+        "name": "Florida",
+        "order": 0,
+        "rotation": 41126
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049672,
+        "name": "Auburn",
+        "order": 0,
+        "rotation": 41127
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049673,
+        "name": "Tennessee",
+        "order": 0,
+        "rotation": 41128
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049674,
+        "name": "Utah",
+        "order": 0,
+        "rotation": 41129
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049675,
+        "name": "BYU",
+        "order": 0,
+        "rotation": 41130
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049676,
+        "name": "Clemson",
+        "order": 0,
+        "rotation": 41131
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049677,
+        "name": "Missouri",
+        "order": 0,
+        "rotation": 41132
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049678,
+        "name": "SMU",
+        "order": 0,
+        "rotation": 41133
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049679,
+        "name": "Iowa",
+        "order": 0,
+        "rotation": 41134
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049680,
+        "name": "Washington",
+        "order": 0,
+        "rotation": 41135
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049681,
+        "name": "Vanderbilt",
+        "order": 0,
+        "rotation": 41136
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049682,
+        "name": "South Carolina",
+        "order": 0,
+        "rotation": 41137
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049683,
+        "name": "Florida State",
+        "order": 0,
+        "rotation": 41138
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049684,
+        "name": "Virginia Tech",
+        "order": 0,
+        "rotation": 41139
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049685,
+        "name": "Louisville",
+        "order": 0,
+        "rotation": 41140
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049686,
+        "name": "Kansas State",
+        "order": 0,
+        "rotation": 41141
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049687,
+        "name": "Illinois",
+        "order": 0,
+        "rotation": 41142
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049688,
+        "name": "Houston",
+        "order": 0,
+        "rotation": 41143
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049689,
+        "name": "Virginia",
+        "order": 0,
+        "rotation": 41144
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049690,
+        "name": "Baylor",
+        "order": 0,
+        "rotation": 41145
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049691,
+        "name": "Arizona",
+        "order": 0,
+        "rotation": 41146
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049692,
+        "name": "Nebraska",
+        "order": 0,
+        "rotation": 41147
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049693,
+        "name": "Georgia Tech",
+        "order": 0,
+        "rotation": 41148
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049694,
+        "name": "Arizona State",
+        "order": 0,
+        "rotation": 41149
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049695,
+        "name": "TCU",
+        "order": 0,
+        "rotation": 41150
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049696,
+        "name": "Pittsburgh",
+        "order": 0,
+        "rotation": 41151
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049697,
+        "name": "Cincinnati",
+        "order": 0,
+        "rotation": 41152
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049698,
+        "name": "Boise State",
+        "order": 0,
+        "rotation": 41153
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049699,
+        "name": "Tulane",
+        "order": 0,
+        "rotation": 41154
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049700,
+        "name": "North Carolina",
+        "order": 0,
+        "rotation": 41155
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049701,
+        "name": "Kentucky",
+        "order": 0,
+        "rotation": 41156
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049702,
+        "name": "Duke",
+        "order": 0,
+        "rotation": 41157
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049703,
+        "name": "Arkansas",
+        "order": 0,
+        "rotation": 41158
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049704,
+        "name": "Oklahoma State",
+        "order": 0,
+        "rotation": 41159
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049705,
+        "name": "Kansas",
+        "order": 0,
+        "rotation": 41160
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049706,
+        "name": "Iowa State",
+        "order": 0,
+        "rotation": 41161
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049707,
+        "name": "Wisconsin",
+        "order": 0,
+        "rotation": 41162
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049708,
+        "name": "Wake Forest",
+        "order": 0,
+        "rotation": 41163
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049709,
+        "name": "Colorado",
+        "order": 0,
+        "rotation": 41164
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049710,
+        "name": "UNLV",
+        "order": 0,
+        "rotation": 41165
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049711,
+        "name": "South Florida",
+        "order": 0,
+        "rotation": 41166
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049712,
+        "name": "NC State",
+        "order": 0,
+        "rotation": 41167
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049713,
+        "name": "Mississippi State",
+        "order": 0,
+        "rotation": 41168
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049714,
+        "name": "California",
+        "order": 0,
+        "rotation": 41169
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049715,
+        "name": "UCLA",
+        "order": 0,
+        "rotation": 41170
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049716,
+        "name": "UCF Knights",
+        "order": 0,
+        "rotation": 41171
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049717,
+        "name": "San Diego State",
+        "order": 0,
+        "rotation": 41172
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049718,
+        "name": "Navy",
+        "order": 0,
+        "rotation": 41173
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049719,
+        "name": "Michigan State",
+        "order": 0,
+        "rotation": 41174
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049720,
+        "name": "Memphis",
+        "order": 0,
+        "rotation": 41175
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049721,
+        "name": "Hawaii",
+        "order": 0,
+        "rotation": 41176
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049722,
+        "name": "West Virginia",
+        "order": 0,
+        "rotation": 41177
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049723,
+        "name": "Washington State",
+        "order": 0,
+        "rotation": 41178
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049724,
+        "name": "East Carolina",
+        "order": 0,
+        "rotation": 41179
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049725,
+        "name": "Syracuse",
+        "order": 0,
+        "rotation": 41180
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049726,
+        "name": "Northwestern",
+        "order": 0,
+        "rotation": 41181
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049727,
+        "name": "Minnesota",
+        "order": 0,
+        "rotation": 41182
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049728,
+        "name": "Maryland",
+        "order": 0,
+        "rotation": 41183
+      },
+      {
+        "alignment": "neutral",
+        "id": 1628049729,
+        "name": "The Field",
+        "order": 0,
+        "rotation": 41184
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T00:05:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "Futures",
+      "description": "CFP Championship Game Winner 2026-27"
+    },
+    "startTime": "2026-09-26T00:05:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Place 1st",
+    "version": 645705143
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356439,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356440,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356441,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Alabama To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645357026
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": true,
+    "hasAltTotal": true,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1637190837,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": true,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": "live_delay",
+    "parent": {
+      "hasMarkets": false,
+      "id": 1637148550,
+      "isLive": false,
+      "participants": [
+        {
+          "alignment": "home",
+          "name": "Washington",
+          "order": 1,
+          "state": {
+            "hasPossession": true,
+            "score": 10,
+            "scoreByQuarter": [
+              0,
+              10,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        },
+        {
+          "alignment": "away",
+          "name": "Minnesota",
+          "order": 0,
+          "state": {
+            "hasPossession": false,
+            "score": 21,
+            "scoreByQuarter": [
+              14,
+              7,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        }
+      ],
+      "startTime": "2026-09-27T03:00:00Z",
+      "state": {
+        "down": 4,
+        "quarter": 3,
+        "timeRemainingInQtr": "13:46",
+        "yardsToFirstDown": 5,
+        "yardsToGoal": 70
+      }
+    },
+    "parentId": 1637148550,
+    "parlayRestriction": "unique_matchups",
+    "participants": [
+      {
+        "alignment": "home",
+        "name": "Washington",
+        "order": 1,
+        "stats": [
+          {
+            "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
+          }
+        ]
+      },
+      {
+        "alignment": "away",
+        "name": "Minnesota",
+        "order": 0,
+        "stats": [
+          {
+            "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
+          }
+        ]
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-27T08:00:00Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 0,
+        "status": "closed"
+      },
+      {
+        "cutoffAt": null,
+        "period": 1,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": null,
+        "period": 3,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": "2026-09-27T04:52:31Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": false,
+        "hasTotal": true,
+        "period": 2,
+        "status": "closed"
+      }
+    ],
+    "rotation": 9369,
+    "startTime": "2026-09-27T03:00:00Z",
+    "state": {},
+    "status": "started",
+    "totalMarketCount": 0,
+    "type": "matchup",
+    "units": "Regular",
+    "version": 703341777
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356512,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356513,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356514,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Texas To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645420908
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356497,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356498,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356499,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Mississippi To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645357024
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356487,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356488,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356489,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-26T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "LSU To Make the Playoffs"
+    },
+    "startTime": "2026-09-26T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 645357025
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": true,
+    "hasAltTotal": true,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1637189607,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": true,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": "live_delay",
+    "parent": {
+      "hasMarkets": false,
+      "id": 1637148862,
+      "isLive": false,
+      "participants": [
+        {
+          "alignment": "home",
+          "name": "Nevada",
+          "order": 1,
+          "state": {
+            "hasPossession": true,
+            "score": 17,
+            "scoreByQuarter": [
+              10,
+              0,
+              7,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        },
+        {
+          "alignment": "away",
+          "name": "Air Force",
+          "order": 0,
+          "state": {
+            "hasPossession": false,
+            "score": 13,
+            "scoreByQuarter": [
+              3,
+              7,
+              3,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        }
+      ],
+      "startTime": "2026-09-27T02:30:00Z",
+      "state": {
+        "down": 2,
+        "quarter": 4,
+        "timeRemainingInQtr": "15:00",
+        "yardsToFirstDown": 15,
+        "yardsToGoal": 94
+      }
+    },
+    "parentId": 1637148862,
+    "parlayRestriction": "unique_matchups",
+    "participants": [
+      {
+        "alignment": "home",
+        "name": "Nevada",
+        "order": 1,
+        "stats": [
+          {
+            "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
+          }
+        ]
+      },
+      {
+        "alignment": "away",
+        "name": "Air Force",
+        "order": 0,
+        "stats": [
+          {
+            "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
+          }
+        ]
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-27T07:30:00Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 0,
+        "status": "open"
+      },
+      {
+        "cutoffAt": null,
+        "period": 1,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": null,
+        "period": 3,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": "2026-09-27T04:18:19Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 2,
+        "status": "open"
+      }
+    ],
+    "rotation": 9367,
+    "startTime": "2026-09-27T02:30:00Z",
+    "state": {},
+    "status": "started",
+    "totalMarketCount": 3,
+    "type": "matchup",
+    "units": "Regular",
+    "version": 703341708
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": true,
+    "hasAltTotal": true,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1637189606,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": true,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 12,
+      "matchupCountSE": 12,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 41,
+        "matchupCountSE": 41,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": "live_delay",
+    "parent": {
+      "hasMarkets": false,
+      "id": 1637154234,
+      "isLive": false,
+      "participants": [
+        {
+          "alignment": "home",
+          "name": "Stanford",
+          "order": 1,
+          "state": {
+            "hasPossession": true,
+            "score": 13,
+            "scoreByQuarter": [
+              7,
+              3,
+              3,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        },
+        {
+          "alignment": "away",
+          "name": "Georgia Tech",
+          "order": 0,
+          "state": {
+            "hasPossession": false,
+            "score": 20,
+            "scoreByQuarter": [
+              10,
+              10,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        }
+      ],
+      "startTime": "2026-09-27T02:30:00Z",
+      "state": {
+        "down": 1,
+        "quarter": 3,
+        "timeRemainingInQtr": "08:07",
+        "yardsToFirstDown": 10,
+        "yardsToGoal": 76
+      }
+    },
+    "parentId": 1637154234,
+    "parlayRestriction": "unique_matchups",
+    "participants": [
+      {
+        "alignment": "home",
+        "name": "Stanford",
+        "order": 1,
+        "stats": [
+          {
+            "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
+          }
+        ]
+      },
+      {
+        "alignment": "away",
+        "name": "Georgia Tech",
+        "order": 0,
+        "stats": [
+          {
+            "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
+          }
+        ]
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-09-27T07:30:00Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 0,
+        "status": "open"
+      },
+      {
+        "cutoffAt": null,
+        "period": 1,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": null,
+        "period": 3,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": "2026-09-27T04:30:39Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": true,
+        "hasTotal": true,
+        "period": 2,
+        "status": "open"
+      }
+    ],
+    "rotation": 9419,
+    "startTime": "2026-09-27T02:30:00Z",
+    "state": {},
+    "status": "started",
+    "totalMarketCount": 3,
+    "type": "matchup",
+    "units": "Regular",
+    "version": 703341708
+  }
+]

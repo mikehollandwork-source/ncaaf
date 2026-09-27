@@ -5,8 +5,15 @@ Modes
   closing  only games kicking off within CLOSING_WINDOW_MIN; exits without
            writing if there are none. Tightens the closing-line snapshot.
   auto     full if minute < 15, else closing (default)
-  backfill ESPN schedule/results/open-close lines only, from --since to today
-           (use once to pick up games played before tracking started)
+  backfill ESPN schedule/results/open-close lines from --since to today, plus
+           Action Network's full line history (every book's line changes,
+           opener to kickoff) for every game already played this season
+
+Sportsbook lines need no API key: Action Network's public feed (DraftKings,
+FanDuel, BetMGM, Caesars, BetRivers, bet365, the market opener, public
+money/ticket splits) and Pinnacle's web feed. The Odds API is used only if
+ODDS_API_KEY is set. Once a day (the 10:00 UTC full run) the exact line
+history for games that kicked off in the last ~36h is saved too.
 
 Tracking stops at kickoff: every source filters to games that haven't started
 (prediction markets with a +/-1h lenient window because their kickoff time is
@@ -21,7 +28,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from .sources import espn, kalshi, oddsapi, polymarket
+from .sources import espn, kalshi, oddsapi, polymarket, scraped
 from .util import env, iso, log, make_session, parse_time, utcnow, write_table
 
 
@@ -29,7 +36,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill"), default="auto")
     ap.add_argument("--data-dir", default=env("DATA_DIR", "data"))
-    ap.add_argument("--sources", default="espn,odds,kalshi,poly",
+    ap.add_argument("--sources", default="espn,an,pinnacle,odds,kalshi,poly",
                     help="comma list of sources to poll")
     ap.add_argument("--since", help="backfill start date YYYY-MM-DD")
     ap.add_argument("--probe", action="store_true",
@@ -67,6 +74,13 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
         log.info("backfilled %d games since %s", len(games), iso(since))
+        cur = scraped.an_current_week(session)
+        if cur is not None:
+            hist = scraped.an_history_for(session, now, list(range(0, cur + 1)), since, now, meta)
+            write_table(data_dir, "an_history", hist, now)
+            log.info("backfilled Action Network line history: %d rows, %s games",
+                     len(hist), meta.get("an_history_games"))
+        write_table(data_dir, "runs", [meta], now)
         return 0
     if mode == "full":
         games = espn.fetch_games(session, now - timedelta(days=3), now + timedelta(days=14))
@@ -86,8 +100,28 @@ def main(argv=None) -> int:
         log.info("closing mode: %d games kick off within %s", len(soon), window)
     meta["espn_games"] = len(games)
 
-    # ---- sportsbooks
-    if "odds" in sources:
+    # ---- sportsbooks (keyless site feeds)
+    in_h = (lambda r: parse_time(r["commence_time"]) <= horizon) if horizon else (lambda r: True)
+    if "an" in sources:
+        try:
+            odds, splits = scraped.an_fetch(session, now, meta)
+            tables["an_odds"] = [r for r in odds if in_h(r)]
+            tables["an_splits"] = [r for r in splits if in_h(r)]
+        except Exception as e:
+            log.exception("action network failed")
+            meta["an_error"] = str(e)[:300]
+        if mode == "full" and now.hour == int(env("AN_HISTORY_HOUR_UTC", "10")):
+            cur = scraped.an_current_week(session)
+            if cur is not None:
+                tables["an_history"] = scraped.an_history_for(
+                    session, now, [cur - 1, cur], now - timedelta(hours=36), now - timedelta(minutes=30), meta)
+    if "pinnacle" in sources:
+        try:
+            tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
+        except Exception as e:
+            log.exception("pinnacle failed")
+            meta["pinnacle_error"] = str(e)[:300]
+    if "odds" in sources and env("ODDS_API_KEY"):
         try:
             rows = oddsapi.fetch_odds(session, now, meta)
             if horizon is not None:
