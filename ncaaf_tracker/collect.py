@@ -99,6 +99,7 @@ def main(argv=None) -> int:
         horizon = now + window
         log.info("closing mode: %d games kick off within %s", len(soon), window)
     meta["espn_games"] = len(games)
+    kickoff_fn = espn_kickoff_lookup(games)
 
     # ---- sportsbooks (keyless site feeds)
     in_h = (lambda r: parse_time(r["commence_time"]) <= horizon) if horizon else (lambda r: True)
@@ -135,13 +136,13 @@ def main(argv=None) -> int:
     pm_horizon = horizon + timedelta(hours=1) if horizon else None
     if "kalshi" in sources:
         try:
-            tables.update(kalshi.collect(session, now, pm_horizon, meta))
+            tables.update(kalshi.collect(session, now, pm_horizon, meta, kickoff_fn))
         except Exception as e:
             log.exception("kalshi failed")
             meta["kalshi_error"] = str(e)[:300]
     if "poly" in sources:
         try:
-            tables.update(polymarket.collect(session, now, pm_horizon, meta))
+            tables.update(polymarket.collect(session, now, pm_horizon, meta, kickoff_fn))
         except Exception as e:
             log.exception("polymarket failed")
             meta["poly_error"] = str(e)[:300]
@@ -154,6 +155,24 @@ def main(argv=None) -> int:
     write_table(data_dir, "runs", [meta], now)
     log.info("run meta: %s", json.dumps(meta))
     return 0
+
+
+def espn_kickoff_lookup(games: list[dict]):
+    """(team_a, team_b, approx_time) -> ESPN kickoff, using the analysis name matcher."""
+    import pandas as pd
+    from .matching import Matcher
+    if not games:
+        return None
+    df = pd.DataFrame(games)
+    m = Matcher(df)
+    ko = dict(zip(df["espn_id"], df["kickoff"]))
+
+    def find(a, b, when):
+        if when is None:
+            return None
+        gid, _ = m.match(a, b, when, 30)
+        return parse_time(ko[gid]) if gid is not None else None
+    return find
 
 
 AN = "https://api.actionnetwork.com/web"

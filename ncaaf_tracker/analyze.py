@@ -81,6 +81,7 @@ def build_games(data_dir: Path) -> pd.DataFrame:
                                                  and c != "espn_id" and not c.endswith(("provider", "details", "raw"))])
     final = latest["status_state"].eq("post") | latest["completed"].astype(str).str.lower().eq("true")
     latest["final"] = final
+    latest.loc[~final, ["home_score", "away_score"]] = np.nan   # ESPN reports 0-0 before kickoff
     latest["margin_home"] = np.where(final, latest["home_score"] - latest["away_score"], np.nan)
     latest["winner"] = np.select([final & (latest["margin_home"] > 0), final & (latest["margin_home"] < 0)],
                                  [latest["home_name"], latest["away_name"]], default=None)
@@ -149,7 +150,7 @@ def map_events(o: pd.DataFrame, matcher: Matcher, unmatched: list) -> dict:
     mapping = {}
     ev = o.drop_duplicates("event_id")[["event_id", "home_team", "away_team", "commence_time", "source"]]
     for _, e in ev.iterrows():
-        gid, sides = matcher.match(e["home_team"], e["away_team"], ts(pd.Series([e["commence_time"]]))[0], 3)
+        gid, sides = matcher.match(e["home_team"], e["away_team"], ts(pd.Series([e["commence_time"]]))[0], 12)
         if gid is None:
             unmatched.append({"source": e["source"], "id": e["event_id"], "team_a": e["home_team"],
                               "team_b": e["away_team"], "time": e["commence_time"]})

@@ -63,21 +63,35 @@ def market_kickoff(ev: dict, m: dict) -> datetime | None:
             or parse_time(m.get("eventStartTime")))
 
 
-def market_rows(events: list[dict], now: datetime, horizon: datetime | None) -> list[dict]:
+def _espn_kickoff(ev: dict, kickoff_fn) -> datetime | None:
+    """Polymarket's gameStartTime can be a placeholder; prefer ESPN's kickoff."""
+    if kickoff_fn is None:
+        return None
+    for m in ev.get("markets", []) or []:
+        if (m.get("sportsMarketType") or "").lower() == "moneyline":
+            o = json_list(m.get("outcomes"))
+            if len(o) == 2:
+                return kickoff_fn(o[0], o[1], market_kickoff(ev, m))
+    return None
+
+
+def market_rows(events: list[dict], now: datetime, horizon: datetime | None,
+                kickoff_fn=None) -> list[dict]:
     snap = iso(now)
     # Props (player/team yards, exact margin, halves) are ~2/3 of CFB markets; skip them.
     keep = {t.strip() for t in env("POLY_MARKET_TYPES", "moneyline,spreads,totals").split(",") if t.strip()}
     rows = []
     for ev in events:
+        espn_ko = _espn_kickoff(ev, kickoff_fn)
         for m in ev.get("markets", []) or []:
             if m.get("closed"):
                 continue
             mtype = (m.get("sportsMarketType") or "").lower()
             if keep and mtype and mtype not in keep:
                 continue
-            ko = market_kickoff(ev, m)
+            ko = espn_ko or market_kickoff(ev, m)
             # No game start -> futures (e.g. national title); not a single game.
-            if ko is None or ko < now - timedelta(hours=1):
+            if ko is None or ko <= now - (timedelta(0) if espn_ko else timedelta(hours=1)):
                 continue
             if horizon is not None and ko > horizon:
                 continue
@@ -168,10 +182,11 @@ def fetch_trades(session, condition_id: str, since: datetime) -> list[dict]:
     return out
 
 
-def collect(session, now: datetime, horizon: datetime | None, meta: dict) -> dict[str, list[dict]]:
+def collect(session, now: datetime, horizon: datetime | None, meta: dict,
+            kickoff_fn=None) -> dict[str, list[dict]]:
     snap = iso(now)
     events = list_events(session)
-    markets = market_rows(events, now, horizon)
+    markets = market_rows(events, now, horizon, kickoff_fn)
     meta["poly_events"] = len(events)
     meta["poly_markets"] = len(markets)
     if not markets:
@@ -193,7 +208,9 @@ def collect(session, now: datetime, horizon: datetime | None, meta: dict) -> dic
             log.error("polymarket: repeated trade failures, skipping the rest this run")
             break
         try:
-            trades.extend(fetch_trades(session, r["condition_id"], now - lookback))
+            ko = parse_time(r.get("game_start_time"))
+            trades.extend(t for t in fetch_trades(session, r["condition_id"], now - lookback)
+                          if ko is None or parse_time(t["trade_ts"]) < ko)
             failures = 0
         except Exception as e:
             failures += 1
