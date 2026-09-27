@@ -1,9 +1,8 @@
 name: analyze
 
-# Daily rebuild of the analysis tables + report from everything collected so far.
+# Analysis tables + report from everything collected so far.
+# Manual only for now (collection-only phase): Actions -> analyze -> Run workflow.
 on:
-  schedule:
-    - cron: "41 11 * * *"
   workflow_dispatch:
 
 permissions:
