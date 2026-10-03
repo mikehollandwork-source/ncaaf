@@ -70,6 +70,69 @@ def results(games: list[dict]) -> list[dict]:
     return out
 
 
+def _stat_values(key: str, display) -> list[tuple[str, float | None, str]]:
+    """'completions/passingAttempts' + '22/35' -> two stats; '--' -> None."""
+    keys = key.split("/")
+    vals = str(display).split("/") if len(keys) > 1 and "/" in str(display) else [display]
+    if len(vals) != len(keys):
+        return [(key, to_float(display), str(display))]
+    return [(k, to_float(v), str(display)) for k, v in zip(keys, vals)]
+
+
+def parse_box_score(summary: dict, espn_id: str) -> tuple[list[dict], list[dict]]:
+    """ESPN game summary -> (team stat rows, player stat rows), one row per stat."""
+    box = summary.get("boxscore") or {}
+    side = {}
+    team_rows, player_rows = [], []
+    for t in box.get("teams", []) or []:
+        team = t.get("team") or {}
+        side[team.get("id")] = t.get("homeAway")
+        for st in t.get("statistics", []) or []:
+            for name, val, disp in _stat_values(st.get("name", ""), st.get("displayValue")):
+                team_rows.append({"espn_id": espn_id, "team_id": team.get("id"),
+                                  "team": team.get("displayName"), "home_away": t.get("homeAway"),
+                                  "stat": name, "label": st.get("label"), "value": val, "display": disp})
+    for p in box.get("players", []) or []:
+        team = p.get("team") or {}
+        for cat in p.get("statistics", []) or []:
+            keys = cat.get("keys") or []
+            for a in cat.get("athletes", []) or []:
+                ath = a.get("athlete") or {}
+                for key, disp in zip(keys, a.get("stats") or []):
+                    for name, val, raw in _stat_values(key, disp):
+                        player_rows.append({
+                            "espn_id": espn_id, "team_id": team.get("id"), "team": team.get("displayName"),
+                            "home_away": side.get(team.get("id")), "athlete_id": ath.get("id"),
+                            "player": ath.get("displayName"), "jersey": ath.get("jersey"),
+                            "category": cat.get("name"), "stat": name, "value": val, "display": raw})
+    return team_rows, player_rows
+
+
+def fetch_box_scores(session, games: list[dict], done: set, meta: dict, limit: int = 1000):
+    """Box scores for completed games not saved yet (final box scores don't change)."""
+    team_rows, player_rows, n, failures = [], [], 0, 0
+    for g in games:
+        if g.get("completed") is not True or g["espn_id"] in done or n >= limit:
+            continue
+        if failures >= 6:
+            log.error("espn box scores: repeated failures, stopping this run")
+            break
+        try:
+            data = get_json(session, HOSTS[0] + SUMMARY_PATH, {"event": g["espn_id"]}, min_interval=0.2)
+            failures = 0
+        except Exception as e:
+            failures += 1
+            log.warning("espn box score %s failed: %s", g["espn_id"], e)
+            continue
+        t, p = parse_box_score(data, g["espn_id"])
+        if t or p:
+            team_rows += t
+            player_rows += p
+            n += 1
+    meta["box_scores"] = n
+    return team_rows, player_rows
+
+
 def fill_closed_odds(session, games: list[dict]) -> int:
     """The scoreboard drops odds once a game is final; the per-game summary
     ('pickcenter') still has the provider's open/close. Used by backfill."""
