@@ -1,6 +1,31 @@
 [
   {
     "ageLimit": 0,
+    "featureOrder": 2,
+    "group": "Canada",
+    "id": 876,
+    "isFeatured": true,
+    "isHidden": false,
+    "isPromoted": false,
+    "isSticky": false,
+    "matchupCount": 2,
+    "matchupCountSE": 2,
+    "name": "Canadian Football",
+    "sequence": 3,
+    "sport": {
+      "featureOrder": 2,
+      "id": 15,
+      "isFeatured": true,
+      "isHidden": false,
+      "isSticky": false,
+      "matchupCount": 150,
+      "matchupCountSE": 135,
+      "name": "Football",
+      "primaryMarketType": "spread"
+    }
+  },
+  {
+    "ageLimit": 0,
     "featureOrder": 0,
     "group": "USA",
     "id": 880,
@@ -8,8 +33,8 @@
     "isHidden": false,
     "isPromoted": false,
     "isSticky": false,
-    "matchupCount": 8,
-    "matchupCountSE": 8,
+    "matchupCount": 51,
+    "matchupCountSE": 51,
     "name": "NCAA",
     "sequence": 2,
     "sport": {
@@ -18,8 +43,8 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 34,
-      "matchupCountSE": 34,
+      "matchupCount": 150,
+      "matchupCountSE": 135,
       "name": "Football",
       "primaryMarketType": "spread"
     }
@@ -33,8 +58,8 @@
     "isHidden": false,
     "isPromoted": false,
     "isSticky": false,
-    "matchupCount": 26,
-    "matchupCountSE": 26,
+    "matchupCount": 45,
+    "matchupCountSE": 30,
     "name": "NFL",
     "sequence": 1,
     "sport": {
@@ -43,8 +68,33 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 34,
-      "matchupCountSE": 34,
+      "matchupCount": 150,
+      "matchupCountSE": 135,
+      "name": "Football",
+      "primaryMarketType": "spread"
+    }
+  },
+  {
+    "ageLimit": 0,
+    "featureOrder": -1,
+    "group": "USA",
+    "id": 202331,
+    "isFeatured": false,
+    "isHidden": false,
+    "isPromoted": false,
+    "isSticky": false,
+    "matchupCount": 52,
+    "matchupCountSE": 52,
+    "name": "NCAA FCS",
+    "sequence": 4,
+    "sport": {
+      "featureOrder": 2,
+      "id": 15,
+      "isFeatured": true,
+      "isHidden": false,
+      "isSticky": false,
+      "matchupCount": 150,
+      "matchupCountSE": 135,
       "name": "Football",
       "primaryMarketType": "spread"
     }
