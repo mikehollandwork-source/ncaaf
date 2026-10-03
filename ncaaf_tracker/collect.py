@@ -198,6 +198,7 @@ PROBES = {
     "espn": (espn.HOSTS[0] + espn.SCOREBOARD_PATH, {}),
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
+    "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
     "an_week6": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6", {}),
     "an_week6_season": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6&season=2026", {}),
     "an_week6_fcs": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&division=FCS&week=6&season=2026", {}),
