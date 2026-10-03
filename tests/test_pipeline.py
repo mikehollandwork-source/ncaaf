@@ -252,3 +252,11 @@ def test_pinnacle_parse_real_shape():
     spread = [r for r in rows if r["market"] == "spreads" and r["outcome"] == "Fresno State"]
     assert [r["point"] for r in spread] == [-4.5]                  # main line only, no alternates
     assert not [r for r in rows if "Heisman" in str(r)]            # futures skipped
+
+
+def test_last_history_save(tmp_path):
+    from ncaaf_tracker.collect import last_history_save
+    assert last_history_save(tmp_path) is None
+    write_table(tmp_path, "an_history", [{"a": 1}], parse_time("2026-09-27T10:28:34Z"))
+    write_table(tmp_path, "an_history", [{"a": 1}], parse_time("2026-10-02T03:00:00Z"))
+    assert last_history_save(tmp_path) == parse_time("2026-10-02T03:00:00Z")
