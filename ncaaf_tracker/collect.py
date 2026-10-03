@@ -74,6 +74,7 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
         write_table(data_dir, "results", espn.results(games), now)
+        save_box_scores(session, data_dir, games, now, meta)
         log.info("backfilled %d games since %s", len(games), iso(since))
         cur = scraped.an_current_week(session)
         if cur is not None:
@@ -89,6 +90,7 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         tables["espn_games"] = games
         tables["results"] = espn.results(games)   # finals from the last 3 days
+        save_box_scores(session, data_dir, games, now, meta)
         horizon = None
     else:
         games = espn.fetch_games(session, now - timedelta(hours=12), now + timedelta(days=1))
@@ -164,6 +166,29 @@ def main(argv=None) -> int:
     return 0
 
 
+def saved_box_score_ids(data_dir: Path) -> set:
+    import csv
+    import gzip
+    ids = set()
+    for f in data_dir.glob("box_team/*/box_team_*.csv.gz"):
+        with gzip.open(f, "rt", newline="") as fh:
+            ids.update(r["espn_id"] for r in csv.DictReader(fh))
+    return ids
+
+
+def save_box_scores(session, data_dir: Path, games: list[dict], now, meta: dict) -> None:
+    """Final box scores (team + every player's stat line), once per game."""
+    try:
+        team, players = espn.fetch_box_scores(session, games, saved_box_score_ids(data_dir), meta)
+    except Exception as e:
+        log.exception("box scores failed")
+        meta["box_error"] = str(e)[:300]
+        return
+    write_table(data_dir, "box_team", team, now)
+    write_table(data_dir, "box_players", players, now)
+    meta["rows_box_players"] = len(players)
+
+
 def last_history_save(data_dir: Path):
     """Timestamp of the newest saved an_history file, from its name."""
     files = sorted(data_dir.glob("an_history/*/an_history_*.csv.gz"))
@@ -198,6 +223,7 @@ PROBES = {
     "espn": (espn.HOSTS[0] + espn.SCOREBOARD_PATH, {}),
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
+    "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
     "an_week6": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6", {}),
     "an_week6_season": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6&season=2026", {}),
     "an_week6_fcs": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&division=FCS&week=6&season=2026", {}),

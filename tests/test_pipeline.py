@@ -260,3 +260,21 @@ def test_last_history_save(tmp_path):
     write_table(tmp_path, "an_history", [{"a": 1}], parse_time("2026-09-27T10:28:34Z"))
     write_table(tmp_path, "an_history", [{"a": 1}], parse_time("2026-10-02T03:00:00Z"))
     assert last_history_save(tmp_path) == parse_time("2026-10-02T03:00:00Z")
+
+
+def test_box_score_real_payload(tmp_path):
+    data = json.loads((FIX / "espn_summary_401858242.json").read_text())
+    team, players = espn.parse_box_score(data, "401858242")
+    vt = {r["stat"]: r for r in team if r["team"] == "Virginia Tech Hokies"}
+    assert vt["totalYards"]["value"] == 370 and vt["totalYards"]["home_away"] == "away"
+    assert vt["completionAttempts"]["display"] == "22/35" and vt["thirdDownEff"]["display"] == "4-15"
+    qb = {(r["category"], r["stat"]): r for r in players if r["player"] == "Ethan Grunkemeyer"}
+    assert qb[("passing", "passingYards")]["value"] == 147
+    assert qb[("passing", "completions")]["value"] == 22 and qb[("passing", "passingAttempts")]["value"] == 35
+    assert qb[("passing", "adjQBR")]["value"] == 54.1 and qb[("passing", "adjQBR")]["home_away"] == "away"
+    assert {r["category"] for r in players} >= {"passing", "rushing", "receiving", "defensive", "kicking"}
+
+    # saved once per game: the next run skips games already stored
+    from ncaaf_tracker.collect import saved_box_score_ids
+    write_table(tmp_path, "box_team", team, parse_time("2026-10-03T00:00:00Z"))
+    assert saved_box_score_ids(tmp_path) == {"401858242"}
