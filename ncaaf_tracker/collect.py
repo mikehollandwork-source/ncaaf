@@ -12,8 +12,8 @@ Modes
 Sportsbook lines need no API key: Action Network's public feed (DraftKings,
 FanDuel, BetMGM, Caesars, BetRivers, bet365, the market opener, public
 money/ticket splits) and Pinnacle's web feed. The Odds API is used only if
-ODDS_API_KEY is set. Once a day (the 10:00 UTC full run) the exact line
-history for games that kicked off in the last ~36h is saved too.
+ODDS_API_KEY is set. The exact line history for games that have kicked off is
+saved by the first full run after the previous save is 20h+ old.
 
 Tracking stops at kickoff: every source filters to games that haven't started
 (prediction markets with a +/-1h lenient window because their kickoff time is
@@ -25,7 +25,7 @@ import argparse
 import json
 import logging
 import sys
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .sources import espn, kalshi, oddsapi, polymarket, scraped
@@ -113,11 +113,16 @@ def main(argv=None) -> int:
         except Exception as e:
             log.exception("action network failed")
             meta["an_error"] = str(e)[:300]
-        if mode == "full" and now.hour == int(env("AN_HISTORY_HOUR_UTC", "10")):
+        # Line history: GitHub drops many scheduled runs, so don't depend on one hour of the
+        # day. Any full run saves it once the last save is 20h+ old, covering every game
+        # since that save (Action Network keeps only about a week of history).
+        last = last_history_save(data_dir)
+        if mode == "full" and (last is None or now - last >= timedelta(hours=20)):
+            since = max(last - timedelta(hours=36), now - timedelta(days=7)) if last else now - timedelta(days=7)
             cur = scraped.an_current_week(session)
             if cur is not None:
                 tables["an_history"] = scraped.an_history_for(
-                    session, now, [cur - 1, cur], now - timedelta(hours=36), now - timedelta(minutes=30), meta)
+                    session, now, [cur - 2, cur - 1, cur], since, now - timedelta(minutes=30), meta)
     if "pinnacle" in sources:
         try:
             tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
@@ -157,6 +162,15 @@ def main(argv=None) -> int:
     write_table(data_dir, "runs", [meta], now)
     log.info("run meta: %s", json.dumps(meta))
     return 0
+
+
+def last_history_save(data_dir: Path):
+    """Timestamp of the newest saved an_history file, from its name."""
+    files = sorted(data_dir.glob("an_history/*/an_history_*.csv.gz"))
+    if not files:
+        return None
+    return parse_time(datetime.strptime(files[-1].name[len("an_history_"):-len(".csv.gz")],
+                                        "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc))
 
 
 def espn_kickoff_lookup(games: list[dict]):

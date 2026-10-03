@@ -13,7 +13,7 @@ No API keys needed. Sportsbook lines come from the public feeds that betting sit
 | ESPN scoreboard | schedule, kickoff, final score / winner, DraftKings open & close | `espn_games` |
 | ESPN (finished games) | one row per completed game: home team, away team, both scores, winner, loser, winner side (home/away), margin, total. Postponed/canceled games excluded | `results` |
 | Action Network (hourly) | DraftKings, FanDuel, BetMGM, Caesars, BetRivers, bet365 moneyline / spread / total, the **market opener** (`an_open`), and **public betting splits** (% of tickets and % of money per side) | `an_odds`, `an_splits` |
-| Action Network (daily + backfill) | **exact line history**: every line change per book with a timestamp, opener to kickoff | `an_history` |
+| Action Network (about once a day + backfill) | **exact line history**: every line change per book with a timestamp, opener to kickoff. Saved by the first run after the previous save is 20h+ old, covering every game since then | `an_history` |
 | Pinnacle web feed (hourly) | the sharp reference line | `pinnacle_odds` |
 | Kalshi | `KXNCAAFGAME` / `KXNCAAFSPREAD` / `KXNCAAFTOTAL` quotes, volume, OI; moneyline order book (top 10) + trades with taker side | `kalshi_markets`, `kalshi_books`, `kalshi_trades` |
 | Polymarket | CFB moneyline / spread / total markets: price, volume, liquidity; moneyline order book + trades with side | `poly_markets`, `poly_books`, `poly_trades` |
