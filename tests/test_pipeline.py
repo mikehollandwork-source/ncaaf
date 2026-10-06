@@ -278,3 +278,19 @@ def test_box_score_real_payload(tmp_path):
     from ncaaf_tracker.collect import saved_box_score_ids
     write_table(tmp_path, "box_team", team, parse_time("2026-10-03T00:00:00Z"))
     assert saved_box_score_ids(tmp_path) == {"401858242"}
+
+
+def test_actionnetwork_props_real_payload():
+    data = json.loads((FIX / "an_props_289385.json").read_text())
+    game = {"id": 289385, "start_time": "2026-10-09T23:00:00.000Z", "home_team_id": 257, "away_team_id": 262,
+            "teams": [{"id": 257, "full_name": "Louisville Cardinals"}, {"id": 262, "full_name": "Florida State Seminoles"}]}
+    rows = scraped.an_parse_props(data, game, parse_time("2026-10-06T04:00:00Z"))
+    py = [r for r in rows if r["prop_type"] == "core_bet_type_9_passing_yards" and r["player"] == "Ashton Daniels"]
+    assert {(r["book"], r["side"], r["line"], r["odds"]) for r in py} >= {("fanduel", "over", 214.5, -114),
+                                                                           ("an_consensus", "under", 214.5, -114)}
+    assert {r["team"] for r in py} == {"Florida State Seminoles"} and {r["home_away"] for r in py} == {"away"}
+    assert py[0]["player_info"] == "FSU - QB" and py[0]["milestone"] is False
+    assert any(r["milestone"] for r in rows) and any(r["prop_group"] == "game_props" for r in rows)
+    assert any(r["prop_name"] == "Anytime TD Scorer" for r in rows)
+    tt = [r for r in rows if r["prop_name"] == "Team Total"]
+    assert tt and all(r["home_away"] in ("home", "away") for r in tt)

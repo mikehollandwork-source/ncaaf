@@ -125,6 +125,18 @@ def main(argv=None) -> int:
             if cur is not None:
                 tables["an_history"] = scraped.an_history_for(
                     session, now, [cur - 2, cur - 1, cur], since, now - timedelta(minutes=30), meta)
+        # Player/team props (~570 rows a game): every ~6h for games in the next 3 days,
+        # plus every near-kickoff run for games about to start (closing prop lines).
+        try:
+            if horizon is not None:
+                tables["an_props"] = scraped.an_props_for(session, now, now, horizon, meta)
+            else:
+                last_p = last_save(data_dir, "an_props")
+                if last_p is None or now - last_p >= timedelta(hours=int(env("PROPS_EVERY_H", "6"))):
+                    tables["an_props"] = scraped.an_props_for(session, now, now, now + timedelta(days=3), meta)
+        except Exception as e:
+            log.exception("action network props failed")
+            meta["an_props_error"] = str(e)[:300]
     if "pinnacle" in sources:
         try:
             tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
@@ -189,13 +201,17 @@ def save_box_scores(session, data_dir: Path, games: list[dict], now, meta: dict)
     meta["rows_box_players"] = len(players)
 
 
-def last_history_save(data_dir: Path):
-    """Timestamp of the newest saved an_history file, from its name."""
-    files = sorted(data_dir.glob("an_history/*/an_history_*.csv.gz"))
+def last_save(data_dir: Path, table: str):
+    """Timestamp of the newest saved file of a table, from its name."""
+    files = sorted(data_dir.glob(f"{table}/*/{table}_*.csv.gz"))
     if not files:
         return None
-    return parse_time(datetime.strptime(files[-1].name[len("an_history_"):-len(".csv.gz")],
+    return parse_time(datetime.strptime(files[-1].name[len(table) + 1:-len(".csv.gz")],
                                         "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc))
+
+
+def last_history_save(data_dir: Path):
+    return last_save(data_dir, "an_history")
 
 
 def espn_kickoff_lookup(games: list[dict]):
@@ -224,13 +240,7 @@ PROBES = {
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
     "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
-    "an_week6": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6", {}),
-    "an_week6_season": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69,75,123&week=6&season=2026", {}),
-    "an_week6_fcs": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&division=FCS&week=6&season=2026", {}),
-    "an_date_dash": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&date=2026-10-03", {}),
-    "an_date_fbs_all": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68&division=FBS&date={sat}&tz=America/New_York", {}),
-    "an_game_history": (AN + "/v2/markets/event/289145/history?bookIds=68,30", {}),
-    "an_game": (AN + "/v2/games/289145?bookIds=68,30", {}),
+    "an_props": (AN + "/v2/games/289385/props?bookIds=15,68,69,75", {}),
     "pin_leagues_nokey": (PIN + "/sports/15/leagues?all=false", {}),
     "pin_leagues_key": (PIN + "/sports/15/leagues?all=false", {"x-api-key": PIN_WEB_KEY}),
     "pin_matchups_880": (PIN + "/leagues/880/matchups", {"x-api-key": PIN_WEB_KEY}),

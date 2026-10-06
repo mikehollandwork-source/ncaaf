@@ -173,6 +173,79 @@ def an_parse_game(g: dict, now: datetime) -> tuple[list[dict], list[dict]]:
     return odds, splits
 
 
+def an_props(session, game: dict, now: datetime) -> list[dict]:
+    """Player + team props for one game: every book's line and odds, one row per side."""
+    books = ",".join(str(b) for b in AN_BOOKS if b != 30)
+    data = get_json(session, f"{AN}/v2/games/{game['id']}/props", {"bookIds": books}, min_interval=0.3)
+    return an_parse_props(data, game, now)
+
+
+def an_parse_props(data: dict, game: dict, now: datetime) -> list[dict]:
+    teams = {t.get("id"): t for t in game.get("teams", []) or []}
+    side_of = {game.get("home_team_id"): "home", game.get("away_team_id"): "away"}
+    home, away = teams.get(game.get("home_team_id"), {}), teams.get(game.get("away_team_id"), {})
+    players = data.get("players") or {}
+    base = {"snapshot_ts": iso(now), "event_id": f"an:{game.get('id')}",
+            "commence_time": iso(parse_time(game.get("start_time"))),
+            "home_team": home.get("full_name"), "away_team": away.get("full_name")}
+    rows = []
+    for group in ("player_props", "game_props"):
+        for ptype, markets in (data.get(group) or {}).items():
+            for m in markets or []:
+                pl = players.get(str(m.get("player_id"))) or {}
+                team_id = m.get("team_id") or pl.get("team_id")
+                for book_id, outs in (m.get("lines") or {}).items():
+                    try:
+                        book = AN_BOOKS.get(int(book_id), f"an_{book_id}")
+                    except ValueError:
+                        continue
+                    for o in outs or []:
+                        if o.get("is_live"):
+                            continue
+                        tid = team_id or o.get("team_id")   # team totals carry it per outcome
+                        rows.append({
+                            **base, "prop_group": group, "prop_type": ptype,
+                            "prop_name": m.get("custom_pick_type_name"),
+                            "milestone": "_milestones_" in ptype,
+                            "player_id": m.get("player_id"), "player": pl.get("full_name"),
+                            "player_info": pl.get("display_text"),         # e.g. "FSU - QB"
+                            "team_id": tid, "team": (teams.get(tid) or {}).get("full_name"),
+                            "home_away": side_of.get(tid),
+                            "book": book, "side": o.get("side"), "line": to_float(o.get("value")),
+                            "odds": to_float(o.get("odds")), "alt": o.get("is_alt_market"),
+                            "line_status": o.get("line_status"),
+                        })
+    return rows
+
+
+def an_props_for(session, now: datetime, start: datetime, end: datetime, meta: dict) -> list[dict]:
+    """Props for every game kicking off in [start, end]."""
+    cur = an_current_week(session)
+    if cur is None:
+        return []
+    rows, n, failures = [], 0, 0
+    for w in (cur, cur + 1):
+        for g in an_week_games(session, now.year, w):
+            st = parse_time(g.get("start_time"))
+            if st is None or not (start < st <= end) or g.get("status") not in (None, "scheduled"):
+                continue
+            if failures >= 6:
+                log.error("action network props: repeated failures, stopping")
+                meta["an_props_games"] = n
+                return rows
+            try:
+                got = an_props(session, g, now)
+                failures = 0
+            except Exception as e:
+                failures += 1
+                log.warning("action network props %s failed: %s", g.get("id"), e)
+                continue
+            rows += got
+            n += bool(got)
+    meta["an_props_games"] = n
+    return rows
+
+
 # ------------------------------------------------------------------ Pinnacle
 
 def pin_fetch(session, now: datetime, meta: dict) -> list[dict]:
