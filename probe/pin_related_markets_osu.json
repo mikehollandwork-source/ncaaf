@@ -1,0 +1,116 @@
+[
+  {
+    "cutoffAt": "2026-10-10T20:15:00+00:00",
+    "isAlternate": false,
+    "key": "s;0;tt;44.5;home",
+    "limits": [
+      {
+        "amount": 500,
+        "type": "maxRiskStake"
+      }
+    ],
+    "matchupId": 1637330317,
+    "period": 0,
+    "prices": [
+      {
+        "designation": "over",
+        "points": 44.5,
+        "price": -121
+      },
+      {
+        "designation": "under",
+        "points": 44.5,
+        "price": 104
+      }
+    ],
+    "side": "home",
+    "status": "open",
+    "type": "team_total",
+    "version": 3753717132
+  },
+  {
+    "cutoffAt": "2026-10-10T20:15:00+00:00",
+    "isAlternate": false,
+    "key": "s;0;tt;10.5;away",
+    "limits": [
+      {
+        "amount": 500,
+        "type": "maxRiskStake"
+      }
+    ],
+    "matchupId": 1637330317,
+    "period": 0,
+    "prices": [
+      {
+        "designation": "over",
+        "points": 10.5,
+        "price": 106
+      },
+      {
+        "designation": "under",
+        "points": 10.5,
+        "price": -124
+      }
+    ],
+    "side": "away",
+    "status": "open",
+    "type": "team_total",
+    "version": 3753717132
+  },
+  {
+    "cutoffAt": "2026-10-10T20:15:00+00:00",
+    "isAlternate": false,
+    "key": "s;0;s;-34.5",
+    "limits": [
+      {
+        "amount": 2000,
+        "type": "maxRiskStake"
+      }
+    ],
+    "matchupId": 1637330317,
+    "period": 0,
+    "prices": [
+      {
+        "designation": "home",
+        "points": -34.5,
+        "price": -107
+      },
+      {
+        "designation": "away",
+        "points": 34.5,
+        "price": -109
+      }
+    ],
+    "status": "open",
+    "type": "spread",
+    "version": 3753717132
+  },
+  {
+    "cutoffAt": "2026-10-10T20:15:00+00:00",
+    "isAlternate": false,
+    "key": "s;0;ou;56.0",
+    "limits": [
+      {
+        "amount": 1000,
+        "type": "maxRiskStake"
+      }
+    ],
+    "matchupId": 1637330317,
+    "period": 0,
+    "prices": [
+      {
+        "designation": "over",
+        "points": 56.0,
+        "price": -113
+      },
+      {
+        "designation": "under",
+        "points": 56.0,
+        "price": -105
+      }
+    ],
+    "status": "open",
+    "type": "total",
+    "version": 3753717132
+  }
+]
