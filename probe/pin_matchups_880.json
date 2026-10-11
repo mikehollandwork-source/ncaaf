@@ -3,614 +3,12 @@
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351015,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "California Golden",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Virginia Tech",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 393,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637351005,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Purdue",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Minnesota",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-11T00:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 367,
-    "startTime": "2026-10-11T00:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704653877
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637325678,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Appalachian State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Old Dominion",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T17:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 361,
-    "startTime": "2026-10-10T17:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704757998
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637352446,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Western Kentucky",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Missouri State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-08T23:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 311,
-    "startTime": "2026-10-08T23:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704621163
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637325682,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Temple",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Connecticut",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:45:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 359,
-    "startTime": "2026-10-10T19:45:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704766024
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330311,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Utah State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Washington State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T01:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 323,
-    "startTime": "2026-10-10T01:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704704295
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330315,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Kansas State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Houston",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 407,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
     "hasAltSpread": false,
     "hasAltTotal": false,
     "hasBetshare": false,
-    "hasLive": false,
+    "hasLive": true,
     "hasMarkets": true,
-    "id": 1632356469,
+    "id": 1638007681,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -625,8 +23,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -635,2551 +33,51 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
     "liveMode": null,
     "parent": null,
-    "parentId": null,
+    "parentId": 1637352440,
     "parlayRestriction": null,
     "participants": [
       {
         "alignment": "neutral",
-        "id": 1632356470,
-        "name": "Yes",
+        "id": 1638007682,
+        "name": "Over",
         "order": 0,
-        "rotation": 41110
+        "rotation": 387
       },
       {
         "alignment": "neutral",
-        "id": 1632356471,
-        "name": "No",
+        "id": 1638007683,
+        "name": "Under",
         "order": 0,
-        "rotation": 41111
+        "rotation": 388
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-10T16:00:00Z",
+        "cutoffAt": "2026-10-11T02:15:00Z",
         "period": 0,
-        "status": "open"
+        "status": "closed"
       }
     ],
-    "rotation": 41110,
+    "rotation": 387,
     "special": {
-      "category": "To Make the Playoffs",
-      "description": "Florida To Make the Playoffs"
+      "category": "Player Props",
+      "description": "Devon Dampier Total Passing Yards"
     },
-    "startTime": "2026-10-10T16:00:00Z",
+    "startTime": "2026-10-11T02:15:00Z",
     "state": {},
     "status": "pending",
     "totalMarketCount": 1,
     "type": "special",
-    "units": "Playoffs",
-    "version": 648162676
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637776886,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1637776887,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41110
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637776888,
-        "name": "No",
-        "order": 0,
-        "rotation": 41111
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41110,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "Utah to Make the Playoffs"
-    },
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Regular",
-    "version": 648164969
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330317,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Ohio State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Maryland",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T20:15:00Z",
-        "hasMoneyline": false,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 339,
-    "startTime": "2026-10-10T20:15:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 4,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704767534
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351007,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "NC State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Wake Forest",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 355,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637325681,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Missouri",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Texas A&M",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 381,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637354416,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Memphis",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "UAB",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T17:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 383,
-    "startTime": "2026-10-10T17:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704757998
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637325679,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Arizona State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Hawaii",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-11T02:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 389,
-    "startTime": "2026-10-11T02:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704718815
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330316,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Oregon",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "UCLA",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 391,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704769996
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637352445,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "UTEP",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Nevada",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T23:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 385,
-    "startTime": "2026-10-10T23:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704774270
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330313,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "BYU",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Iowa State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T02:15:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 325,
-    "startTime": "2026-10-10T02:15:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704741351
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637354415,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "UTSA",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "South Florida",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-08T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 315,
-    "startTime": "2026-10-08T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704757155
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637329162,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Oregon State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "San Diego State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T22:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 411,
-    "startTime": "2026-10-10T22:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704772325
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637329139,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Northern Illinois",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Air Force",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 415,
-    "startTime": "2026-10-10T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704747464
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330293,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Kennesaw State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Jacksonville State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-07T23:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 303,
-    "startTime": "2026-10-07T23:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704672190
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351013,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Vanderbilt",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Mississippi",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 397,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637325683,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "UNLV",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "North Dakota State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T23:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 413,
-    "startTime": "2026-10-10T23:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704774270
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637352441,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "East Carolina",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Rice",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T20:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 369,
-    "startTime": "2026-10-10T20:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704766789
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351011,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Oklahoma State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Central Florida",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 375,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637329166,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Nebraska",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Indiana",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 327,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637351016,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Penn State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "USC",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 343,
-    "startTime": "2026-10-10T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704688905
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1632373731,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Oklahoma",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 3
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Texas",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 3
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      },
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 1,
-        "status": "open"
-      },
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 3,
-        "status": "open"
-      }
-    ],
-    "rotation": 395,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 15,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330322,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Akron",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Eastern Michigan",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 353,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351009,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Georgia Southern",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "James Madison",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 373,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330325,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Notre Dame",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Stanford",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": false,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 409,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 4,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637690713,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Massachusetts",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Miami Ohio",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T18:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 371,
-    "startTime": "2026-10-10T18:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704760168
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637469232,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1637469233,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41157
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637469234,
-        "name": "No",
-        "order": 0,
-        "rotation": 41158
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41157,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "Oregon To Make the Playoffs"
-    },
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Playoffs",
-    "version": 648162068
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351014,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Washington",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Iowa",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T01:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 319,
-    "startTime": "2026-10-10T01:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704704295
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330324,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Pittsburgh",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "North Carolina",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 341,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1632356497,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1632356498,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41110
-      },
-      {
-        "alignment": "neutral",
-        "id": 1632356499,
-        "name": "No",
-        "order": 0,
-        "rotation": 41111
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41110,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "Mississippi To Make the Playoffs"
-    },
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Playoffs",
-    "version": 648162382
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1632356487,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": null,
-    "participants": [
-      {
-        "alignment": "neutral",
-        "id": 1632356488,
-        "name": "Yes",
-        "order": 0,
-        "rotation": 41110
-      },
-      {
-        "alignment": "neutral",
-        "id": 1632356489,
-        "name": "No",
-        "order": 0,
-        "rotation": 41111
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 41110,
-    "special": {
-      "category": "To Make the Playoffs",
-      "description": "LSU To Make the Playoffs"
-    },
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 1,
-    "type": "special",
-    "units": "Playoffs",
-    "version": 648162327
+    "units": "Passing Yards",
+    "version": 650334111
   },
   {
     "ageLimit": 0,
@@ -3205,8 +103,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -3215,8 +113,8 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
@@ -3270,7 +168,7 @@
     "hasBetshare": false,
     "hasLive": true,
     "hasMarkets": true,
-    "id": 1637352444,
+    "id": 1638007699,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -3285,8 +183,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -3295,57 +193,371 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
     "liveMode": null,
     "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
+    "parentId": 1637352440,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "North Texas",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1638007700,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
       },
       {
-        "alignment": "away",
-        "name": "Charlotte",
+        "alignment": "neutral",
+        "id": 1638007701,
+        "name": "Under",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "rotation": 388
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-10-11T02:15:00Z",
         "period": 0,
-        "status": "open"
+        "status": "closed"
       }
     ],
-    "rotation": 405,
-    "startTime": "2026-10-10T19:30:00Z",
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Isaiah Marshall Total Rushing Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
     "state": {},
     "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Rushing Yards",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007687,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007688,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007689,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Devon Dampier Total Touchdown Passes"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Touchdown Passes",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007729,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007731,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007732,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Wayshawn Parker Total Rushing Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Rushing Yards",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007744,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007745,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007746,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Wayshawn Parker Total Receiving Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Receiving Yards",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007711,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007712,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007713,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Isaiah Marshall Total Touchdown Passes"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Touchdown Passes",
+    "version": 650334111
   },
   {
     "ageLimit": 0,
@@ -3356,11 +568,11 @@
     "hasBetshare": false,
     "hasLive": true,
     "hasMarkets": true,
-    "id": 1637330319,
+    "id": 1637803191,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
-    "isLive": false,
+    "isLive": true,
     "isPromoted": false,
     "league": {
       "ageLimit": 0,
@@ -3371,8 +583,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -3381,101 +593,83 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Army",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Tulane",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 337,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637325680,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
+    "liveMode": "live_delay",
+    "parent": {
+      "hasMarkets": false,
+      "id": 1637325680,
+      "isLive": false,
+      "participants": [
+        {
+          "alignment": "home",
+          "name": "Fresno State",
+          "order": 1,
+          "state": {
+            "hasPossession": false,
+            "score": 20,
+            "scoreByQuarter": [
+              13,
+              7,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        },
+        {
+          "alignment": "away",
+          "name": "Boise State",
+          "order": 0,
+          "state": {
+            "hasPossession": true,
+            "score": 25,
+            "scoreByQuarter": [
+              15,
+              10,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        }
+      ],
+      "startTime": "2026-10-11T02:30:00Z",
+      "state": {
+        "down": 1,
+        "quarter": 3,
+        "timeRemainingInQtr": "15:00",
+        "yardsToFirstDown": 10,
+        "yardsToGoal": 75
       }
     },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
+    "parentId": 1637325680,
     "parlayRestriction": "unique_matchups",
     "participants": [
       {
@@ -3485,6 +679,12 @@
         "stats": [
           {
             "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
           }
         ]
       },
@@ -3495,40 +695,65 @@
         "stats": [
           {
             "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
           }
         ]
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-11T02:30:00Z",
+        "cutoffAt": "2026-10-11T07:30:00Z",
         "hasMoneyline": true,
         "hasSpread": true,
         "hasTeamTotal": true,
         "hasTotal": true,
         "period": 0,
         "status": "open"
+      },
+      {
+        "cutoffAt": null,
+        "period": 1,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": null,
+        "period": 3,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": "2026-10-11T07:30:00Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": false,
+        "hasTotal": true,
+        "period": 2,
+        "status": "open"
       }
     ],
-    "rotation": 417,
+    "rotation": 9417,
     "startTime": "2026-10-11T02:30:00Z",
     "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
+    "status": "started",
+    "totalMarketCount": 6,
     "type": "matchup",
     "units": "Regular",
-    "version": 704718761
+    "version": 705722971
   },
   {
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
     "hasBetshare": false,
     "hasLive": true,
     "hasMarkets": true,
-    "id": 1637329164,
+    "id": 1638007726,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -3543,8 +768,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -3553,1635 +778,51 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
     "liveMode": null,
     "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
+    "parentId": 1637352440,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Florida",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1638007727,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
       },
       {
-        "alignment": "away",
-        "name": "South Carolina",
+        "alignment": "neutral",
+        "id": 1638007728,
+        "name": "Under",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:45:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 329,
-    "startTime": "2026-10-10T16:45:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704757459
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351017,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Georgia Tech",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Duke",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 365,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637721468,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "West Virginia",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Arizona",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 351,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704652000
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330326,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Navy",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Tulsa",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 401,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330321,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Louisville",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Florida State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-09T23:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 317,
-    "startTime": "2026-10-09T23:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704702062
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351010,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Ohio",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Central Michigan",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 345,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637325670,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Michigan State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Illinois",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 333,
-    "startTime": "2026-10-10T19:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330314,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Bowling Green",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Sacramento State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 331,
-    "startTime": "2026-10-10T16:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704755489
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637329167,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Liberty",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Sam Houston State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-08T23:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 309,
-    "startTime": "2026-10-08T23:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704719006
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351012,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "San Jose State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Wyoming",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T01:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 321,
-    "startTime": "2026-10-10T01:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704704295
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351008,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Arkansas",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Tennessee",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T20:15:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 399,
-    "startTime": "2026-10-10T20:15:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704767534
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637352440,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Utah",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Kansas",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "rotation": 388
       }
     ],
     "periods": [
       {
         "cutoffAt": "2026-10-11T02:15:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
         "period": 0,
-        "status": "open"
+        "status": "closed"
       }
     ],
     "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Ricky Johnson Total Receiving Yards"
+    },
     "startTime": "2026-10-11T02:15:00Z",
     "state": {},
     "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704656708
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637354412,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Virginia",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Syracuse",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 357,
-    "startTime": "2026-10-10T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704652717
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": false,
-    "hasMarkets": true,
-    "id": 1637330312,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Alabama",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Georgia",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 403,
-    "startTime": "2026-10-10T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704672310
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637351006,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Arkansas State",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "South Alabama",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-08T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 313,
-    "startTime": "2026-10-08T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704621163
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": 11,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637330292,
-    "isBetshareEnabled": false,
-    "isFeatured": true,
-    "isHighlighted": true,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Troy",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 3
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Southern Miss",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          },
-          {
-            "period": 1
-          },
-          {
-            "period": 3
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-07T00:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      },
-      {
-        "cutoffAt": "2026-10-07T00:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 1,
-        "status": "open"
-      },
-      {
-        "cutoffAt": "2026-10-07T00:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 3,
-        "status": "open"
-      }
-    ],
-    "rotation": 301,
-    "startTime": "2026-10-07T00:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 15,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704762071
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": false,
-    "hasAltTotal": false,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637721477,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Northwestern",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Ball State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T16:30:00Z",
-        "hasMoneyline": false,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 379,
-    "startTime": "2026-10-10T16:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 4,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704655383
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637329163,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Florida International",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "New Mexico State",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-07T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 305,
-    "startTime": "2026-10-07T23:30:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704617243
-  },
-  {
-    "ageLimit": 0,
-    "altTeaser": false,
-    "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
-    "hasBetshare": false,
-    "hasLive": true,
-    "hasMarkets": true,
-    "id": 1637325669,
-    "isBetshareEnabled": false,
-    "isFeatured": false,
-    "isHighlighted": false,
-    "isLive": false,
-    "isPromoted": false,
-    "league": {
-      "ageLimit": 0,
-      "featureOrder": 0,
-      "group": "USA",
-      "id": 880,
-      "isFeatured": true,
-      "isHidden": false,
-      "isPromoted": false,
-      "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
-      "name": "NCAA",
-      "sequence": 2,
-      "sport": {
-        "featureOrder": 2,
-        "id": 15,
-        "isFeatured": true,
-        "isHidden": false,
-        "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
-        "name": "Football",
-        "primaryMarketType": "spread"
-      }
-    },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
-    "parlayRestriction": "allowed",
-    "participants": [
-      {
-        "alignment": "home",
-        "name": "Marshall",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      },
-      {
-        "alignment": "away",
-        "name": "Coastal Carolina",
-        "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
-      }
-    ],
-    "periods": [
-      {
-        "cutoffAt": "2026-10-10T04:00:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
-        "period": 0,
-        "status": "open"
-      }
-    ],
-    "rotation": 347,
-    "startTime": "2026-10-10T04:00:00Z",
-    "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704710596
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Receiving Yards",
+    "version": 650334111
   },
   {
     "ageLimit": 0,
@@ -5192,7 +833,7 @@
     "hasBetshare": false,
     "hasLive": false,
     "hasMarkets": true,
-    "id": 1637154272,
+    "id": 1632356469,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -5207,8 +848,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -5217,8 +858,8 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
@@ -5230,154 +871,49 @@
     "participants": [
       {
         "alignment": "neutral",
-        "id": 1637155464,
-        "name": "Darian Mensah",
+        "id": 1632356470,
+        "name": "Yes",
         "order": 0,
-        "rotation": 15586
+        "rotation": 41110
       },
       {
         "alignment": "neutral",
-        "id": 1637155465,
-        "name": "Trinidad Chambliss",
+        "id": 1632356471,
+        "name": "No",
         "order": 0,
-        "rotation": 15587
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155466,
-        "name": "Jeremiah Smith",
-        "order": 0,
-        "rotation": 15588
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155467,
-        "name": "Arch Manning",
-        "order": 0,
-        "rotation": 15589
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155468,
-        "name": "Malachi Toney",
-        "order": 0,
-        "rotation": 15590
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155469,
-        "name": "Kamario Taylor",
-        "order": 0,
-        "rotation": 15591
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155470,
-        "name": "CJ Carr",
-        "order": 0,
-        "rotation": 15592
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155471,
-        "name": "Keelon Russell",
-        "order": 0,
-        "rotation": 15593
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155472,
-        "name": "Julian Sayin",
-        "order": 0,
-        "rotation": 15594
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155473,
-        "name": "Josh Hoover",
-        "order": 0,
-        "rotation": 15595
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155474,
-        "name": "Jayden Maiava",
-        "order": 0,
-        "rotation": 15596
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155475,
-        "name": "Gunner Stockton",
-        "order": 0,
-        "rotation": 15597
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155476,
-        "name": "Lincoln Kienholz",
-        "order": 0,
-        "rotation": 15598
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155477,
-        "name": "Dante Moore",
-        "order": 0,
-        "rotation": 15599
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155478,
-        "name": "Sam Leavitt",
-        "order": 0,
-        "rotation": 15600
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155479,
-        "name": "Jadan Baugh",
-        "order": 0,
-        "rotation": 15601
-      },
-      {
-        "alignment": "neutral",
-        "id": 1637155480,
-        "name": "The Field",
-        "order": 0,
-        "rotation": 15602
+        "rotation": 41111
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-02T23:00:00Z",
+        "cutoffAt": "2026-10-10T16:00:00Z",
         "period": 0,
         "status": "open"
       }
     ],
-    "rotation": 15586,
+    "rotation": 41110,
     "special": {
-      "category": "Futures",
-      "description": "Heisman Trophy Award Winner"
+      "category": "To Make the Playoffs",
+      "description": "Florida To Make the Playoffs"
     },
-    "startTime": "2026-10-02T23:00:00Z",
+    "startTime": "2026-10-10T16:00:00Z",
     "state": {},
     "status": "pending",
     "totalMarketCount": 1,
     "type": "special",
-    "units": "Place 1st",
-    "version": 646598266
+    "units": "Playoffs",
+    "version": 648162676
   },
   {
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
     "hasBetshare": false,
     "hasLive": true,
     "hasMarkets": true,
-    "id": 1637351018,
+    "id": 1638007693,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -5392,8 +928,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -5402,68 +938,62 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
     "liveMode": null,
     "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
+    "parentId": 1637352440,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Western Michigan",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1638007694,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
       },
       {
-        "alignment": "away",
-        "name": "Kent State",
+        "alignment": "neutral",
+        "id": 1638007695,
+        "name": "Under",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "rotation": 388
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-10-11T02:15:00Z",
         "period": 0,
-        "status": "open"
+        "status": "closed"
       }
     ],
-    "rotation": 363,
-    "startTime": "2026-10-10T19:30:00Z",
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Dylan Edwards Total Rushing Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
     "state": {},
     "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Rushing Yards",
+    "version": 650334111
   },
   {
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
     "hasBetshare": false,
     "hasLive": false,
     "hasMarkets": true,
-    "id": 1637354413,
+    "id": 1637776886,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -5478,8 +1008,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -5488,8 +1018,8 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
@@ -5497,48 +1027,522 @@
     "liveMode": null,
     "parent": null,
     "parentId": null,
-    "parlayRestriction": "allowed",
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Louisiana Tech",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1637776887,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
       },
       {
-        "alignment": "away",
-        "name": "UL Lafayette",
+        "alignment": "neutral",
+        "id": 1637776888,
+        "name": "No",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "rotation": 41111
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-10T23:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-10-10T16:00:00Z",
         "period": 0,
         "status": "open"
       }
     ],
-    "rotation": 377,
-    "startTime": "2026-10-10T23:30:00Z",
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Utah to Make the Playoffs"
+    },
+    "startTime": "2026-10-10T16:00:00Z",
     "state": {},
     "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
+    "totalMarketCount": 1,
+    "type": "special",
     "units": "Regular",
-    "version": 704737121
+    "version": 648164969
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1637469232,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1637469233,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41157
+      },
+      {
+        "alignment": "neutral",
+        "id": 1637469234,
+        "name": "No",
+        "order": 0,
+        "rotation": 41158
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-10T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41157,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Oregon To Make the Playoffs"
+    },
+    "startTime": "2026-10-10T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 648162068
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356487,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356488,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356489,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-10T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "LSU To Make the Playoffs"
+    },
+    "startTime": "2026-10-10T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 648162327
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007675,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007676,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007677,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Braden Pegan Total Receiving Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Receiving Yards",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": false,
+    "hasMarkets": true,
+    "id": 1632356497,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": null,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1632356498,
+        "name": "Yes",
+        "order": 0,
+        "rotation": 41110
+      },
+      {
+        "alignment": "neutral",
+        "id": 1632356499,
+        "name": "No",
+        "order": 0,
+        "rotation": 41111
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-10T16:00:00Z",
+        "period": 0,
+        "status": "open"
+      }
+    ],
+    "rotation": 41110,
+    "special": {
+      "category": "To Make the Playoffs",
+      "description": "Mississippi To Make the Playoffs"
+    },
+    "startTime": "2026-10-10T16:00:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Playoffs",
+    "version": 648162382
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007714,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007715,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007716,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Nik McMillan Total Receiving Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Receiving Yards",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007720,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007721,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007722,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Noah Bennee Total Receiving Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Receiving Yards",
+    "version": 650334111
   },
   {
     "ageLimit": 0,
@@ -5549,11 +1553,11 @@
     "hasBetshare": false,
     "hasLive": true,
     "hasMarkets": true,
-    "id": 1637354414,
+    "id": 1637803190,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
-    "isLive": false,
+    "isLive": true,
     "isPromoted": false,
     "league": {
       "ageLimit": 0,
@@ -5564,8 +1568,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -5574,68 +1578,167 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
-    "liveMode": null,
-    "parent": null,
-    "parentId": null,
+    "liveMode": "live_delay",
+    "parent": {
+      "hasMarkets": false,
+      "id": 1637325679,
+      "isLive": false,
+      "participants": [
+        {
+          "alignment": "home",
+          "name": "Arizona State",
+          "order": 1,
+          "state": {
+            "hasPossession": true,
+            "score": 17,
+            "scoreByQuarter": [
+              7,
+              10,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        },
+        {
+          "alignment": "away",
+          "name": "Hawaii",
+          "order": 0,
+          "state": {
+            "hasPossession": false,
+            "score": 6,
+            "scoreByQuarter": [
+              3,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          "stats": [
+            {
+              "period": 0
+            },
+            {
+              "period": 1
+            },
+            {
+              "period": 3
+            }
+          ]
+        }
+      ],
+      "startTime": "2026-10-11T02:30:00Z",
+      "state": {
+        "down": 1,
+        "quarter": 3,
+        "timeRemainingInQtr": "00:00",
+        "yardsToFirstDown": 10,
+        "yardsToGoal": 75
+      }
+    },
+    "parentId": 1637325679,
     "parlayRestriction": "unique_matchups",
     "participants": [
       {
         "alignment": "home",
-        "name": "Kentucky",
+        "name": "Arizona State",
         "order": 1,
         "stats": [
           {
             "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
           }
         ]
       },
       {
         "alignment": "away",
-        "name": "LSU",
+        "name": "Hawaii",
         "order": 0,
         "stats": [
           {
             "period": 0
+          },
+          {
+            "period": 1
+          },
+          {
+            "period": 2
           }
         ]
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-10T23:00:00Z",
+        "cutoffAt": "2026-10-11T07:30:00Z",
         "hasMoneyline": true,
         "hasSpread": true,
         "hasTeamTotal": true,
         "hasTotal": true,
         "period": 0,
-        "status": "open"
+        "status": "closed"
+      },
+      {
+        "cutoffAt": null,
+        "period": 1,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": null,
+        "period": 3,
+        "status": "settled"
+      },
+      {
+        "cutoffAt": "2026-10-11T04:43:31Z",
+        "hasMoneyline": true,
+        "hasSpread": true,
+        "hasTeamTotal": false,
+        "hasTotal": true,
+        "period": 2,
+        "status": "closed"
       }
     ],
-    "rotation": 349,
-    "startTime": "2026-10-10T23:00:00Z",
+    "rotation": 9389,
+    "startTime": "2026-10-11T02:30:00Z",
     "state": {},
-    "status": "pending",
-    "totalMarketCount": 5,
+    "status": "started",
+    "totalMarketCount": 0,
     "type": "matchup",
     "units": "Regular",
-    "version": 704774270
+    "version": 705723478
   },
   {
     "ageLimit": 0,
     "altTeaser": false,
     "featureOrder": -1,
-    "hasAltSpread": true,
-    "hasAltTotal": true,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
     "hasBetshare": false,
     "hasLive": true,
     "hasMarkets": true,
-    "id": 1637352442,
+    "id": 1638164244,
     "isBetshareEnabled": false,
     "isFeatured": false,
     "isHighlighted": false,
@@ -5650,8 +1753,8 @@
       "isHidden": false,
       "isPromoted": false,
       "isSticky": false,
-      "matchupCount": 66,
-      "matchupCountSE": 66,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
       "name": "NCAA",
       "sequence": 2,
       "sport": {
@@ -5660,56 +1763,130 @@
         "isFeatured": true,
         "isHidden": false,
         "isSticky": false,
-        "matchupCount": 113,
-        "matchupCountSE": 98,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
         "name": "Football",
         "primaryMarketType": "spread"
       }
     },
     "liveMode": null,
     "parent": null,
-    "parentId": null,
-    "parlayRestriction": "unique_matchups",
+    "parentId": 1637352440,
+    "parlayRestriction": null,
     "participants": [
       {
-        "alignment": "home",
-        "name": "Toledo",
-        "order": 1,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "alignment": "neutral",
+        "id": 1638164245,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
       },
       {
-        "alignment": "away",
-        "name": "Buffalo",
+        "alignment": "neutral",
+        "id": 1638164246,
+        "name": "Under",
         "order": 0,
-        "stats": [
-          {
-            "period": 0
-          }
-        ]
+        "rotation": 388
       }
     ],
     "periods": [
       {
-        "cutoffAt": "2026-10-10T19:30:00Z",
-        "hasMoneyline": true,
-        "hasSpread": true,
-        "hasTeamTotal": true,
-        "hasTotal": true,
+        "cutoffAt": "2026-10-11T02:15:00Z",
         "period": 0,
-        "status": "open"
+        "status": "closed"
       }
     ],
-    "rotation": 335,
-    "startTime": "2026-10-10T19:30:00Z",
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Devon Dampier Total Rushing Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
     "state": {},
     "status": "pending",
-    "totalMarketCount": 5,
-    "type": "matchup",
-    "units": "Regular",
-    "version": 704765316
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Rushing Yards",
+    "version": 650334111
+  },
+  {
+    "ageLimit": 0,
+    "altTeaser": false,
+    "featureOrder": -1,
+    "hasAltSpread": false,
+    "hasAltTotal": false,
+    "hasBetshare": false,
+    "hasLive": true,
+    "hasMarkets": true,
+    "id": 1638007705,
+    "isBetshareEnabled": false,
+    "isFeatured": false,
+    "isHighlighted": false,
+    "isLive": false,
+    "isPromoted": false,
+    "league": {
+      "ageLimit": 0,
+      "featureOrder": 0,
+      "group": "USA",
+      "id": 880,
+      "isFeatured": true,
+      "isHidden": false,
+      "isPromoted": false,
+      "isSticky": false,
+      "matchupCount": 9,
+      "matchupCountSE": 9,
+      "name": "NCAA",
+      "sequence": 2,
+      "sport": {
+        "featureOrder": 2,
+        "id": 15,
+        "isFeatured": true,
+        "isHidden": false,
+        "isSticky": false,
+        "matchupCount": 74,
+        "matchupCountSE": 59,
+        "name": "Football",
+        "primaryMarketType": "spread"
+      }
+    },
+    "liveMode": null,
+    "parent": null,
+    "parentId": 1637352440,
+    "parlayRestriction": null,
+    "participants": [
+      {
+        "alignment": "neutral",
+        "id": 1638007706,
+        "name": "Over",
+        "order": 0,
+        "rotation": 387
+      },
+      {
+        "alignment": "neutral",
+        "id": 1638007707,
+        "name": "Under",
+        "order": 0,
+        "rotation": 388
+      }
+    ],
+    "periods": [
+      {
+        "cutoffAt": "2026-10-11T02:15:00Z",
+        "period": 0,
+        "status": "closed"
+      }
+    ],
+    "rotation": 387,
+    "special": {
+      "category": "Player Props",
+      "description": "Isaiah Marshall Total Passing Yards"
+    },
+    "startTime": "2026-10-11T02:15:00Z",
+    "state": {},
+    "status": "pending",
+    "totalMarketCount": 1,
+    "type": "special",
+    "units": "Passing Yards",
+    "version": 650334111
   }
 ]

@@ -18,8 +18,8 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 113,
-      "matchupCountSE": 98,
+      "matchupCount": 74,
+      "matchupCountSE": 59,
       "name": "Football",
       "primaryMarketType": "spread"
     }
@@ -33,8 +33,8 @@
     "isHidden": false,
     "isPromoted": false,
     "isSticky": false,
-    "matchupCount": 66,
-    "matchupCountSE": 66,
+    "matchupCount": 9,
+    "matchupCountSE": 9,
     "name": "NCAA",
     "sequence": 2,
     "sport": {
@@ -43,8 +43,8 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 113,
-      "matchupCountSE": 98,
+      "matchupCount": 74,
+      "matchupCountSE": 59,
       "name": "Football",
       "primaryMarketType": "spread"
     }
@@ -58,8 +58,8 @@
     "isHidden": false,
     "isPromoted": false,
     "isSticky": false,
-    "matchupCount": 46,
-    "matchupCountSE": 31,
+    "matchupCount": 47,
+    "matchupCountSE": 32,
     "name": "NFL",
     "sequence": 1,
     "sport": {
@@ -68,8 +68,33 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 113,
-      "matchupCountSE": 98,
+      "matchupCount": 74,
+      "matchupCountSE": 59,
+      "name": "Football",
+      "primaryMarketType": "spread"
+    }
+  },
+  {
+    "ageLimit": 0,
+    "featureOrder": -1,
+    "group": "USA",
+    "id": 202331,
+    "isFeatured": false,
+    "isHidden": false,
+    "isPromoted": false,
+    "isSticky": false,
+    "matchupCount": 17,
+    "matchupCountSE": 17,
+    "name": "NCAA FCS",
+    "sequence": 4,
+    "sport": {
+      "featureOrder": 2,
+      "id": 15,
+      "isFeatured": true,
+      "isHidden": false,
+      "isSticky": false,
+      "matchupCount": 74,
+      "matchupCountSE": 59,
       "name": "Football",
       "primaryMarketType": "spread"
     }
