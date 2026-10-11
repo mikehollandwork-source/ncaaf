@@ -267,6 +267,16 @@ def probe(session, save_dir: Path | None = None) -> int:
                 (save_dir / f"{name}.{ext}").write_bytes(r.content[:3_000_000])
         except Exception as e:
             print(f"{name:22} ERR  {e}")
+    # props pipeline check: which games fall in the window and what comes back
+    meta: dict = {}
+    rows = scraped.an_props_for(session, now, now, now + timedelta(days=7), meta)
+    print("props check (7-day window):", meta, "rows:", len(rows))
+    cur = scraped.an_current_week(session)
+    if save_dir and cur is not None:
+        for w in (cur, cur + 1):
+            data = session.get(f"{AN}/v2/scoreboard/ncaaf", params={"bookIds": "15", "division": "FBS",
+                                                                     "week": w, "season": now.year}, timeout=25)
+            (save_dir / f"an_scoreboard_week{w}.json").write_bytes(data.content[:3_000_000])
     return 0
 
 
