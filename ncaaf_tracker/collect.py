@@ -178,27 +178,34 @@ def main(argv=None) -> int:
     return 0
 
 
-def saved_box_score_ids(data_dir: Path) -> set:
+def saved_ids(data_dir: Path, table: str) -> set:
     import csv
     import gzip
     ids = set()
-    for f in data_dir.glob("box_team/*/box_team_*.csv.gz"):
+    for f in data_dir.glob(f"{table}/*/{table}_*.csv.gz"):
         with gzip.open(f, "rt", newline="") as fh:
             ids.update(r["espn_id"] for r in csv.DictReader(fh))
     return ids
 
 
+def saved_box_score_ids(data_dir: Path) -> set:
+    return saved_ids(data_dir, "box_team")
+
+
 def save_box_scores(session, data_dir: Path, games: list[dict], now, meta: dict) -> None:
-    """Final box scores (team + every player's stat line), once per game."""
+    """Final box scores (team + every player's stat line) and play-by-play, once per game."""
     try:
-        team, players = espn.fetch_box_scores(session, games, saved_box_score_ids(data_dir), meta)
+        team, players, plays = espn.fetch_box_scores(session, games, saved_box_score_ids(data_dir), meta,
+                                                     done_plays=saved_ids(data_dir, "plays"))
     except Exception as e:
         log.exception("box scores failed")
         meta["box_error"] = str(e)[:300]
         return
     write_table(data_dir, "box_team", team, now)
     write_table(data_dir, "box_players", players, now)
+    write_table(data_dir, "plays", plays, now)
     meta["rows_box_players"] = len(players)
+    meta["rows_plays"] = len(plays)
 
 
 def last_save(data_dir: Path, table: str):

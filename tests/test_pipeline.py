@@ -294,3 +294,13 @@ def test_actionnetwork_props_real_payload():
     assert any(r["prop_name"] == "Anytime TD Scorer" for r in rows)
     tt = [r for r in rows if r["prop_name"] == "Team Total"]
     assert tt and all(r["home_away"] in ("home", "away") for r in tt)
+
+
+def test_play_by_play_with_win_probability():
+    data = json.loads((FIX / "espn_summary_401858242.json").read_text())
+    plays = espn.parse_plays(data, "401858242")
+    assert len(plays) == 186
+    assert all(p["home_wp_after"] is not None for p in plays)
+    # win probability chains play to play
+    assert all(a["home_wp_after"] == b["home_wp_before"] for a, b in zip(plays, plays[1:]))
+    assert any(p["yards"] and p["yards"] >= 20 for p in plays)
