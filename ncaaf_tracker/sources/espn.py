@@ -59,6 +59,7 @@ def results(games: list[dict]) -> list[dict]:
             "espn_id": g["espn_id"], "season": g.get("season"), "week": g.get("week"),
             "division": g.get("division"), "kickoff": g.get("kickoff"),
             "home_team": g.get("home_name"), "away_team": g.get("away_name"),
+            "home_rank": g.get("home_rank"), "away_rank": g.get("away_rank"),
             "home_abbr": g.get("home_abbr"), "away_abbr": g.get("away_abbr"),
             "home_score": hs, "away_score": as_,
             "winner_side": side,
@@ -236,6 +237,8 @@ def parse_event(ev: dict, division: str | None = None) -> dict | None:
         row[f"{side}_nickname"] = t.get("name")
         row[f"{side}_abbr"] = t.get("abbreviation")
         row[f"{side}_score"] = to_float(c.get("score"))
+        rank = (c.get("curatedRank") or {}).get("current")
+        row[f"{side}_rank"] = rank if isinstance(rank, int) and 1 <= rank <= 25 else None   # AP top 25; 99 = unranked
         row[f"{side}_winner"] = c.get("winner")
     row.update(parse_odds(comp.get("odds") or []))
     return row

@@ -20,10 +20,10 @@ def espn_event(state="pre", hs=None, as_=None):
             "date": "2026-10-03T19:30Z", "neutralSite": False,
             "status": {"type": {"state": state, "completed": state == "post", "detail": "x"}},
             "competitors": [
-                {"homeAway": "home", "score": hs, "winner": state == "post" and hs > as_,
+                {"homeAway": "home", "score": hs, "winner": state == "post" and hs > as_, "curatedRank": {"current": 99},
                  "team": {"id": "130", "displayName": "Michigan Wolverines", "shortDisplayName": "Michigan",
                           "location": "Michigan", "name": "Wolverines", "abbreviation": "MICH"}},
-                {"homeAway": "away", "score": as_, "winner": state == "post" and as_ > hs,
+                {"homeAway": "away", "score": as_, "winner": state == "post" and as_ > hs, "curatedRank": {"current": 4},
                  "team": {"id": "194", "displayName": "Ohio State Buckeyes", "shortDisplayName": "Ohio State",
                           "location": "Ohio State", "name": "Buckeyes", "abbreviation": "OSU"}},
             ],
@@ -140,6 +140,7 @@ def test_results_table():
 
 def test_espn_odds_parse():
     g = espn.parse_event(espn_event())
+    assert g["away_rank"] == 4 and g["home_rank"] is None   # 99 = unranked
     assert g["espn_spread_home_open"] == 2.5 and g["espn_total_open"] == 49.5
     assert g["espn_ml_home_close"] == 145
 
