@@ -221,14 +221,21 @@ def an_parse_props(data: dict, game: dict, now: datetime) -> list[dict]:
 def an_props_for(session, now: datetime, start: datetime, end: datetime, meta: dict) -> list[dict]:
     """Props for every game kicking off in [start, end]."""
     cur = an_current_week(session)
+    meta["an_props_week"] = cur
     if cur is None:
         return []
     rows, n, failures = [], 0, 0
+    seen, statuses = 0, {}
     for w in (cur, cur + 1):
         for g in an_week_games(session, now.year, w):
+            seen += 1
             st = parse_time(g.get("start_time"))
-            if st is None or not (start < st <= end) or g.get("status") not in (None, "scheduled"):
+            if st is None or not (start < st <= end):
                 continue
+            statuses[g.get("status")] = statuses.get(g.get("status"), 0) + 1
+            if g.get("status") not in (None, "scheduled"):
+                continue
+            meta["an_props_candidates"] = meta.get("an_props_candidates", 0) + 1
             if failures >= 6:
                 log.error("action network props: repeated failures, stopping")
                 meta["an_props_games"] = n
@@ -243,6 +250,8 @@ def an_props_for(session, now: datetime, start: datetime, end: datetime, meta: d
             rows += got
             n += bool(got)
     meta["an_props_games"] = n
+    meta["an_props_scanned"] = seen
+    meta["an_props_window_statuses"] = ",".join(f"{k}:{v}" for k, v in statuses.items())
     return rows
 
 

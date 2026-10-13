@@ -178,27 +178,34 @@ def main(argv=None) -> int:
     return 0
 
 
-def saved_box_score_ids(data_dir: Path) -> set:
+def saved_ids(data_dir: Path, table: str) -> set:
     import csv
     import gzip
     ids = set()
-    for f in data_dir.glob("box_team/*/box_team_*.csv.gz"):
+    for f in data_dir.glob(f"{table}/*/{table}_*.csv.gz"):
         with gzip.open(f, "rt", newline="") as fh:
             ids.update(r["espn_id"] for r in csv.DictReader(fh))
     return ids
 
 
+def saved_box_score_ids(data_dir: Path) -> set:
+    return saved_ids(data_dir, "box_team")
+
+
 def save_box_scores(session, data_dir: Path, games: list[dict], now, meta: dict) -> None:
-    """Final box scores (team + every player's stat line), once per game."""
+    """Final box scores (team + every player's stat line) and play-by-play, once per game."""
     try:
-        team, players = espn.fetch_box_scores(session, games, saved_box_score_ids(data_dir), meta)
+        team, players, plays = espn.fetch_box_scores(session, games, saved_box_score_ids(data_dir), meta,
+                                                     done_plays=saved_ids(data_dir, "plays"))
     except Exception as e:
         log.exception("box scores failed")
         meta["box_error"] = str(e)[:300]
         return
     write_table(data_dir, "box_team", team, now)
     write_table(data_dir, "box_players", players, now)
+    write_table(data_dir, "plays", plays, now)
     meta["rows_box_players"] = len(players)
+    meta["rows_plays"] = len(plays)
 
 
 def last_save(data_dir: Path, table: str):
@@ -241,6 +248,13 @@ PROBES = {
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
     "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
     "an_props": (AN + "/v2/games/289385/props?bookIds=15,68,69,75", {}),
+    "an_props_osu_books": (AN + "/v2/games/289489/props?bookIds=15,68,69,71,75,79,123,972", {}),
+    "an_props_osu_nobooks": (AN + "/v2/games/289489/props", {}),
+    "an_props_osu_state": (AN + "/v2/games/289489/props?bookIds=15,68,69,75&stateCode=NJ", {}),
+    "an_props_tue_books": (AN + "/v2/games/289875/props?bookIds=15,68,69,71,75,79,123,972", {}),
+    "an_props_tue_nobooks": (AN + "/v2/games/289875/props", {}),
+    "an_game_osu": (AN + "/v2/games/289489?bookIds=15,68,69", {}),
+    "an_game_osu_v1": (AN + "/v1/games/289489", {}),
     "pin_leagues_nokey": (PIN + "/sports/15/leagues?all=false", {}),
     "pin_leagues_key": (PIN + "/sports/15/leagues?all=false", {"x-api-key": PIN_WEB_KEY}),
     "pin_matchups_880": (PIN + "/leagues/880/matchups", {"x-api-key": PIN_WEB_KEY}),
@@ -267,6 +281,16 @@ def probe(session, save_dir: Path | None = None) -> int:
                 (save_dir / f"{name}.{ext}").write_bytes(r.content[:3_000_000])
         except Exception as e:
             print(f"{name:22} ERR  {e}")
+    # props pipeline check: which games fall in the window and what comes back
+    meta: dict = {}
+    rows = scraped.an_props_for(session, now, now, now + timedelta(days=7), meta)
+    print("props check (7-day window):", meta, "rows:", len(rows))
+    cur = scraped.an_current_week(session)
+    if save_dir and cur is not None:
+        for w in (cur, cur + 1):
+            data = session.get(f"{AN}/v2/scoreboard/ncaaf", params={"bookIds": "15", "division": "FBS",
+                                                                     "week": w, "season": now.year}, timeout=25)
+            (save_dir / f"an_scoreboard_week{w}.json").write_bytes(data.content[:3_000_000])
     return 0
 
 

@@ -108,29 +108,63 @@ def parse_box_score(summary: dict, espn_id: str) -> tuple[list[dict], list[dict]
     return team_rows, player_rows
 
 
-def fetch_box_scores(session, games: list[dict], done: set, meta: dict, limit: int = 1000):
-    """Box scores for completed games not saved yet (final box scores don't change)."""
-    team_rows, player_rows, n, failures = [], [], 0, 0
+def parse_plays(summary: dict, espn_id: str) -> list[dict]:
+    """Every play with ESPN's home win probability after it (summary 'winprobability').
+
+    wp_before is the previous play's wp_after (the first play starts from the
+    first entry, which already reflects the pregame line)."""
+    wp = {w.get("playId"): w.get("homeWinPercentage") for w in summary.get("winprobability") or []}
+    rows, prev = [], None
+    if summary.get("winprobability"):
+        prev = summary["winprobability"][0].get("homeWinPercentage")
+    for d in (summary.get("drives") or {}).get("previous", []) or []:
+        for pl in d.get("plays", []) or []:
+            start, end = pl.get("start") or {}, pl.get("end") or {}
+            after = wp.get(pl.get("id"))
+            rows.append({
+                "espn_id": espn_id, "play_id": pl.get("id"), "seq": to_float(pl.get("sequenceNumber")),
+                "period": (pl.get("period") or {}).get("number"), "clock": (pl.get("clock") or {}).get("displayValue"),
+                "type": (pl.get("type") or {}).get("text"), "offense_id": (start.get("team") or {}).get("id"),
+                "down": start.get("down"), "distance": start.get("distance"),
+                "yards_to_endzone": start.get("yardsToEndzone"), "yards": to_float(pl.get("statYardage")),
+                "scoring": pl.get("scoringPlay"), "turnover": pl.get("isTurnover"), "penalty": pl.get("isPenalty"),
+                "home_score": pl.get("homeScore"), "away_score": pl.get("awayScore"),
+                "home_wp_before": prev, "home_wp_after": after, "text": (pl.get("text") or "")[:200],
+            })
+            if after is not None:
+                prev = after
+    return rows
+
+
+def fetch_box_scores(session, games: list[dict], done_box: set, meta: dict, limit: int = 1000,
+                     done_plays: set | None = None):
+    """Box scores and play-by-play for completed games not saved yet (finals don't change)."""
+    done_plays = done_box if done_plays is None else done_plays
+    team_rows, player_rows, play_rows, n, failures = [], [], [], 0, 0
     for g in games:
-        if g.get("completed") is not True or g["espn_id"] in done or n >= limit:
+        gid = g["espn_id"]
+        need_box, need_plays = gid not in done_box, gid not in done_plays
+        if g.get("completed") is not True or not (need_box or need_plays) or n >= limit:
             continue
         if failures >= 6:
             log.error("espn box scores: repeated failures, stopping this run")
             break
         try:
-            data = get_json(session, HOSTS[0] + SUMMARY_PATH, {"event": g["espn_id"]}, min_interval=0.2)
+            data = get_json(session, HOSTS[0] + SUMMARY_PATH, {"event": gid}, min_interval=0.2)
             failures = 0
         except Exception as e:
             failures += 1
-            log.warning("espn box score %s failed: %s", g["espn_id"], e)
+            log.warning("espn box score %s failed: %s", gid, e)
             continue
-        t, p = parse_box_score(data, g["espn_id"])
-        if t or p:
+        if need_box:
+            t, p = parse_box_score(data, gid)
             team_rows += t
             player_rows += p
-            n += 1
+        if need_plays:
+            play_rows += parse_plays(data, gid)
+        n += 1
     meta["box_scores"] = n
-    return team_rows, player_rows
+    return team_rows, player_rows, play_rows
 
 
 def fill_closed_odds(session, games: list[dict]) -> int:
