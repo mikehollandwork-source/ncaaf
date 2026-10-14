@@ -249,13 +249,8 @@ def build_splits(data_dir: Path, mapping: dict) -> pd.DataFrame:
 
 # ------------------------------------------------------------------ Kalshi
 
-def build_kalshi(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatched: list):
-    m = load(data_dir, "kalshi_markets")
-    if m.empty:
-        return pd.DataFrame(), pd.DataFrame()
-    m = m[m["series"] == "KXNCAAFGAME"].copy()
-    num(m, ["yes_bid", "yes_ask", "last_price", "volume", "open_interest"])
-    m["snap"] = ts(m["snapshot_ts"])
+def kalshi_ticker_sides(m: pd.DataFrame, matcher: Matcher, unmatched: list) -> dict[str, tuple[str, str]]:
+    """Kalshi game-winner ticker -> (espn_id, 'home'|'away' team the ticker's yes pays on)."""
     tick_side: dict[str, tuple[str, str]] = {}
     for ev_t, d in m.groupby("event_ticker"):
         teams = d.drop_duplicates("ticker")[["ticker", "yes_sub_title"]].dropna()
@@ -270,6 +265,17 @@ def build_kalshi(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatche
             continue
         for t, name in zip(teams["ticker"], teams["yes_sub_title"]):
             tick_side[t] = (gid, sides[name])
+    return tick_side
+
+
+def build_kalshi(data_dir: Path, games: pd.DataFrame, matcher: Matcher, unmatched: list):
+    m = load(data_dir, "kalshi_markets")
+    if m.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    m = m[m["series"] == "KXNCAAFGAME"].copy()
+    num(m, ["yes_bid", "yes_ask", "last_price", "volume", "open_interest"])
+    m["snap"] = ts(m["snapshot_ts"])
+    tick_side = kalshi_ticker_sides(m, matcher, unmatched)
     m = m[m["ticker"].isin(tick_side)].copy()
     m["espn_id"] = m["ticker"].map(lambda t: tick_side[t][0])
     m["side"] = m["ticker"].map(lambda t: tick_side[t][1])

@@ -1,4 +1,7 @@
-"""Grade the locked rule (ranked_rlm_v1) from the snapshots the collector logs.
+"""Grade the locked rules from the snapshots the collector logs:
+  ranked_rlm_v1        (table rule_picks)
+  kalshi_book_fade_v1  (table book_picks; also shows "bet every underdog" on the same games,
+                        since fading book money is mostly an underdog bet)
 
   python analysis/track_rule.py --data-dir store/data
 
@@ -62,7 +65,53 @@ def main(argv=None) -> int:
             w, l_ = (done.result == "win").sum(), (done.result == "loss").sum()
             print(f"\nrecord {w}-{l_}-{(done.result == 'push').sum()}  ROI {100 * done.profit.mean():+.1f}%  "
                   f"(break-even at -110 is 52.4%)")
+    book(D)
     return 0
+
+
+def grade(D: Path, table: str) -> pd.DataFrame:
+    p = explosive.load(D, table)
+    if p.empty:
+        return p
+    p["snap"] = pd.to_datetime(p.snapshot_ts, utc=True)
+    p["ko"] = pd.to_datetime(p.commence_time, utc=True)
+    p = p[(p.snap < p.ko) & (p.ko >= LOCKED)].sort_values("snap")
+    bets = p.groupby("espn_id").tail(1)
+    bets = bets[bets.fires.astype(str) == "True"].copy()
+    for c in ("pick_line", "pick_odds", "pick_ml"):
+        if c in bets:
+            bets[c] = pd.to_numeric(bets[c], errors="coerce")
+    r = explosive.load(D, "results").drop_duplicates("espn_id", keep="last").set_index("espn_id")
+    bets = bets[bets.espn_id.isin(r.index)].copy()
+    hs = bets.espn_id.map(r.home_score).astype(float)
+    as_ = bets.espn_id.map(r.away_score).astype(float)
+    bets["margin"] = np.where(bets.pick_side == "home", hs - as_, as_ - hs)
+    return bets
+
+
+def show(b: pd.DataFrame, label: str) -> None:
+    res = b.margin + b.pick_line
+    sp = [0.0 if x == 0 else (bands.american_profit(-110 if np.isnan(o) else o) if x > 0 else -1.0)
+          for x, o in zip(res, b.pick_odds)]
+    ml = [bands.american_profit(o) if m > 0 else -1.0 for m, o in zip(b.margin, b.pick_ml) if not np.isnan(o)]
+    print(f"  {label:28} ATS {(res > 0).sum()}-{(res < 0).sum()}-{(res == 0).sum()} ROI "
+          f"{100 * np.mean(sp) if sp else float('nan'):+.1f}% | ML {(b.margin > 0).sum()}-{(b.margin < 0).sum()} "
+          f"ROI {100 * np.mean(ml) if ml else float('nan'):+.1f}%")
+
+
+def book(D: Path) -> None:
+    b = grade(D, "book_picks")
+    print(f"\nrule kalshi_book_fade_v1 since {LOCKED:%Y-%m-%d}: {len(b)} graded bets")
+    if b.empty:
+        return
+    show(b, "fade book-contracts team")
+    dog = b.pick_is_dog.astype(str) == "True"
+    show(b[dog], "  ...when the pick is the dog")
+    show(b[~dog], "  ...when the pick is the fav")
+    # baseline: the underdog in the same games, at the same DraftKings prices is not logged for
+    # the other side, so compare cover rates: dog cover% in these games
+    cov = np.where(dog, b.margin + b.pick_line > 0, b.margin + b.pick_line < 0)
+    print(f"  baseline: underdog covered {100 * cov.mean():.1f}% of these games")
 
 
 if __name__ == "__main__":

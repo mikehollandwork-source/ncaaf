@@ -349,3 +349,27 @@ def test_locked_rule_snapshot():
     assert r["fires"] and r["pick_side"] == "home" and r["pick_line"] == 4.0 and r["pick_odds"] == -108
     splits[0]["money_pct"] = 55          # public money now with the move -> no bet
     assert not rule_snapshot(games, odds, splits, parse_time("2026-10-16T12:00:00Z"))[0]["fires"]
+
+
+def test_book_rule_snapshot():
+    from ncaaf_tracker.collect import book_rule_snapshot
+    games = [{"espn_id": "1", "kickoff": "2026-10-17T19:30:00Z", "home_name": "Tennessee Volunteers",
+              "away_name": "Alabama Crimson Tide", "home_short": "Tennessee", "away_short": "Alabama",
+              "home_location": "Tennessee", "away_location": "Alabama", "home_abbr": "TENN", "away_abbr": "ALA",
+              "home_id": "2633", "away_id": "333", "home_rank": 14, "away_rank": 6}]
+    mk = [{"series": "KXNCAAFGAME", "event_ticker": "E", "ticker": "E-TENN", "yes_sub_title": "Tennessee",
+           "kickoff_est": "2026-10-17T19:30:00Z", "yes_bid": 0.38, "yes_ask": 0.40},
+          {"series": "KXNCAAFGAME", "event_ticker": "E", "ticker": "E-ALA", "yes_sub_title": "Alabama",
+           "kickoff_est": "2026-10-17T19:30:00Z", "yes_bid": 0.60, "yes_ask": 0.62}]
+    books = [{"ticker": "E-ALA", "side": "yes", "price": 0.60, "size": 500},   # backs Alabama
+             {"ticker": "E-TENN", "side": "no", "price": 0.60, "size": 100},   # backs Alabama
+             {"ticker": "E-TENN", "side": "yes", "price": 0.38, "size": 400}]  # backs Tennessee
+    base = {"event_id": "an:1", "commence_time": "2026-10-17T19:30:00Z", "home_team": "Tennessee Volunteers",
+            "away_team": "Alabama Crimson Tide", "book": "draftkings"}
+    odds = [{**base, "market": "spreads", "outcome": "Tennessee Volunteers", "point": 4.0, "price": -108},
+            {**base, "market": "spreads", "outcome": "Alabama Crimson Tide", "point": -4.0, "price": -112},
+            {**base, "market": "h2h", "outcome": "Tennessee Volunteers", "point": None, "price": 160}]
+    r = book_rule_snapshot(games, mk, books, odds, parse_time("2026-10-17T18:00:00Z"))[0]
+    assert r["away_contracts"] == 600 and r["home_contracts"] == 400
+    assert r["fires"] and r["pick_side"] == "home" and r["pick_line"] == 4.0 and r["pick_ml"] == 160
+    assert r["pick_is_dog"] and r["kalshi_home_p"] == 0.39
