@@ -102,8 +102,15 @@ def main(argv=None) -> int:
 
     k = rr.dropna(subset=["k_side"])
     print("\nKalshi real money:")
-    rec(k[k.k_side > 0], "Kalshi money WITH the backed side")
-    rec(k[k.k_side < 0], "Kalshi money AGAINST the backed side")
+    for season in sorted(k.season.unique()):
+        ks = k[k.season == season]
+        rec(ks[ks.k_side > 0], f"{season}: Kalshi money WITH the backed side")
+        rec(ks[ks.k_side < 0], f"{season}: Kalshi money AGAINST the backed side")
+    rec(k[k.k_side > 0], "both: Kalshi money WITH the backed side")
+    rec(k[k.k_side < 0], "both: Kalshi money AGAINST the backed side")
+    for season in sorted(s.season.unique()):
+        ss = s[s.season == season]
+        rec(ss[(ss.t_side < 0) & (ss.m_side < 0)], f"{season}: AN tickets AND money against the backed side")
     km = k.dropna(subset=["m_side"])
     agree = km[km.k_side == km.m_side]
     print(f"  Kalshi side == AN money side: {len(agree)}/{len(km)}")
