@@ -34,11 +34,12 @@ from .util import env, iso, log, make_session, parse_time, utcnow, write_table
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill"), default="auto")
+    ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill", "history"), default="auto")
     ap.add_argument("--data-dir", default=env("DATA_DIR", "data"))
     ap.add_argument("--sources", default="espn,an,pinnacle,odds,kalshi,poly",
                     help="comma list of sources to poll")
-    ap.add_argument("--since", help="backfill start date YYYY-MM-DD")
+    ap.add_argument("--since", help="backfill/history start date YYYY-MM-DD")
+    ap.add_argument("--until", help="history end date YYYY-MM-DD (default today)")
     ap.add_argument("--probe", action="store_true",
                     help="hit one endpoint per source, print HTTP status, and exit")
     ap.add_argument("--discover", action="store_true",
@@ -66,6 +67,21 @@ def main(argv=None) -> int:
     window = timedelta(minutes=int(env("CLOSING_WINDOW_MIN", "100")))
 
     # ---- master schedule / results
+    if mode == "history":
+        # ESPN only, any date range (e.g. a past season): games, ranks, results, and one
+        # game-page load per finished game for its closing odds, box score and plays.
+        since = parse_time(f"{args.since}T00:00:00Z")
+        until = parse_time(f"{args.until}T00:00:00Z") if args.until else now
+        games = espn.fetch_games(session, since, until)
+        save_box_scores(session, data_dir, games, now, meta)
+        for g in games:
+            g["snapshot_ts"] = iso(now)
+        write_table(data_dir, "espn_games", games, now)
+        write_table(data_dir, "results", espn.results(games), now)
+        meta.update({"history_since": args.since, "history_until": args.until, "espn_games": len(games)})
+        write_table(data_dir, "runs", [meta], now)
+        log.info("history %s..%s: %d games, %s game pages", args.since, args.until, len(games), meta.get("box_scores"))
+        return 0
     if mode == "backfill":
         since = parse_time(f"{args.since}T00:00:00Z") if args.since else now - timedelta(days=45)
         games = espn.fetch_games(session, since, now + timedelta(days=14))
