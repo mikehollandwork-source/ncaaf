@@ -32,7 +32,8 @@ def main(argv=None) -> int:
     D = Path(args.data_dir)
     p = explosive.load(D, "rule_picks")
     if p.empty:
-        print("no rule snapshots yet")
+        print("no ranked_rlm_v1 snapshots yet")
+        book(D)
         return 0
     p["snap"] = pd.to_datetime(p.snapshot_ts, utc=True)
     p["ko"] = pd.to_datetime(p.commence_time, utc=True)
