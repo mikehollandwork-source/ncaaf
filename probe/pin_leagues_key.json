@@ -18,8 +18,8 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 116,
-      "matchupCountSE": 101,
+      "matchupCount": 114,
+      "matchupCountSE": 99,
       "name": "Football",
       "primaryMarketType": "spread"
     }
@@ -33,8 +33,8 @@
     "isHidden": false,
     "isPromoted": false,
     "isSticky": false,
-    "matchupCount": 67,
-    "matchupCountSE": 67,
+    "matchupCount": 65,
+    "matchupCountSE": 65,
     "name": "NCAA",
     "sequence": 2,
     "sport": {
@@ -43,8 +43,8 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 116,
-      "matchupCountSE": 101,
+      "matchupCount": 114,
+      "matchupCountSE": 99,
       "name": "Football",
       "primaryMarketType": "spread"
     }
@@ -68,8 +68,8 @@
       "isFeatured": true,
       "isHidden": false,
       "isSticky": false,
-      "matchupCount": 116,
-      "matchupCountSE": 101,
+      "matchupCount": 114,
+      "matchupCountSE": 99,
       "name": "Football",
       "primaryMarketType": "spread"
     }
