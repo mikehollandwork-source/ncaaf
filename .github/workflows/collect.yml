@@ -12,10 +12,13 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "full | closing | backfill | probe"
+        description: "full | closing | backfill | history | probe"
         default: full
       since:
-        description: "backfill start date (YYYY-MM-DD)"
+        description: "backfill/history start date (YYYY-MM-DD)"
+        default: ""
+      until:
+        description: "history end date (YYYY-MM-DD)"
         default: ""
 
 permissions:
@@ -28,7 +31,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -63,6 +66,7 @@ jobs:
           if [ "$MODE" = "probe" ]; then python -m ncaaf_tracker.collect --probe --data-dir store/data; exit 0; fi
           ARGS="--mode $MODE --data-dir store/data"
           if [ -n "${{ inputs.since }}" ]; then ARGS="$ARGS --since ${{ inputs.since }}"; fi
+          if [ -n "${{ inputs.until }}" ]; then ARGS="$ARGS --until ${{ inputs.until }}"; fi
           python -m ncaaf_tracker.collect $ARGS
 
       - name: Commit snapshot

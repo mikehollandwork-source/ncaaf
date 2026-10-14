@@ -163,6 +163,8 @@ def fetch_box_scores(session, games: list[dict], done_box: set, meta: dict, limi
             player_rows += p
         if need_plays:
             play_rows += parse_plays(data, gid)
+        if not g.get("espn_details"):          # finished games lose odds on the scoreboard
+            g.update(parse_odds(data.get("pickcenter") or []))
         n += 1
     meta["box_scores"] = n
     return team_rows, player_rows, play_rows
