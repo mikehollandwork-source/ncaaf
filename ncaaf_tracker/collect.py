@@ -78,6 +78,11 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
         write_table(data_dir, "results", espn.results(games), now)
+        for season in sorted({since.year if since.month >= 7 else since.year - 1,
+                              until.year if until.month >= 7 else until.year - 1}):
+            lines = scraped.an_final_lines(session, season)
+            write_table(data_dir, "an_final_lines", lines, now)
+            meta[f"an_final_lines_{season}"] = len(lines)
         meta.update({"history_since": args.since, "history_until": args.until, "espn_games": len(games)})
         write_table(data_dir, "runs", [meta], now)
         log.info("history %s..%s: %d games, %s game pages", args.since, args.until, len(games), meta.get("box_scores"))

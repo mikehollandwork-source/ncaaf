@@ -255,6 +255,44 @@ def an_props_for(session, now: datetime, start: datetime, end: datetime, meta: d
     return rows
 
 
+def an_final_lines(session, season: int, weeks=range(0, 21)) -> list[dict]:
+    """Final (closing) lines per book plus the market opener (book 30) for every
+    finished game of a season, from the past-week scoreboards."""
+    books = ",".join(str(b) for b in (15, 30, 68, 69))
+    rows = []
+    for w in weeks:
+        for div in ("FBS", "FCS"):
+            try:
+                data = get_json(session, f"{AN}/v2/scoreboard/ncaaf",
+                                {"bookIds": books, "division": div, "week": w, "season": season}, min_interval=0.3)
+            except Exception as e:
+                log.warning("action network %s week %s %s failed: %s", season, w, div, e)
+                continue
+            for g in data.get("games", []) or []:
+                if g.get("status") != "complete":
+                    continue
+                teams = {t.get("id"): t for t in g.get("teams", []) or []}
+                home, away = teams.get(g.get("home_team_id"), {}), teams.get(g.get("away_team_id"), {})
+                name = {"home": home.get("full_name"), "away": away.get("full_name"), "over": "Over", "under": "Under"}
+                for book_id, mk in (g.get("markets") or {}).items():
+                    book = AN_BOOKS.get(int(book_id), f"an_{book_id}")
+                    for an_type, market in AN_MARKETS.items():
+                        for o in (mk.get("event") or {}).get(an_type, []) or []:
+                            bi = o.get("bet_info") or {}
+                            rows.append({
+                                "season": season, "week": g.get("week"), "event_id": f"an:{g.get('id')}",
+                                "commence_time": iso(parse_time(g.get("start_time"))),
+                                "home_team": name["home"], "away_team": name["away"],
+                                "book": book, "market": market, "side": o.get("side"),
+                                "outcome": name.get(o.get("side"), o.get("side")),
+                                "price": to_float(o.get("odds")),
+                                "point": None if market == "h2h" else to_float(o.get("value")),
+                                "money_pct": to_float((bi.get("money") or {}).get("percent")),
+                                "tickets_pct": to_float((bi.get("tickets") or {}).get("percent")),
+                            })
+    return rows
+
+
 # ------------------------------------------------------------------ Pinnacle
 
 def pin_fetch(session, now: datetime, meta: dict) -> list[dict]:
