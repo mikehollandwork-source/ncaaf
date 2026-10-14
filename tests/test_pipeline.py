@@ -305,3 +305,28 @@ def test_play_by_play_with_win_probability():
     # win probability chains play to play
     assert all(a["home_wp_after"] == b["home_wp_before"] for a, b in zip(plays, plays[1:]))
     assert any(p["yards"] and p["yards"] >= 20 for p in plays)
+
+
+def test_kalshi_trades_window_and_paging():
+    calls = []
+
+    class S:
+        def get(self, url, params=None, timeout=None):
+            calls.append(dict(params))
+            page = len(calls)
+
+            class R:
+                status_code = 200
+                def raise_for_status(self): pass
+                def json(self):
+                    if page == 1:
+                        return {"trades": [{"trade_id": "a", "count_fp": "5", "yes_price_dollars": "0.40",
+                                            "taker_side": "yes", "created_time": "2026-10-03T15:00:00Z"}], "cursor": "c1"}
+                    return {"trades": [{"trade_id": "b", "count": 2, "yes_price": 41, "taker_side": "no",
+                                        "created_time": "2026-10-03T14:00:00Z"}], "cursor": None}
+            return R()
+    since, until = parse_time("2026-09-26T00:00:00Z"), parse_time("2026-10-03T16:00:00Z")
+    got = kalshi.fetch_trades(S(), "T", since, until)
+    assert [t["trade_id"] for t in got] == ["a", "b"] and got[0]["count"] == 5 and got[1]["yes_price"] == 0.41
+    assert calls[0]["min_ts"] == int(since.timestamp()) and calls[0]["max_ts"] == int(until.timestamp())
+    assert calls[1]["cursor"] == "c1"
