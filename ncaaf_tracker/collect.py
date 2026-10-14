@@ -72,7 +72,10 @@ def main(argv=None) -> int:
         since = parse_time(f"{args.since}T00:00:00Z")
         until = parse_time(f"{args.until}T00:00:00Z") if args.until else now
         games = espn.fetch_games(session, since - timedelta(days=1), until + timedelta(days=1))
-        got = kalshi.backfill_trades(session, now, since, espn_kickoff_lookup(games), meta, until)
+        # markets settled before Kalshi's historical cutoff live in its archive endpoints
+        historical = until < parse_time("2026-08-14T00:00:00Z")
+        meta["kalshi_historical"] = historical
+        got = kalshi.backfill_trades(session, now, since, espn_kickoff_lookup(games), meta, until, historical)
         for name, rows in got.items():
             write_table(data_dir, name, rows, now)
         write_table(data_dir, "runs", [meta], now)
@@ -171,6 +174,12 @@ def main(argv=None) -> int:
         except Exception as e:
             log.exception("action network props failed")
             meta["an_props_error"] = str(e)[:300]
+    try:
+        tables["rule_picks"] = rule_snapshot(games, tables.get("an_odds", []), tables.get("an_splits", []), now)
+        meta["rule_fires"] = sum(r["fires"] for r in tables["rule_picks"])
+    except Exception as e:
+        log.exception("rule snapshot failed")
+        meta["rule_error"] = str(e)[:300]
     if "pinnacle" in sources:
         try:
             tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
@@ -256,6 +265,61 @@ def last_history_save(data_dir: Path):
     return last_save(data_dir, "an_history")
 
 
+RULE = "ranked_rlm_v1"   # locked 2026-10-14; do not edit, add a new version instead
+
+
+def rule_snapshot(games: list[dict], an_odds: list[dict], an_splits: list[dict], now) -> list[dict]:
+    """Locked rule: ranked game (either team AP top 25); DraftKings spread has moved 1+ pt from
+    the market opener toward a side; that side has under 50% of both tickets and money.
+    Every ranked game is logged each run with whether the rule fires right now."""
+    import pandas as pd
+    from .matching import Matcher
+    if not games or not an_odds:
+        return []
+    gdf = pd.DataFrame(games)
+    gdf = gdf[gdf["home_rank"].notna() | gdf["away_rank"].notna()]
+    if gdf.empty:
+        return []
+    m = Matcher(gdf)
+    o = pd.DataFrame(an_odds)
+    o = o[o["market"] == "spreads"]
+    sp = pd.DataFrame(an_splits) if an_splits else pd.DataFrame(columns=["event_id", "market", "side"])
+    sp = sp[sp["market"] == "spreads"] if len(sp) else sp
+    rows = []
+    for eid, d in o.groupby("event_id"):
+        r = d.iloc[0]
+        gid, sides = m.match(r.home_team, r.away_team, parse_time(r.commence_time), 12)
+        if gid is None:
+            continue
+        g = gdf[gdf.espn_id == gid].iloc[0]
+        flip = sides[r.home_team] != "home"          # AN home is ESPN away
+        def line(book):
+            x = d[(d.book == book) & (d.outcome == r.home_team)]
+            return float(x.point.iloc[-1]) if len(x) and x.point.notna().any() else None
+        opener, dk = line("an_open"), line("draftkings")
+        if opener is None or dk is None:
+            continue
+        move = dk - opener                            # > 0: AN-home line got worse
+        toward = None if abs(move) < 1 else ("away" if move > 0 else "home")
+        rec = {"snapshot_ts": iso(now), "rule": RULE, "espn_id": gid, "event_id": eid,
+               "commence_time": r.commence_time, "an_home": r.home_team, "an_away": r.away_team,
+               "home_rank": g.get("home_rank"), "away_rank": g.get("away_rank"),
+               "home_open": opener, "home_dk": dk, "move": move, "toward": toward, "fires": False}
+        if toward:
+            team = r.home_team if toward == "home" else r.away_team
+            odds = d[(d.book == "draftkings") & (d.outcome == team)].price
+            s = sp[(sp.event_id == eid) & (sp.side == toward)] if len(sp) else sp
+            tk = float(s.tickets_pct.iloc[-1]) if len(s) else None
+            mn = float(s.money_pct.iloc[-1]) if len(s) else None
+            espn_side = toward if not flip else ("away" if toward == "home" else "home")
+            rec.update({"pick": team, "pick_side": espn_side, "pick_line": dk if toward == "home" else -dk,
+                        "pick_odds": float(odds.iloc[-1]) if len(odds) else None,
+                        "pick_tickets_pct": tk, "pick_money_pct": mn,
+                        "fires": tk is not None and mn is not None and 3 <= mn <= 96 and tk < 50 and mn < 50})
+        rows.append(rec)
+    return rows
+
+
 def espn_kickoff_lookup(games: list[dict]):
     """(team_a, team_b, approx_time) -> ESPN kickoff, using the analysis name matcher."""
     import pandas as pd
@@ -282,10 +346,8 @@ PROBES = {
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
     "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
-    "an_2025_week1": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69&division=FBS&week=1&season=2025", {}),
-    "an_2025_week8": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69&division=FBS&week=8&season=2025", {}),
-    "espn_core_odds_2025": ("https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/401752677/competitions/401752677/odds", {}),
-    "espn_summary_2025": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401752677", {}),
+    "k_hist_trades_real": (kalshi.BASE + "/historical/trades?ticker=KXNCAAFGAME-26JAN01ORETTU-TTU&limit=5", {}),
+    "k_hist_markets_closets": (kalshi.BASE + "/historical/markets?series_ticker=KXNCAAFGAME&limit=3&min_close_ts=1756000000&max_close_ts=1757000000", {}),
     "an_props": (AN + "/v2/games/289385/props?bookIds=15,68,69,75", {}),
     "an_props_osu_books": (AN + "/v2/games/289489/props?bookIds=15,68,69,71,75,79,123,972", {}),
     "an_props_osu_nobooks": (AN + "/v2/games/289489/props", {}),

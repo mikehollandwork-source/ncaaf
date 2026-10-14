@@ -63,7 +63,9 @@ def kickoff_estimate(m: dict) -> datetime | None:
 
 
 def list_markets(session, series: str, status: str | None = "open", min_close_ts: int | None = None,
-                 max_close_ts: int | None = None) -> list[dict]:
+                 max_close_ts: int | None = None, historical: bool = False) -> list[dict]:
+    """historical=True reads Kalshi's archive (markets settled before its historical cutoff)."""
+    path = f"{BASE}/historical/markets" if historical else f"{BASE}/markets"
     out, cursor = [], None
     while True:
         params = {"series_ticker": series, "limit": 200}
@@ -75,7 +77,7 @@ def list_markets(session, series: str, status: str | None = "open", min_close_ts
             params["max_close_ts"] = max_close_ts
         if cursor:
             params["cursor"] = cursor
-        data = get_json(session, f"{BASE}/markets", params, min_interval=PAUSE)
+        data = get_json(session, path, params, min_interval=PAUSE)
         out.extend(data.get("markets", []) or [])
         cursor = data.get("cursor")
         if not cursor or not data.get("markets"):
@@ -154,8 +156,10 @@ def parse_orderbook(data: dict, ticker: str, snap: str, depth: int) -> list[dict
 
 
 def fetch_trades(session, ticker: str, since: datetime, until: datetime | None = None,
-                 max_pages: int = 50) -> list[dict]:
-    """Every trade in [since, until] (Kalshi keeps full history), newest first."""
+                 max_pages: int = 50, historical: bool = False) -> list[dict]:
+    """Every trade in [since, until] (Kalshi keeps full history), newest first.
+    historical=True reads the archive (trades before Kalshi's historical cutoff)."""
+    path = f"{BASE}/historical/trades" if historical else f"{BASE}/markets/trades"
     out, cursor = [], None
     for _ in range(max_pages):
         params = {"ticker": ticker, "min_ts": int(since.timestamp()), "limit": 1000}
@@ -163,7 +167,7 @@ def fetch_trades(session, ticker: str, since: datetime, until: datetime | None =
             params["max_ts"] = int(until.timestamp())
         if cursor:
             params["cursor"] = cursor
-        data = get_json(session, f"{BASE}/markets/trades", params, min_interval=PAUSE)
+        data = get_json(session, path, params, min_interval=PAUSE)
         for t in data.get("trades", []) or []:
             out.append({
                 "trade_id": t.get("trade_id"),
@@ -181,17 +185,19 @@ def fetch_trades(session, ticker: str, since: datetime, until: datetime | None =
 
 
 def backfill_trades(session, now: datetime, since: datetime, kickoff_fn, meta: dict,
-                    until: datetime | None = None) -> dict[str, list[dict]]:
+                    until: datetime | None = None, historical: bool = False) -> dict[str, list[dict]]:
     """Full pre-kickoff trade history for every game-winner market that closed
     in [since, until]: the market rows plus every trade up to ESPN's kickoff."""
     snap = iso(now)
     raw = []
-    for status in ("settled", "closed"):
+    for status in ((None,) if historical else ("settled", "closed")):
         try:
             raw += list_markets(session, GAME_SERIES, status=status, min_close_ts=int(since.timestamp()),
-                                max_close_ts=int(until.timestamp()) if until else None)
+                                max_close_ts=int(until.timestamp()) if until else None, historical=historical)
         except Exception as e:
             log.warning("kalshi list %s markets failed: %s", status, e)
+    if historical and until is not None:   # in case the archive ignores the close-time filter
+        raw = [m for m in raw if since <= (parse_time(m.get("close_time")) or since) <= until + timedelta(days=2)]
     rows = {m["ticker"]: market_row(m, GAME_SERIES, snap) for m in raw if m.get("ticker")}
     rows = list(rows.values())
     meta["kalshi_backfill_markets"] = len(rows)
@@ -206,7 +212,8 @@ def backfill_trades(session, now: datetime, since: datetime, kickoff_fn, meta: d
             break
         try:
             opened = parse_time(r.get("open_time")) or ko - timedelta(days=21)
-            trades += fetch_trades(session, r["ticker"], min(opened, ko - timedelta(hours=1)), ko, max_pages=200)
+            trades += fetch_trades(session, r["ticker"], min(opened, ko - timedelta(hours=1)), ko, max_pages=200,
+                                   historical=historical)
             failures, done = 0, done + 1
         except Exception as e:
             failures += 1

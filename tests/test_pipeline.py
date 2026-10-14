@@ -330,3 +330,22 @@ def test_kalshi_trades_window_and_paging():
     assert [t["trade_id"] for t in got] == ["a", "b"] and got[0]["count"] == 5 and got[1]["yes_price"] == 0.41
     assert calls[0]["min_ts"] == int(since.timestamp()) and calls[0]["max_ts"] == int(until.timestamp())
     assert calls[1]["cursor"] == "c1"
+
+
+def test_locked_rule_snapshot():
+    from ncaaf_tracker.collect import rule_snapshot
+    games = [{"espn_id": "1", "kickoff": "2026-10-17T19:30:00Z", "home_name": "Tennessee Volunteers",
+              "away_name": "Alabama Crimson Tide", "home_short": "Tennessee", "away_short": "Alabama",
+              "home_location": "Tennessee", "away_location": "Alabama", "home_abbr": "TENN", "away_abbr": "ALA",
+              "home_id": "2633", "away_id": "333", "home_rank": 14, "away_rank": 6}]
+    base = {"event_id": "an:1", "commence_time": "2026-10-17T19:30:00Z", "home_team": "Tennessee Volunteers",
+            "away_team": "Alabama Crimson Tide", "market": "spreads"}
+    odds = [{**base, "book": "an_open", "outcome": "Tennessee Volunteers", "point": 5.5, "price": -110},
+            {**base, "book": "draftkings", "outcome": "Tennessee Volunteers", "point": 4.0, "price": -108},
+            {**base, "book": "draftkings", "outcome": "Alabama Crimson Tide", "point": -4.0, "price": -112}]
+    splits = [{**base, "side": "home", "tickets_pct": 35, "money_pct": 40},
+              {**base, "side": "away", "tickets_pct": 65, "money_pct": 60}]
+    r = rule_snapshot(games, odds, splits, parse_time("2026-10-16T12:00:00Z"))[0]
+    assert r["fires"] and r["pick_side"] == "home" and r["pick_line"] == 4.0 and r["pick_odds"] == -108
+    splits[0]["money_pct"] = 55          # public money now with the move -> no bet
+    assert not rule_snapshot(games, odds, splits, parse_time("2026-10-16T12:00:00Z"))[0]["fires"]
