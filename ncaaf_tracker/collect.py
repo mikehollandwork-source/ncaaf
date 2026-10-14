@@ -34,7 +34,7 @@ from .util import env, iso, log, make_session, parse_time, utcnow, write_table
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill", "history"), default="auto")
+    ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill", "history", "trades"), default="auto")
     ap.add_argument("--data-dir", default=env("DATA_DIR", "data"))
     ap.add_argument("--sources", default="espn,an,pinnacle,odds,kalshi,poly",
                     help="comma list of sources to poll")
@@ -67,6 +67,17 @@ def main(argv=None) -> int:
     window = timedelta(minutes=int(env("CLOSING_WINDOW_MIN", "100")))
 
     # ---- master schedule / results
+    if mode == "trades":
+        # Full pre-kickoff Kalshi trade history for every finished game in [since, until].
+        since = parse_time(f"{args.since}T00:00:00Z")
+        until = parse_time(f"{args.until}T00:00:00Z") if args.until else now
+        games = espn.fetch_games(session, since - timedelta(days=1), until + timedelta(days=1))
+        got = kalshi.backfill_trades(session, now, since, espn_kickoff_lookup(games), meta, until)
+        for name, rows in got.items():
+            write_table(data_dir, name, rows, now)
+        write_table(data_dir, "runs", [meta], now)
+        log.info("kalshi trades backfill: %s", {k: v for k, v in meta.items() if "kalshi" in k})
+        return 0
     if mode == "history":
         # ESPN only, any date range (e.g. a past season): games, ranks, results, and one
         # game-page load per finished game for its closing odds, box score and plays.
@@ -180,7 +191,8 @@ def main(argv=None) -> int:
     pm_horizon = horizon + timedelta(hours=1) if horizon else None
     if "kalshi" in sources:
         try:
-            tables.update(kalshi.collect(session, now, pm_horizon, meta, kickoff_fn))
+            tables.update(kalshi.collect(session, now, pm_horizon, meta, kickoff_fn,
+                                         trades_since=last_save(data_dir, "kalshi_trades")))
         except Exception as e:
             log.exception("kalshi failed")
             meta["kalshi_error"] = str(e)[:300]

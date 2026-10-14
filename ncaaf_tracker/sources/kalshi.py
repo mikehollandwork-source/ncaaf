@@ -62,10 +62,17 @@ def kickoff_estimate(m: dict) -> datetime | None:
     return None
 
 
-def list_markets(session, series: str) -> list[dict]:
+def list_markets(session, series: str, status: str | None = "open", min_close_ts: int | None = None,
+                 max_close_ts: int | None = None) -> list[dict]:
     out, cursor = [], None
     while True:
-        params = {"series_ticker": series, "status": "open", "limit": 200}
+        params = {"series_ticker": series, "limit": 200}
+        if status:
+            params["status"] = status
+        if min_close_ts:
+            params["min_close_ts"] = min_close_ts
+        if max_close_ts:
+            params["max_close_ts"] = max_close_ts
         if cursor:
             params["cursor"] = cursor
         data = get_json(session, f"{BASE}/markets", params, min_interval=PAUSE)
@@ -91,6 +98,7 @@ def market_row(m: dict, series: str, snap: str) -> dict:
         "ticker_date": iso(ticker_date(m.get("event_ticker") or m.get("ticker"))),
         "expected_expiration_time": m.get("expected_expiration_time"),
         "close_time": m.get("close_time"),
+        "open_time": m.get("open_time"),
         "strike_type": m.get("strike_type"),
         "floor_strike": to_float(m.get("floor_strike")),
         "cap_strike": to_float(m.get("cap_strike")),
@@ -145,10 +153,14 @@ def parse_orderbook(data: dict, ticker: str, snap: str, depth: int) -> list[dict
     return rows
 
 
-def fetch_trades(session, ticker: str, since: datetime) -> list[dict]:
+def fetch_trades(session, ticker: str, since: datetime, until: datetime | None = None,
+                 max_pages: int = 50) -> list[dict]:
+    """Every trade in [since, until] (Kalshi keeps full history), newest first."""
     out, cursor = [], None
-    for _ in range(20):
+    for _ in range(max_pages):
         params = {"ticker": ticker, "min_ts": int(since.timestamp()), "limit": 1000}
+        if until is not None:
+            params["max_ts"] = int(until.timestamp())
         if cursor:
             params["cursor"] = cursor
         data = get_json(session, f"{BASE}/markets/trades", params, min_interval=PAUSE)
@@ -166,6 +178,44 @@ def fetch_trades(session, ticker: str, since: datetime) -> list[dict]:
         if not cursor or not data.get("trades"):
             break
     return out
+
+
+def backfill_trades(session, now: datetime, since: datetime, kickoff_fn, meta: dict,
+                    until: datetime | None = None) -> dict[str, list[dict]]:
+    """Full pre-kickoff trade history for every game-winner market that closed
+    in [since, until]: the market rows plus every trade up to ESPN's kickoff."""
+    snap = iso(now)
+    raw = []
+    for status in ("settled", "closed"):
+        try:
+            raw += list_markets(session, GAME_SERIES, status=status, min_close_ts=int(since.timestamp()),
+                                max_close_ts=int(until.timestamp()) if until else None)
+        except Exception as e:
+            log.warning("kalshi list %s markets failed: %s", status, e)
+    rows = {m["ticker"]: market_row(m, GAME_SERIES, snap) for m in raw if m.get("ticker")}
+    rows = list(rows.values())
+    meta["kalshi_backfill_markets"] = len(rows)
+    meta["kalshi_backfill_espn_kickoffs"] = apply_espn_kickoffs(rows, kickoff_fn)
+    trades, failures, done = [], 0, 0
+    for r in rows:
+        ko = parse_time(r.get("kickoff_est"))
+        if r.get("kickoff_source") != "espn" or ko is None:
+            continue
+        if failures >= 10:
+            log.error("kalshi trade backfill: repeated failures, stopping")
+            break
+        try:
+            opened = parse_time(r.get("open_time")) or ko - timedelta(days=21)
+            trades += fetch_trades(session, r["ticker"], min(opened, ko - timedelta(hours=1)), ko, max_pages=200)
+            failures, done = 0, done + 1
+        except Exception as e:
+            failures += 1
+            log.warning("kalshi trades %s failed: %s", r["ticker"], e)
+    for t in trades:
+        t["snapshot_ts"] = snap
+    meta["kalshi_backfill_tickers"] = done
+    meta["rows_kalshi_backfill_trades"] = len(trades)
+    return {"kalshi_markets": rows, "kalshi_trades": trades}
 
 
 def game_key(event_ticker: str | None) -> str | None:
@@ -201,12 +251,15 @@ def apply_espn_kickoffs(rows: list[dict], kickoff_fn) -> int:
 
 
 def collect(session, now: datetime, horizon: datetime | None, meta: dict,
-            kickoff_fn=None) -> dict[str, list[dict]]:
+            kickoff_fn=None, trades_since: datetime | None = None) -> dict[str, list[dict]]:
     snap = iso(now)
     series_list = [s.strip() for s in env("KALSHI_SERIES", DEFAULT_SERIES).split(",") if s.strip()]
     depth = int(env("KALSHI_BOOK_DEPTH", "10"))
     book_series = set(env("KALSHI_BOOK_SERIES", GAME_SERIES).split(","))
     lookback = timedelta(minutes=int(env("TRADE_LOOKBACK_MIN", "75")))
+    # GitHub runs the collector only every few hours: fetch every trade since the last save
+    # (15 min overlap, deduped by trade_id in analysis), capped at a week.
+    since_all = max(trades_since - timedelta(minutes=15), now - timedelta(days=7)) if trades_since else now - lookback
 
     all_rows = []
     for series in series_list:
@@ -244,7 +297,7 @@ def collect(session, now: datetime, horizon: datetime | None, meta: dict,
                 failures += 1
                 log.warning("kalshi book %s failed: %s", t, e)
             try:
-                got = fetch_trades(session, t, now - lookback)
+                got = fetch_trades(session, t, since_all, ko if r.get("kickoff_source") == "espn" else None)
                 if ko is not None and r.get("kickoff_source") == "espn":
                     got = [x for x in got if (parse_time(x["created_time"]) or now) < ko]
                 trades.extend(got)

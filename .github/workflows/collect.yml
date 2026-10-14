@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "full | closing | backfill | history | probe"
+        description: "full | closing | backfill | history | trades | probe"
         default: full
       since:
         description: "backfill/history start date (YYYY-MM-DD)"
