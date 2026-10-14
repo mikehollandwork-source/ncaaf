@@ -1,9 +1,10 @@
 """Do public splits and real prediction-market money agree, and who wins when they don't?
 
-  python analysis/money_agreement.py --data-dir store/data [--all-ranked]
+  python analysis/money_agreement.py --data-dir store/data [--scope both|any|all]
 
-Games: ranked vs ranked where the closing spread moved 1+ point toward a side
-(the "line moved toward" rule); --all-ranked uses every game with a ranked team.
+Games: ranked vs ranked (--scope both, default), any game with a ranked team (any)
+or every game (all), where the closing spread moved 1+ point toward a side
+(the "line moved toward" rule).
 Signals, all from the backed side's point of view, at kickoff:
   tickets   Action Network % of bets (one source; per-book copies are identical)
   money     Action Network % of money
@@ -52,16 +53,25 @@ def rec(d: pd.DataFrame, label: str) -> None:
     print(f"  {label:58} n={len(d):3d}  ATS {w}-{l_}{'-%d' % p if p else ''} {pct}")
 
 
+def roi(d: pd.DataFrame, label: str, fade: bool) -> None:
+    home = (d.backed == "home") != fade
+    r = bt.score(d.reset_index(drop=True), pd.Series(home.values, dtype=object))
+    print(f"  {label:58} ATS {r['cover%']:4.1f}% ROI {r['ATS ROI%']:+6.1f}% (n={r['ATS bets']:3d}) | "
+          f"ML win {r['win%']:4.1f}% ROI {r['ML ROI%']:+6.1f}% (n={r['ML bets']:3d})")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-dir", default="store/data")
-    ap.add_argument("--all-ranked", action="store_true")
+    ap.add_argument("--scope", choices=("both", "any", "all"), default="both")
+    ap.add_argument("--all-ranked", action="store_true", help="same as --scope any")
     args = ap.parse_args(argv)
     D = Path(args.data_dir)
     pd.set_option("display.width", 230)
 
     df = bt.features(D, bt.games(D))
-    rr = df[(df.n_ranked >= 1) if args.all_ranked else (df.n_ranked == 2)].copy()
+    scope = "any" if args.all_ranked else args.scope
+    rr = df[{"both": df.n_ranked == 2, "any": df.n_ranked >= 1, "all": df.n_ranked >= 0}[scope]].copy()
     mv = rr.sp_close - rr.sp_open
     rr = rr[mv.abs() >= 1].copy()
     home = (rr.sp_close - rr.sp_open) < 0
@@ -111,6 +121,14 @@ def main(argv=None) -> int:
     for season in sorted(s.season.unique()):
         ss = s[s.season == season]
         rec(ss[(ss.t_side < 0) & (ss.m_side < 0)], f"{season}: AN tickets AND money against the backed side")
+    print("\nBetting the backed side vs fading it, at closing DraftKings prices:")
+    for season in [*sorted(k.season.unique()), None]:
+        ks = k if season is None else k[k.season == season]
+        for flow in (1, -1):
+            g = ks[ks.k_side == flow]
+            for fade in (False, True):
+                roi(g, f"{season or 'both'}: Kalshi {'WITH' if flow > 0 else 'AGAINST'} the move, "
+                       f"{'FADE' if fade else 'back'} the backed side", fade)
     km = k.dropna(subset=["m_side"])
     agree = km[km.k_side == km.m_side]
     print(f"  Kalshi side == AN money side: {len(agree)}/{len(km)}")

@@ -212,6 +212,15 @@ def main(argv=None) -> int:
             log.exception("polymarket failed")
             meta["poly_error"] = str(e)[:300]
 
+    if tables.get("kalshi_books"):
+        try:
+            tables["book_picks"] = book_rule_snapshot(games, tables.get("kalshi_markets", []),
+                                                      tables["kalshi_books"], tables.get("an_odds", []), now)
+            meta["book_rule_fires"] = sum(r["fires"] for r in tables["book_picks"])
+        except Exception as e:
+            log.exception("book rule snapshot failed")
+            meta["book_rule_error"] = str(e)[:300]
+
     for name, rows in tables.items():
         meta[f"rows_{name}"] = len(rows)
         path = write_table(data_dir, name, rows, now)
@@ -316,6 +325,92 @@ def rule_snapshot(games: list[dict], an_odds: list[dict], an_splits: list[dict],
                         "pick_odds": float(odds.iloc[-1]) if len(odds) else None,
                         "pick_tickets_pct": tk, "pick_money_pct": mn,
                         "fires": tk is not None and mn is not None and 3 <= mn <= 96 and tk < 50 and mn < 50})
+        rows.append(rec)
+    return rows
+
+
+BOOK_RULE = "kalshi_book_fade_v1"   # locked 2026-10-14; do not edit, add a new version instead
+
+
+def book_rule_snapshot(games: list[dict], k_markets: list[dict], k_books: list[dict],
+                       an_odds: list[dict], now) -> list[dict]:
+    """Locked rule: fade the team with more resting Kalshi order-book CONTRACTS (bids backing
+    it: yes on its ticker + no on the opponent's). Every game with both books this run is
+    logged; the bet is the last snapshot before kickoff, graded at the DraftKings spread.
+    Dollars, the Kalshi price and DraftKings moneyline are logged too so the result can be
+    compared with simply betting the underdog."""
+    import pandas as pd
+    from .matching import Matcher
+    if not games or not k_markets or not k_books:
+        return []
+    gdf = pd.DataFrame(games)
+    m = Matcher(gdf)
+    mk = pd.DataFrame(k_markets)
+    mk = mk[mk["series"] == "KXNCAAFGAME"]
+    tick: dict[str, tuple[str, str]] = {}
+    for _, d in mk.groupby("event_ticker"):
+        teams = d.drop_duplicates("ticker")[["ticker", "yes_sub_title"]].dropna()
+        if len(teams) != 2:
+            continue
+        a, b = teams["yes_sub_title"].tolist()
+        gid, sides = m.match(a, b, parse_time(d["kickoff_est"].dropna().iloc[-1]) if d["kickoff_est"].notna().any()
+                             else None, 12)
+        if gid is not None:
+            for t, name in zip(teams["ticker"], teams["yes_sub_title"]):
+                tick[t] = (gid, sides[name])
+    mid = {}
+    for r in k_markets:
+        bid, ask = r.get("yes_bid"), r.get("yes_ask")
+        if r.get("ticker") in tick and bid is not None and ask is not None and ask > 0:
+            mid[r["ticker"]] = (bid + ask) / 2
+    agg: dict[str, dict] = {}
+    for r in k_books:
+        t = r["ticker"]
+        if t not in tick or r.get("size") is None or r.get("price") is None:
+            continue
+        gid, team = tick[t]
+        backs = team if r["side"] == "yes" else ("away" if team == "home" else "home")
+        a = agg.setdefault(gid, {"tickers": set(), "home_contracts": 0.0, "away_contracts": 0.0,
+                                 "home_usd": 0.0, "away_usd": 0.0})
+        a["tickers"].add(t)
+        a[f"{backs}_contracts"] += r["size"]
+        a[f"{backs}_usd"] += r["size"] * r["price"]
+    # DraftKings spread + moneyline per ESPN game
+    dk: dict[str, dict] = {}
+    o = pd.DataFrame(an_odds)
+    if len(o):
+        o = o[o["book"] == "draftkings"]
+        for _, d in o.groupby("event_id"):
+            r0 = d.iloc[0]
+            gid, sides = m.match(r0.home_team, r0.away_team, parse_time(r0.commence_time), 12)
+            if gid is None:
+                continue
+            for _, x in d.iterrows():
+                side = sides.get(x.outcome)
+                if side in ("home", "away") and x.market in ("spreads", "h2h"):
+                    dk.setdefault(gid, {})[(x.market, side)] = (x.point, x.price)
+    g_by = gdf.set_index("espn_id")
+    rows = []
+    for gid, a in agg.items():
+        if len(a["tickers"]) != 2 or gid not in g_by.index:
+            continue
+        g = g_by.loc[gid]
+        hc, ac = a["home_contracts"], a["away_contracts"]
+        pick = None if hc == ac else ("away" if hc > ac else "home")
+        ht = [t for t, (i, s) in tick.items() if i == gid and s == "home"]
+        line = dk.get(gid, {})
+        rec = {"snapshot_ts": iso(now), "rule": BOOK_RULE, "espn_id": gid, "commence_time": g["kickoff"],
+               "home": g["home_name"], "away": g["away_name"], "home_rank": g.get("home_rank"),
+               "away_rank": g.get("away_rank"), "home_contracts": round(hc, 2), "away_contracts": round(ac, 2),
+               "home_usd": round(a["home_usd"], 2), "away_usd": round(a["away_usd"], 2),
+               "kalshi_home_p": mid.get(ht[0]) if ht else None, "pick_side": pick,
+               "pick": None if pick is None else g[f"{pick}_name"], "fires": False}
+        if pick:
+            sp, ml = line.get(("spreads", pick)), line.get(("h2h", pick))
+            rec.update({"pick_line": sp[0] if sp else None, "pick_odds": sp[1] if sp else None,
+                        "pick_ml": ml[1] if ml else None,
+                        "pick_is_dog": None if not sp or sp[0] is None else bool(sp[0] > 0),
+                        "fires": sp is not None and sp[0] is not None})
         rows.append(rec)
     return rows
 
