@@ -78,6 +78,11 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
         write_table(data_dir, "results", espn.results(games), now)
+        for season in sorted({since.year if since.month >= 7 else since.year - 1,
+                              until.year if until.month >= 7 else until.year - 1}):
+            lines = scraped.an_final_lines(session, season)
+            write_table(data_dir, "an_final_lines", lines, now)
+            meta[f"an_final_lines_{season}"] = len(lines)
         meta.update({"history_since": args.since, "history_until": args.until, "espn_games": len(games)})
         write_table(data_dir, "runs", [meta], now)
         log.info("history %s..%s: %d games, %s game pages", args.since, args.until, len(games), meta.get("box_scores"))
@@ -263,6 +268,10 @@ PROBES = {
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
     "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
+    "an_2025_week1": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69&division=FBS&week=1&season=2025", {}),
+    "an_2025_week8": (AN + "/v2/scoreboard/ncaaf?bookIds=15,30,68,69&division=FBS&week=8&season=2025", {}),
+    "espn_core_odds_2025": ("https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/401752677/competitions/401752677/odds", {}),
+    "espn_summary_2025": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401752677", {}),
     "an_props": (AN + "/v2/games/289385/props?bookIds=15,68,69,75", {}),
     "an_props_osu_books": (AN + "/v2/games/289489/props?bookIds=15,68,69,71,75,79,123,972", {}),
     "an_props_osu_nobooks": (AN + "/v2/games/289489/props", {}),
