@@ -113,6 +113,17 @@ def book(D: Path) -> None:
     # the other side, so compare cover rates: dog cover% in these games
     cov = np.where(dog, b.margin + b.pick_line > 0, b.margin + b.pick_line < 0)
     print(f"  baseline: underdog covered {100 * cov.mean():.1f}% of these games")
+    # price-neutral read of the same snapshots: back the team with more book $ than its price implies
+    for c in ("home_usd", "away_usd", "kalshi_home_p"):
+        b[c] = pd.to_numeric(b[c], errors="coerce")
+    ex = b.home_usd / (b.home_usd + b.away_usd) - b.kalshi_home_p
+    k = ex.notna() & (ex != 0)
+    pick_cov = b.margin + b.pick_line
+    exc_is_pick = (ex > 0) == (b.pick_side == "home")
+    exc_cov = np.where(exc_is_pick, pick_cov > 0, pick_cov < 0)[k] if k.any() else np.array([])
+    if len(exc_cov):
+        print(f"  excess-demand team (book $ share > Kalshi price) covered {100 * exc_cov.mean():.1f}% "
+              f"of {len(exc_cov)} games (-110 break-even 52.4%)")
 
 
 if __name__ == "__main__":
