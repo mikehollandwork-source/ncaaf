@@ -167,6 +167,29 @@ def main(argv=None) -> int:
                    ("0..+25", (gap >= 0) & (gap < 25)), ("public much heavier (> +25)", gap >= 25)):
         rec(s[c], lab)
 
+    # Price-neutral version: in a matched market a team's backers put up its price per contract
+    # and the other side 1 - price, so its fair share of book dollars ~= its Kalshi price.
+    # excess = USD share - Kalshi price; > 0 means more resting money than the price implies.
+    x = df[df.kalshi_home_p.between(0.02, 0.98)].copy()
+    mg = x.hs - x["as"]
+    x["excess"] = x.home_usd / (x.home_usd + x.away_usd) - x.kalshi_home_p
+    x["fade_home"] = x.excess < 0                       # rec() grades fade_home; flip to back
+    x["ats"] = np.where(x.fade_home, mg + x.sp_close, -(mg + x.sp_close))
+    x["won"] = np.where(x.fade_home, x.hs > x["as"], x["as"] > x.hs)
+    fav = (x.excess > 0) == (x.sp_close < 0)            # excess-demand team is the favorite
+    print(f"\nPrice-neutral book excess (USD share - Kalshi price), {len(x)} games | corr with home-favorite "
+          f"{np.corrcoef(x.excess, (x.sp_close < 0).astype(float))[0, 1]:+.2f} "
+          f"(raw USD share {np.corrcoef(x.home_usd / (x.home_usd + x.away_usd), (x.sp_close < 0).astype(float))[0, 1]:+.2f})")
+    rec(x, "FADE excess-demand team")
+    back = x.assign(fade_home=~x.fade_home, ats=-x.ats, won=~x.won)
+    rec(back, "BACK excess-demand team")
+    rec(back[fav], "  back it when it's the favorite")
+    rec(back[~fav], "  back it when it's the underdog")
+    bands(back.assign(a=back.excess.abs()), "a", [0, .05, .1, .2, 1], ["|excess| <5pts", "5-10", "10-20", "20+"],
+          "BACK excess-demand team, by size of the excess:")
+    dog = x.sp_close > 0
+    print(f"  baseline in these games: underdogs covered {100 * np.mean(np.where(dog, mg + x.sp_close > 0, mg + x.sp_close < 0)):.1f}%")
+
     if args.out:
         df.to_csv(args.out, index=False)
     return 0
