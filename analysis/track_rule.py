@@ -1,5 +1,6 @@
 """Grade the locked rules from the snapshots the collector logs:
   ranked_rlm_v1        (table rule_picks)
+  sharp_split_v1, fade90_v1  (table split_picks, locked 2026-10-21)
   kalshi_book_fade_v1  (table book_picks; also shows "bet every underdog" on the same games,
                         since fading book money is mostly an underdog bet)
 
@@ -34,6 +35,7 @@ def main(argv=None) -> int:
     if p.empty:
         print("no ranked_rlm_v1 snapshots yet")
         book(D)
+        split_rules(D)
         return 0
     p["snap"] = pd.to_datetime(p.snapshot_ts, utc=True)
     p["ko"] = pd.to_datetime(p.commence_time, utc=True)
@@ -67,16 +69,19 @@ def main(argv=None) -> int:
             print(f"\nrecord {w}-{l_}-{(done.result == 'push').sum()}  ROI {100 * done.profit.mean():+.1f}%  "
                   f"(break-even at -110 is 52.4%)")
     book(D)
+    split_rules(D)
     return 0
 
 
-def grade(D: Path, table: str) -> pd.DataFrame:
+def grade(D: Path, table: str, rule: str | None = None, since: pd.Timestamp = LOCKED) -> pd.DataFrame:
     p = explosive.load(D, table)
     if p.empty:
         return p
+    if rule:
+        p = p[p.rule == rule]
     p["snap"] = pd.to_datetime(p.snapshot_ts, utc=True)
     p["ko"] = pd.to_datetime(p.commence_time, utc=True)
-    p = p[(p.snap < p.ko) & (p.ko >= LOCKED)].sort_values("snap")
+    p = p[(p.snap < p.ko) & (p.ko >= since)].sort_values("snap")
     bets = p.groupby("espn_id").tail(1)
     bets = bets[bets.fires.astype(str) == "True"].copy()
     for c in ("pick_line", "pick_odds", "pick_ml"):
@@ -98,6 +103,22 @@ def show(b: pd.DataFrame, label: str) -> None:
     print(f"  {label:28} ATS {(res > 0).sum()}-{(res < 0).sum()}-{(res == 0).sum()} ROI "
           f"{100 * np.mean(sp) if sp else float('nan'):+.1f}% | ML {(b.margin > 0).sum()}-{(b.margin < 0).sum()} "
           f"ROI {100 * np.mean(ml) if ml else float('nan'):+.1f}%")
+
+
+SPLIT_LOCKED = pd.Timestamp("2026-10-21T00:00:00Z")
+
+
+def split_rules(D: Path) -> None:
+    for rule, desc in (("sharp_split_v1", "tickets >= 70% one team, money majority other -> back money side"),
+                       ("fade90_v1", "spread tickets >= 90% -> fade")):
+        b = grade(D, "split_picks", rule, SPLIT_LOCKED)
+        print(f"\nrule {rule} ({desc}) since {SPLIT_LOCKED:%Y-%m-%d}: {len(b)} graded bets")
+        if b.empty:
+            continue
+        b["pick_ml"] = np.nan
+        show(b, rule)
+        print(b[["commence_time", "an_away", "an_home", "pick", "pick_line", "pick_odds",
+                 "heavy_tickets_pct", "heavy_money_pct", "margin"]].to_string(index=False))
 
 
 def book(D: Path) -> None:

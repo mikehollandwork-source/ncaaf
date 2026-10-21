@@ -373,3 +373,25 @@ def test_book_rule_snapshot():
     assert r["away_contracts"] == 600 and r["home_contracts"] == 400
     assert r["fires"] and r["pick_side"] == "home" and r["pick_line"] == 4.0 and r["pick_ml"] == 160
     assert r["pick_is_dog"] and r["kalshi_home_p"] == 0.39
+
+
+def test_split_rules_snapshot():
+    from ncaaf_tracker.collect import split_rules_snapshot
+    games = [{"espn_id": "1", "kickoff": "2026-10-24T19:30:00Z", "home_name": "Tennessee Volunteers",
+              "away_name": "Alabama Crimson Tide", "home_short": "Tennessee", "away_short": "Alabama",
+              "home_location": "Tennessee", "away_location": "Alabama", "home_abbr": "TENN", "away_abbr": "ALA",
+              "home_id": "2633", "away_id": "333", "home_rank": None, "away_rank": None}]
+    base = {"event_id": "an:1", "commence_time": "2026-10-24T19:30:00Z", "home_team": "Tennessee Volunteers",
+            "away_team": "Alabama Crimson Tide", "market": "spreads"}
+    odds = [{**base, "book": "draftkings", "outcome": "Tennessee Volunteers", "point": 4.5, "price": -110},
+            {**base, "book": "draftkings", "outcome": "Alabama Crimson Tide", "point": -4.5, "price": -110}]
+    splits = [{**base, "side": "away", "tickets_pct": 75, "money_pct": 40},
+              {**base, "side": "home", "tickets_pct": 25, "money_pct": 60}]
+    r = {x["rule"]: x for x in split_rules_snapshot(games, odds, splits, parse_time("2026-10-24T12:00:00Z"))}
+    assert r["sharp_split_v1"]["fires"] and not r["fade90_v1"]["fires"]
+    assert r["sharp_split_v1"]["pick_side"] == "home" and r["sharp_split_v1"]["pick_line"] == 4.5
+    splits[0].update(tickets_pct=92, money_pct=88); splits[1].update(tickets_pct=8, money_pct=12)
+    r = {x["rule"]: x for x in split_rules_snapshot(games, odds, splits, parse_time("2026-10-24T12:00:00Z"))}
+    assert r["fade90_v1"]["fires"] and not r["sharp_split_v1"]["fires"]
+    splits[0]["money_pct"] = 100                       # bogus split -> no bet
+    assert not any(x["fires"] for x in split_rules_snapshot(games, odds, splits, parse_time("2026-10-24T12:00:00Z")))

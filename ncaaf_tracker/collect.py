@@ -29,7 +29,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .sources import espn, kalshi, oddsapi, polymarket, scraped
-from .util import env, iso, log, make_session, parse_time, utcnow, write_table
+from .util import env, iso, log, make_session, parse_time, to_float, utcnow, write_table
 
 
 def main(argv=None) -> int:
@@ -180,6 +180,12 @@ def main(argv=None) -> int:
     except Exception as e:
         log.exception("rule snapshot failed")
         meta["rule_error"] = str(e)[:300]
+    try:
+        tables["split_picks"] = split_rules_snapshot(games, tables.get("an_odds", []), tables.get("an_splits", []), now)
+        meta["split_rule_fires"] = sum(r["fires"] for r in tables["split_picks"])
+    except Exception as e:
+        log.exception("split rule snapshot failed")
+        meta["split_rule_error"] = str(e)[:300]
     if "pinnacle" in sources:
         try:
             tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
@@ -326,6 +332,61 @@ def rule_snapshot(games: list[dict], an_odds: list[dict], an_splits: list[dict],
                         "pick_tickets_pct": tk, "pick_money_pct": mn,
                         "fires": tk is not None and mn is not None and 3 <= mn <= 96 and tk < 50 and mn < 50})
         rows.append(rec)
+    return rows
+
+
+# Locked 2026-10-21 from analysis/handle_bands.py (2025 + 2026 backtests); do not edit, add a new version.
+SPLIT_RULES = {
+    # spread tickets >= 70% on one team but the money majority on the other: back the money side
+    "sharp_split_v1": lambda tk, mn: tk >= 70 and mn < 50,
+    # spread tickets >= 90% on one team: fade it
+    "fade90_v1": lambda tk, mn: tk >= 90,
+}
+
+
+def split_rules_snapshot(games: list[dict], an_odds: list[dict], an_splits: list[dict], now) -> list[dict]:
+    """Every game with Action Network spread splits, logged once per locked split rule.
+    The 'heavy' team is the one with more spread tickets; both rules bet the other team
+    against the DraftKings spread. Money % outside 3-96 is treated as bogus (no bet), as in
+    the backtest."""
+    import pandas as pd
+    from .matching import Matcher
+    if not games or not an_odds or not an_splits:
+        return []
+    gdf = pd.DataFrame(games)
+    m = Matcher(gdf)
+    o = pd.DataFrame(an_odds)
+    o = o[(o["market"] == "spreads") & (o["book"] == "draftkings")]
+    sp = pd.DataFrame(an_splits)
+    sp = sp[sp["market"] == "spreads"]
+    rows = []
+    for eid, d in sp.groupby("event_id"):
+        r = d.iloc[0]
+        gid, sides = m.match(r.home_team, r.away_team, parse_time(r.commence_time), 12)
+        if gid is None:
+            continue
+        flip = sides[r.home_team] != "home"
+        by = {x.side: x for x in d.itertuples()}
+        if "home" not in by or "away" not in by:
+            continue
+        tk = {k: to_float(v.tickets_pct) for k, v in by.items()}
+        mn = {k: to_float(v.money_pct) for k, v in by.items()}
+        if None in tk.values() or None in mn.values():
+            continue
+        heavy = "home" if tk["home"] >= tk["away"] else "away"
+        other = "away" if heavy == "home" else "home"
+        team = r.home_team if other == "home" else r.away_team
+        line = o[(o.event_id == eid) & (o.outcome == team)]
+        pt = to_float(line.point.iloc[-1]) if len(line) else None
+        pr = to_float(line.price.iloc[-1]) if len(line) else None
+        valid = 3 <= mn[heavy] <= 96 and pt is not None
+        for rule, cond in SPLIT_RULES.items():
+            rows.append({"snapshot_ts": iso(now), "rule": rule, "espn_id": gid, "event_id": eid,
+                         "commence_time": r.commence_time, "an_home": r.home_team, "an_away": r.away_team,
+                         "heavy_tickets_pct": tk[heavy], "heavy_money_pct": mn[heavy],
+                         "pick": team, "pick_side": other if not flip else heavy,
+                         "pick_line": pt, "pick_odds": pr,
+                         "fires": bool(valid and cond(tk[heavy], mn[heavy]))})
     return rows
 
 
