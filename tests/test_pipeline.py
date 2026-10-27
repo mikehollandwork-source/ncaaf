@@ -395,3 +395,24 @@ def test_split_rules_snapshot():
     assert r["fade90_v1"]["fires"] and not r["sharp_split_v1"]["fires"]
     splits[0]["money_pct"] = 100                       # bogus split -> no bet
     assert not any(x["fires"] for x in split_rules_snapshot(games, odds, splits, parse_time("2026-10-24T12:00:00Z")))
+
+
+def test_vsin_parse():
+    from ncaaf_tracker.sources import vsin
+    page = """<html><body><div class="sp-empty-not">x</div>
+    <table class="sp-table freezetable">
+      <tr><th>10/31 12:00 PM</th><th>Spread</th><th>Handle %</th><th>Bet %</th><th>ML</th><th>Handle %</th>
+          <th>Bet %</th><th>Total</th><th>Handle %</th><th>Bet %</th></tr>
+      <tr><td><a class="sp-team-link">(12) Ole Miss</a></td><td>-13.5</td><td>29%</td><td>33%</td><td>-550</td>
+          <td>60%</td><td>81%</td><td>o58.5</td><td>44%</td><td>61%</td></tr>
+      <tr><td><a class="sp-team-link">Auburn</a></td><td>+13.5</td><td>71%</td><td>67%</td><td>+400</td>
+          <td>40%</td><td>19%</td><td>u58.5</td><td>56%</td><td>39%</td></tr>
+    </table></body></html>"""
+    rows = vsin.parse(page, "CIRCA", "2026-10-31T12:00:00Z")
+    assert len(rows) == 2
+    a, h = rows
+    assert a["side"] == "away" and a["team"] == "Ole Miss" and a["opponent"] == "Auburn"
+    assert a["spread"] == -13.5 and a["spread_handle_pct"] == 29 and a["spread_bets_pct"] == 33
+    assert a["ml"] == -550 and a["ml_handle_pct"] == 60 and a["total"] == 58.5 and a["total_bets_pct"] == 61
+    assert h["spread"] == 13.5 and h["spread_handle_pct"] == 71 and h["source"] == "CIRCA"
+    assert vsin.parse("<p>No splits data available for Tuesday</p>", "DK", "x") == []

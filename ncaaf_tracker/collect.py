@@ -28,7 +28,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from .sources import espn, kalshi, oddsapi, polymarket, scraped
+from .sources import espn, kalshi, oddsapi, polymarket, scraped, vsin
 from .util import env, iso, log, make_session, parse_time, to_float, utcnow, write_table
 
 
@@ -36,7 +36,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill", "history", "trades"), default="auto")
     ap.add_argument("--data-dir", default=env("DATA_DIR", "data"))
-    ap.add_argument("--sources", default="espn,an,pinnacle,odds,kalshi,poly",
+    ap.add_argument("--sources", default="espn,an,vsin,pinnacle,odds,kalshi,poly",
                     help="comma list of sources to poll")
     ap.add_argument("--since", help="backfill/history start date YYYY-MM-DD")
     ap.add_argument("--until", help="history end date YYYY-MM-DD (default today)")
@@ -180,6 +180,20 @@ def main(argv=None) -> int:
     except Exception as e:
         log.exception("rule snapshot failed")
         meta["rule_error"] = str(e)[:300]
+    if "vsin" in sources:
+        # DraftKings + Circa handle/bets % (VSiN only lists the current day's games)
+        try:
+            rows, unparsed = vsin.fetch(session, now, meta)
+            tables["vsin_splits"] = rows
+            for src, page in unparsed.items():       # page had data we couldn't read: keep it
+                import gzip
+                d = data_dir / "vsin_raw" / now.strftime("%Y-%m-%d")
+                d.mkdir(parents=True, exist_ok=True)
+                with gzip.open(d / f"vsin_{src}_{now.strftime('%Y%m%dT%H%M%SZ')}.html.gz", "wt", encoding="utf-8") as f:
+                    f.write(page)
+        except Exception as e:
+            log.exception("vsin failed")
+            meta["vsin_error"] = str(e)[:300]
     try:
         tables["split_picks"] = split_rules_snapshot(games, tables.get("an_odds", []), tables.get("an_splits", []), now)
         meta["split_rule_fires"] = sum(r["fires"] for r in tables["split_picks"])
@@ -499,6 +513,8 @@ PIN = "https://guest.api.arcadia.pinnacle.com/0.1"
 PIN_WEB_KEY = "CmX2KcMrXuFmNg6YFbmTxE0y9CIrOi0R"  # public key the pinnacle.com web app sends
 PROBES = {
     "espn": (espn.HOSTS[0] + espn.SCOREBOARD_PATH, {}),
+    "vsin_dk_cfb": (vsin.URL + "?source=DK&sport=CFB", {"User-Agent": vsin.UA}),
+    "vsin_circa_cfb": (vsin.URL + "?source=CIRCA&sport=CFB", {"User-Agent": vsin.UA}),
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
     "polymarket_gamma": (polymarket.GAMMA + "/sports", {}),
     "espn_summary": (espn.HOSTS[0] + espn.SUMMARY_PATH + "?event=401858242", {}),
