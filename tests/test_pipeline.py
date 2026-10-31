@@ -416,3 +416,29 @@ def test_vsin_parse():
     assert a["ml"] == -550 and a["ml_handle_pct"] == 60 and a["total"] == 58.5 and a["total_bets_pct"] == 61
     assert h["spread"] == 13.5 and h["spread_handle_pct"] == 71 and h["source"] == "CIRCA"
     assert vsin.parse("<p>No splits data available for Tuesday</p>", "DK", "x") == []
+
+
+def test_dkn_parse():
+    from ncaaf_tracker.sources import dkn
+    def odd(name, price, h, b):
+        return (f'<div class="tb-sodd flex"><div class="tb-slipline flex-1 font-medium">{name}</div>'
+                f'<div class="flex-1"><a class="tb-odd-s bg" href="x">{price}</a></div>'
+                f'<div class="flex-1">{h}% <div class="tb-progress"><div style="width: {h}%"></div></div></div>'
+                f'<div class="flex-1">{b}% <div class="tb-progress"><div style="width: {b}%"></div></div></div></div>')
+    def head(m):
+        return (f'<div class="tb-se-head flex"><div class="flex-1">{m}</div><div class="flex-1">Odds</div>'
+                f'<div class="flex-1">% Handle</div><div class="flex-1">% Bets</div></div>')
+    page = ('<div class="tb-se border-b"><div class="tb-se-title flex"><h5 class="mt-0">'
+            '<a target="_blank" href="https://sportsbook.draftkings.com/event/34876703?x=1" class="no-underline">'
+            ' UConn @ Air Force </a></h5><span class="t">10/31, 03:00PM </span></div><div class="tb-market-wrap">'
+            + head("Moneyline") + odd("Air Force", "−125", 35, 30) + odd("UConn", "+105", 65, 70)
+            + head("Spread") + odd("Air Force -2.5", "−105", 84, 57) + odd("UConn +2.5", "−115", 16, 43)
+            + head("Total") + odd("Over 53.5", "−105", 64, 61) + odd("Under 53.5", "−115", 36, 39) + "</div></div>")
+    rows = dkn.parse(page, "2026-10-31T18:00:00Z")
+    assert len(rows) == 6
+    sp = [r for r in rows if r["market"] == "spread"]
+    assert sp[0]["side"] == "home" and sp[0]["line"] == -2.5 and sp[0]["odds"] == -105
+    assert sp[0]["handle_pct"] == 84 and sp[0]["bets_pct"] == 57
+    assert sp[1]["selection"] == "UConn" and sp[1]["side"] == "away" and sp[1]["line"] == 2.5
+    assert rows[0]["dk_event_id"] == "34876703" and rows[0]["odds"] == -125 and rows[0]["line"] is None
+    assert rows[4]["side"] == "over" and rows[4]["line"] == 53.5
