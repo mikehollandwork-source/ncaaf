@@ -28,7 +28,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from .sources import espn, kalshi, oddsapi, polymarket, scraped, vsin
+from .sources import dkn, espn, kalshi, oddsapi, polymarket, scraped, vsin
 from .util import env, iso, log, make_session, parse_time, to_float, utcnow, write_table
 
 
@@ -36,7 +36,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--mode", choices=("auto", "full", "closing", "backfill", "history", "trades"), default="auto")
     ap.add_argument("--data-dir", default=env("DATA_DIR", "data"))
-    ap.add_argument("--sources", default="espn,an,vsin,pinnacle,odds,kalshi,poly",
+    ap.add_argument("--sources", default="espn,an,dkn,pinnacle,odds,kalshi,poly",
                     help="comma list of sources to poll")
     ap.add_argument("--since", help="backfill/history start date YYYY-MM-DD")
     ap.add_argument("--until", help="history end date YYYY-MM-DD (default today)")
@@ -180,7 +180,14 @@ def main(argv=None) -> int:
     except Exception as e:
         log.exception("rule snapshot failed")
         meta["rule_error"] = str(e)[:300]
-    if "vsin" in sources:
+    if "dkn" in sources:
+        # DraftKings' own handle % / bets % per selection, every game in the next 7 days
+        try:
+            tables["dk_splits"] = dkn.fetch(session, now, meta)
+        except Exception as e:
+            log.exception("dk network splits failed")
+            meta["dkn_error"] = str(e)[:300]
+    if "vsin" in sources:   # off by default: VSiN withholds the split tables from scripted requests
         # DraftKings + Circa handle/bets % (VSiN only lists the current day's games)
         try:
             rows, unparsed = vsin.fetch(session, now, meta)
@@ -513,6 +520,7 @@ PIN = "https://guest.api.arcadia.pinnacle.com/0.1"
 PIN_WEB_KEY = "CmX2KcMrXuFmNg6YFbmTxE0y9CIrOi0R"  # public key the pinnacle.com web app sends
 PROBES = {
     "espn": (espn.HOSTS[0] + espn.SCOREBOARD_PATH, {}),
+    "dkn_cfb": (dkn.URL + "?tb_eg=87637&tb_edate=n7days&tb_emt=0", {"User-Agent": dkn.UA}),
     "vsin_dk_cfb": (vsin.URL + "?source=DK&sport=CFB", {"User-Agent": vsin.UA}),
     "vsin_circa_cfb": (vsin.URL + "?source=CIRCA&sport=CFB", {"User-Agent": vsin.UA}),
     "kalshi": (kalshi.BASE + "/markets?series_ticker=KXNCAAFGAME&status=open&limit=5", {}),
