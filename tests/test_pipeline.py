@@ -466,3 +466,30 @@ def test_dkn_parse_nov2026_layout():
     assert rows[0]["selection"] == "Akron" and rows[0]["side"] == "home" and rows[0]["odds"] == 410
     assert rows[2]["side"] == "away" and rows[2]["line"] == -12.5 and rows[2]["handle_pct"] == 95 and rows[2]["bets_pct"] == 85
     assert rows[3]["line"] == 12.5 and rows[4]["line"] == 51.5 and rows[0]["game_time_et"] == "Tue 11/3 · 7:00 PM ET"
+
+
+def test_first_half_lines():
+    g = {"id": 1, "status": "scheduled", "start_time": "2026-11-04T01:00:00Z", "home_team_id": 2, "away_team_id": 3,
+         "teams": [{"id": 2, "full_name": "Miami (OH) RedHawks"}, {"id": 3, "full_name": "Buffalo Bulls"}],
+         "markets": {"68": {
+             "event": {"spread": [{"side": "home", "value": -6.5, "odds": -118, "bet_info": {}},
+                                  {"side": "away", "value": 6.5, "odds": -102, "bet_info": {}}]},
+             "firsthalf": {"spread": [{"side": "home", "value": -3.5, "odds": -115, "period": "firsthalf"},
+                                      {"side": "away", "value": 3.5, "odds": -105, "period": "firsthalf"}],
+                           "total": [{"side": "over", "value": 21.5, "odds": -110}]}}}}
+    now = parse_time("2026-11-03T20:00:00Z")
+    full, _ = scraped.an_parse_game(g, now)
+    half, splits = scraped.an_parse_game(g, now, period="firsthalf")
+    assert [r["point"] for r in full] == [-6.5, 6.5] and "period" not in full[0]
+    assert {(r["outcome"], r["point"]) for r in half if r["market"] == "spreads"} == {
+        ("Miami (OH) RedHawks", -3.5), ("Buffalo Bulls", 3.5)}
+    assert all(r["period"] == "1h" for r in half) and splits == []
+    # Pinnacle: period 1 is the first half, kept apart from the full game
+    mu = [{"id": 7, "startTime": "2026-11-04T01:00:00Z", "participants": [
+        {"alignment": "home", "name": "Miami (OH)", "id": 10}, {"alignment": "away", "name": "Buffalo", "id": 11}]}]
+    mk = [{"matchupId": 7, "period": p, "type": "spread", "prices": [
+        {"designation": "home", "points": pts, "price": -110}, {"designation": "away", "points": -pts, "price": -110}]}
+          for p, pts in ((0, -6.5), (1, -3.5), (3, -0.5))]
+    assert [r["point"] for r in scraped.pin_parse(mu, mk, now) if r["outcome"] == "Miami (OH)"] == [-6.5]
+    h = scraped.pin_parse(mu, mk, now, period=1)
+    assert [(r["point"], r["period"]) for r in h if r["outcome"] == "Miami (OH)"] == [(-3.5, "1h")]

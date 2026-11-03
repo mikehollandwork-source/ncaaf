@@ -92,13 +92,17 @@ def main(argv=None) -> int:
             g["snapshot_ts"] = iso(now)
         write_table(data_dir, "espn_games", games, now)
         write_table(data_dir, "results", espn.results(games), now)
-        lines = []   # one file for all seasons: separate writes in the same second share a name
+        lines, lines_1h = [], []   # one file per table for all seasons (same-second writes share a name)
         for season in sorted({since.year if since.month >= 7 else since.year - 1,
                               until.year if until.month >= 7 else until.year - 1}):
             got = scraped.an_final_lines(session, season)
             meta[f"an_final_lines_{season}"] = len(got)
             lines += got
+            got = scraped.an_final_lines(session, season, period="firsthalf")
+            meta[f"an_final_lines_1h_{season}"] = len(got)
+            lines_1h += got
         write_table(data_dir, "an_final_lines", lines, now)
+        write_table(data_dir, "an_final_lines_1h", lines_1h, now)
         meta.update({"history_since": args.since, "history_until": args.until, "espn_games": len(games)})
         write_table(data_dir, "runs", [meta], now)
         log.info("history %s..%s: %d games, %s game pages", args.since, args.until, len(games), meta.get("box_scores"))
@@ -146,9 +150,11 @@ def main(argv=None) -> int:
     in_h = (lambda r: parse_time(r["commence_time"]) <= horizon) if horizon else (lambda r: True)
     if "an" in sources:
         try:
-            odds, splits = scraped.an_fetch(session, now, meta)
+            fh: list = []
+            odds, splits = scraped.an_fetch(session, now, meta, first_half=fh)
             tables["an_odds"] = [r for r in odds if in_h(r)]
             tables["an_splits"] = [r for r in splits if in_h(r)]
+            tables["an_odds_1h"] = [r for r in fh if in_h(r)]
         except Exception as e:
             log.exception("action network failed")
             meta["an_error"] = str(e)[:300]
@@ -209,7 +215,9 @@ def main(argv=None) -> int:
         meta["split_rule_error"] = str(e)[:300]
     if "pinnacle" in sources:
         try:
-            tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta) if in_h(r)]
+            pfh: list = []
+            tables["pinnacle_odds"] = [r for r in scraped.pin_fetch(session, now, meta, first_half=pfh) if in_h(r)]
+            tables["pinnacle_odds_1h"] = [r for r in pfh if in_h(r)]
         except Exception as e:
             log.exception("pinnacle failed")
             meta["pinnacle_error"] = str(e)[:300]
