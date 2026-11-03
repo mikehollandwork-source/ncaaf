@@ -29,7 +29,10 @@ PIN_LEAGUES = {880: "FBS", 202331: "FCS"}
 
 # ------------------------------------------------------------------ Action Network
 
-def an_fetch(session, now: datetime, meta: dict) -> tuple[list[dict], list[dict]]:
+def an_fetch(session, now: datetime, meta: dict,
+             first_half: list | None = None) -> tuple[list[dict], list[dict]]:
+    """Full-game odds + public splits. Pass a list as first_half to also collect
+    first-half lines (Action Network publishes no first-half splits)."""
     books = ",".join(str(b) for b in AN_BOOKS)
     games: dict = {}
     weeks = env("AN_WEEKS")  # optional override, e.g. "6,7"
@@ -41,6 +44,8 @@ def an_fetch(session, now: datetime, meta: dict) -> tuple[list[dict], list[dict]
             # current + next week (lines post ~a week ahead; lookahead lines earlier)
             queries += [{"bookIds": books, "division": div, "week": w, "season": now.year}
                         for w in _an_weeks(session, now)]
+    if first_half is not None:
+        queries = [{**q, "periods": "event,firsthalf"} for q in queries]
     for q in queries:
         try:
             data = get_json(session, f"{AN}/v2/scoreboard/ncaaf", q, min_interval=0.3)
@@ -55,6 +60,8 @@ def an_fetch(session, now: datetime, meta: dict) -> tuple[list[dict], list[dict]
         o, s = an_parse_game(g, now)
         odds += o
         splits += s
+        if first_half is not None:
+            first_half += an_parse_game(g, now, period="firsthalf")[0]
     return odds, splits
 
 
@@ -140,7 +147,7 @@ def an_history_for(session, now: datetime, weeks: list[int], started_after: date
     return rows
 
 
-def an_parse_game(g: dict, now: datetime) -> tuple[list[dict], list[dict]]:
+def an_parse_game(g: dict, now: datetime, period: str = "event") -> tuple[list[dict], list[dict]]:
     start = parse_time(g.get("start_time"))
     if start is None or start <= now or g.get("status") not in (None, "scheduled"):
         return [], []
@@ -157,16 +164,17 @@ def an_parse_game(g: dict, now: datetime) -> tuple[list[dict], list[dict]]:
     for book_id, mk in (g.get("markets") or {}).items():
         book = AN_BOOKS.get(int(book_id), f"an_{book_id}")
         for an_type, market in AN_MARKETS.items():
-            for o in (mk.get("event") or {}).get(an_type, []) or []:
+            for o in (mk.get(period) or {}).get(an_type, []) or []:
                 if o.get("is_live"):
                     continue
                 side = o.get("side")
-                odds.append({**base, "book": book, "market": market, "outcome": name.get(side, side),
+                odds.append({**base, **({"period": "1h"} if period == "firsthalf" else {}),
+                             "book": book, "market": market, "outcome": name.get(side, side),
                              "price": to_float(o.get("odds")),
                              "point": None if market == "h2h" else to_float(o.get("value")),
                              "line_status": o.get("line_status")})
                 bi = o.get("bet_info") or {}
-                if int(book_id) == 15 and bi:
+                if int(book_id) == 15 and bi and period == "event":
                     splits.append({**base, "market": market, "side": side,
                                    "tickets_pct": to_float((bi.get("tickets") or {}).get("percent")),
                                    "money_pct": to_float((bi.get("money") or {}).get("percent"))})
@@ -255,16 +263,19 @@ def an_props_for(session, now: datetime, start: datetime, end: datetime, meta: d
     return rows
 
 
-def an_final_lines(session, season: int, weeks=range(0, 21)) -> list[dict]:
+def an_final_lines(session, season: int, weeks=range(0, 21), period: str = "event") -> list[dict]:
     """Final (closing) lines per book plus the market opener (book 30) for every
-    finished game of a season, from the past-week scoreboards."""
+    finished game of a season, from the past-week scoreboards. period="firsthalf"
+    gives first-half lines instead (no splits exist for those)."""
     books = ",".join(str(b) for b in (15, 30, 68, 69))
     rows = []
     for w in weeks:
         for div in ("FBS", "FCS"):
             try:
-                data = get_json(session, f"{AN}/v2/scoreboard/ncaaf",
-                                {"bookIds": books, "division": div, "week": w, "season": season}, min_interval=0.3)
+                q = {"bookIds": books, "division": div, "week": w, "season": season}
+                if period != "event":
+                    q["periods"] = period
+                data = get_json(session, f"{AN}/v2/scoreboard/ncaaf", q, min_interval=0.3)
             except Exception as e:
                 log.warning("action network %s week %s %s failed: %s", season, w, div, e)
                 continue
@@ -277,9 +288,9 @@ def an_final_lines(session, season: int, weeks=range(0, 21)) -> list[dict]:
                 for book_id, mk in (g.get("markets") or {}).items():
                     book = AN_BOOKS.get(int(book_id), f"an_{book_id}")
                     for an_type, market in AN_MARKETS.items():
-                        for o in (mk.get("event") or {}).get(an_type, []) or []:
+                        for o in (mk.get(period) or {}).get(an_type, []) or []:
                             bi = o.get("bet_info") or {}
-                            rows.append({
+                            rows.append({**({"period": "1h"} if period == "firsthalf" else {}),
                                 "season": season, "week": g.get("week"), "event_id": f"an:{g.get('id')}",
                                 "commence_time": iso(parse_time(g.get("start_time"))),
                                 "home_team": name["home"], "away_team": name["away"],
@@ -295,7 +306,7 @@ def an_final_lines(session, season: int, weeks=range(0, 21)) -> list[dict]:
 
 # ------------------------------------------------------------------ Pinnacle
 
-def pin_fetch(session, now: datetime, meta: dict) -> list[dict]:
+def pin_fetch(session, now: datetime, meta: dict, first_half: list | None = None) -> list[dict]:
     headers = {"x-api-key": env("PINNACLE_WEB_KEY", PIN_WEB_KEY), "Referer": "https://www.pinnacle.com/"}
     rows = []
     for league in PIN_LEAGUES:
@@ -307,12 +318,16 @@ def pin_fetch(session, now: datetime, meta: dict) -> list[dict]:
         except Exception as e:
             log.warning("pinnacle league %s failed: %s", league, e)
             continue
-        rows += pin_parse(matchups.json(), markets.json(), now)
+        mu, mk = matchups.json(), markets.json()
+        rows += pin_parse(mu, mk, now)
+        if first_half is not None:
+            first_half += pin_parse(mu, mk, now, period=1)
     meta["pinnacle_rows"] = len(rows)
     return rows
 
 
-def pin_parse(matchups: list, markets: list, now: datetime) -> list[dict]:
+def pin_parse(matchups: list, markets: list, now: datetime, period: int = 0) -> list[dict]:
+    """period 0 = full game, 1 = first half (3 = first quarter)."""
     games = {}
     for m in matchups or []:
         if m.get("parentId") or m.get("isLive"):
@@ -332,7 +347,7 @@ def pin_parse(matchups: list, markets: list, now: datetime) -> list[dict]:
     rows = []
     for k in markets or []:
         g = games.get(k.get("matchupId"))
-        if g is None or k.get("period") != 0 or k.get("isAlternate"):
+        if g is None or k.get("period") != period or k.get("isAlternate"):
             continue
         market = {"moneyline": "h2h", "spread": "spreads", "total": "totals"}.get(k.get("type"))
         if market is None:
@@ -343,7 +358,8 @@ def pin_parse(matchups: list, markets: list, now: datetime) -> list[dict]:
             outcome = {"home": g["home_team"], "away": g["away_team"], "over": "Over", "under": "Under"}.get(side)
             if outcome is None:
                 continue
-            rows.append({**base, "book": "pinnacle", "market": market, "outcome": outcome,
+            rows.append({**base, **({"period": {1: "1h", 3: "1q"}.get(period, str(period))} if period else {}),
+                         "book": "pinnacle", "market": market, "outcome": outcome,
                          "price": to_float(p.get("price")),
                          "point": None if market == "h2h" else to_float(p.get("points"))})
     return rows
