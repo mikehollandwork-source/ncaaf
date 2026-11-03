@@ -442,3 +442,27 @@ def test_dkn_parse():
     assert sp[1]["selection"] == "UConn" and sp[1]["side"] == "away" and sp[1]["line"] == 2.5
     assert rows[0]["dk_event_id"] == "34876703" and rows[0]["odds"] == -125 and rows[0]["line"] is None
     assert rows[4]["side"] == "over" and rows[4]["line"] == 53.5
+
+
+def test_dkn_parse_nov2026_layout():
+    from ncaaf_tracker.sources import dkn
+    def odd(name, price, h, b):
+        return (f'<div class="tb-sodd grid text-sm"><div class="tb-slipline min-w-0 font-medium">{name}</div>'
+                f'<div><a target="_blank" class="tb-odd-s inline-block" href="x">\n{price}\n</a></div>'
+                f'<div>{h}% <div class="tb-progress"><div style="width: {h}%"></div></div></div>'
+                f'<div>{b}% <div class="tb-progress"><div style="width: {b}%"></div></div></div></div>')
+    def mkt(label, a, b):
+        return f'<div class="py-2.5"><div class="uppercase text-brand-orange">\n{label}\n</div><div class="tb-sm">{a}{b}</div></div>'
+    page = ('<div class="tb-se rounded-lg p-3"><div class="tb-se-title flex"><h5 class="text-neutral-900">'
+            '<a target="_blank" href="https://sportsbook.draftkings.com/event/34913140?x=1" class="no-underline">\n'
+            'Ohio @ Akron </a></h5><span class="shrink-0">Tue 11/3 · 7:00 PM ET</span></div>'
+            '<div class="tb-se-head grid uppercase"><div>Selection</div><div>Odds</div><div>Handle</div><div>Bets</div></div>'
+            '<div class="tb-market-wrap">'
+            + mkt("Moneyline", odd("Akron", "+410", 20, 8), odd("Ohio", "−550", 80, 92))
+            + mkt("Spread", odd("Ohio -12.5", "−112", 95, 85), odd("Akron +12.5", "−108", 5, 15))
+            + mkt("Total", odd("Over 51.5", "−112", 98, 89), odd("Under 51.5", "−108", 2, 11)) + "</div></div>")
+    rows = dkn.parse(page, "2026-11-03T18:00:00Z")
+    assert [r["market"] for r in rows] == ["moneyline"] * 2 + ["spread"] * 2 + ["total"] * 2
+    assert rows[0]["selection"] == "Akron" and rows[0]["side"] == "home" and rows[0]["odds"] == 410
+    assert rows[2]["side"] == "away" and rows[2]["line"] == -12.5 and rows[2]["handle_pct"] == 95 and rows[2]["bets_pct"] == 85
+    assert rows[3]["line"] == 12.5 and rows[4]["line"] == 51.5 and rows[0]["game_time_et"] == "Tue 11/3 · 7:00 PM ET"
