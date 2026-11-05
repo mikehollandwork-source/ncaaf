@@ -3,3 +3,5 @@ pandas>=2.1
 numpy>=1.26
 pytest>=8
 tabulate>=0.9  # markdown tables in analysis/bands.py
+matplotlib>=3.8  # analysis/charts.py
+seaborn>=0.13
