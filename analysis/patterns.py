@@ -355,7 +355,9 @@ def regime(S: pd.DataFrame) -> None:
 
 # ------------------------------------------------------------------ 6 football
 
-def team_stats(D: Path) -> pd.DataFrame:
+def team_stats(D: Path, slope: float | None = None) -> pd.DataFrame:
+    """Per team-game success rate, turnovers and luck. slope=None fits points-per-success-rate on
+    the data; forward rules pass the frozen value so the definition never drifts."""
     p = explosive.load(D, "plays").drop_duplicates(["espn_id", "play_id"])
     for c in ("down", "distance", "yards", "period"):
         p[c] = pd.to_numeric(p[c], errors="coerce")
@@ -387,7 +389,7 @@ def team_stats(D: Path) -> pd.DataFrame:
     t["margin"] = t.pf - t.pa
     t["sr_diff"] = t.sr - t.sr_against
     t["to_margin"] = t.to_won - t.to_lost
-    fit = np.polyfit(np.c_[t.sr_diff].ravel(), t.margin, 1)    # margin explained by success rate
+    fit = np.polyfit(t.sr_diff, t.margin, 1) if slope is None else (slope, 0.0)  # margin from success rate
     t["luck"] = t.margin - np.polyval(fit, t.sr_diff)          # points beyond what success rate says
     t = t.sort_values("kickoff")
     t["season"] = np.where(t.kickoff.dt.month >= 7, t.kickoff.dt.year, t.kickoff.dt.year - 1)

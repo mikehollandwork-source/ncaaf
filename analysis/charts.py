@@ -39,7 +39,7 @@ from ncaaf_tracker.matching import Matcher  # noqa: E402
 SURFACE, INK, INK2, MUTED, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#8a8984", "#e6e5e1"
 DK, PIN, AN = "#2a78d6", "#eb6834", "#1baf7a"           # source colors, fixed everywhere
 SEASON = {2025: "#2a78d6", 2026: "#eb6834"}
-RULE_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]  # fixed slot order, never cycled
+RULE_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#8a5cd6", "#d6457e"]  # fixed slots, never cycled
 ET = ZoneInfo("America/New_York")
 
 
@@ -106,7 +106,14 @@ def live_rules(D: Path) -> dict[str, pd.DataFrame]:
     for rule in ("sharp_split_v1", "fade90_v1"):
         b = tr.grade(D, "split_picks", rule, tr.SPLIT_LOCKED)
         if len(b):
-            out[rule] = b
+            out[rule + (" (info only)" if rule == "fade90_v1" else "")] = b
+    import forward_rules as fr
+    picks, _ = fr.build(D, fr.LOCK)
+    done = fr.grade(picks, D) if len(picks) else picks
+    for rule in ("luck_fade_v1", "early_rlm_v1"):
+        b = done[done.rule == rule] if len(done) else done
+        if len(b):
+            out[rule] = b.rename(columns={"ko": "commence_time"})
     for k, b in out.items():
         b["pick_line"] = pd.to_numeric(b.pick_line, errors="coerce")
         b["pick_odds"] = pd.to_numeric(b.pick_odds, errors="coerce")
@@ -258,6 +265,18 @@ def board(D: Path, out: Path, hours: float) -> list[Path]:
             dk[c] = pd.to_numeric(dk[c], errors="coerce")
         dk["t"] = pd.to_datetime(dk.snapshot_ts, utc=True)
 
+    import forward_rules as fr
+    picks, _ = fr.build(D, now - pd.Timedelta(hours=1))
+    best = fr.spreads(D, m, "an_odds", fr.SOFT, pd.Timestamp(lo))
+
+    def shop(gid, ko, side, name):
+        x = best[(best.espn_id == gid) & (best.eside == side) & (best.t < ko)]
+        if x.empty:
+            return ""
+        x = x.sort_values("t").groupby("book").tail(1).assign(pr=lambda d: d.price.fillna(-110))
+        b = x.sort_values(["point", "pr"], ascending=False).iloc[0]
+        return f"{name} {b.point:+g} ({b.pr:+.0f}) {b.book}"
+
     paths = []
     for _, game in g.sort_values("ko").iterrows():
         gid, ko = game.espn_id, game.ko
@@ -308,9 +327,14 @@ def board(D: Path, out: Path, hours: float) -> list[Path]:
                 verdict = f"Line flat (DraftKings moved {mv:+g})"
         fig.suptitle(f"{away} @ {home}  ·  {ko.tz_convert(ET):%a %b %-d, %-I:%M %p} ET", x=0.01, ha="left",
                      fontweight="bold", fontsize=13)
-        a1.set_title(verdict, loc="left", fontsize=10, color=INK2, fontweight="normal", wrap=True)
+        fired = picks[picks.espn_id == gid] if len(picks) else picks
+        rules = "; ".join(f"{r.rule} → {home if r.pick_side == 'home' else away}" for r in fired.itertuples())
+        lines2 = [verdict,
+                  "Best line: " + " · ".join(x for x in (shop(gid, ko, "home", home), shop(gid, ko, "away", away)) if x),
+                  "Rules firing: " + (rules or "none")]
+        a1.set_title("\n".join(x for x in lines2 if x), loc="left", fontsize=9.5, color=INK2, fontweight="normal")
         last = max(L.t.max(), S.t.max() if len(S) else L.t.max(), K.t.max() if len(K) else L.t.max())
-        a2.set_xlim(L.t.min(), last + (last - L.t.min()) * 0.3)
+        a2.set_xlim(L.t.min(), last + (last - L.t.min()) * 0.42)
         a2.xaxis.set_major_formatter(matplotlib.dates.DateFormatter("%b %-d", tz=ET))
         fig.tight_layout()
         place_labels(a1)

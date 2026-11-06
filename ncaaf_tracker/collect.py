@@ -368,7 +368,7 @@ def rule_snapshot(games: list[dict], an_odds: list[dict], an_splits: list[dict],
 SPLIT_RULES = {
     # spread tickets >= 70% on one team but the money majority on the other: back the money side
     "sharp_split_v1": lambda tk, mn: tk >= 70 and mn < 50,
-    # spread tickets >= 90% on one team: fade it
+    # spread tickets >= 90% on one team: fade it. INFO ONLY since 2026-11-06 (negative CLV)
     "fade90_v1": lambda tk, mn: tk >= 90,
 }
 
