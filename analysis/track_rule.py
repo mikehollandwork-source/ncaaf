@@ -3,6 +3,10 @@
   sharp_split_v1, fade90_v1  (table split_picks, locked 2026-10-21)
   kalshi_book_fade_v1  (table book_picks; also shows "bet every underdog" on the same games,
                         since fading book money is mostly an underdog bet)
+  luck_fade_v1, early_rlm_v1  (locked 2026-11-06; see forward_rules.py)
+
+fade90_v1 is INFO ONLY since 2026-11-06: its closing line value is negative (-0.18 pts) and it
+was 14-19 live, so it stays logged and graded but is not a bet.
 
   python analysis/track_rule.py --data-dir store/data
 
@@ -36,6 +40,7 @@ def main(argv=None) -> int:
         print("no ranked_rlm_v1 snapshots yet")
         book(D)
         split_rules(D)
+        forward(D)
         return 0
     p["snap"] = pd.to_datetime(p.snapshot_ts, utc=True)
     p["ko"] = pd.to_datetime(p.commence_time, utc=True)
@@ -70,7 +75,13 @@ def main(argv=None) -> int:
                   f"(break-even at -110 is 52.4%)")
     book(D)
     split_rules(D)
+    forward(D)
     return 0
+
+
+def forward(D: Path) -> None:
+    import forward_rules
+    forward_rules.report(D)
 
 
 def grade(D: Path, table: str, rule: str | None = None, since: pd.Timestamp = LOCKED) -> pd.DataFrame:
@@ -110,7 +121,7 @@ SPLIT_LOCKED = pd.Timestamp("2026-10-21T00:00:00Z")
 
 def split_rules(D: Path) -> None:
     for rule, desc in (("sharp_split_v1", "tickets >= 70% one team, money majority other -> back money side"),
-                       ("fade90_v1", "spread tickets >= 90% -> fade")):
+                       ("fade90_v1", "spread tickets >= 90% -> fade; INFO ONLY, not a bet")):
         b = grade(D, "split_picks", rule, SPLIT_LOCKED)
         print(f"\nrule {rule} ({desc}) since {SPLIT_LOCKED:%Y-%m-%d}: {len(b)} graded bets")
         if b.empty:
