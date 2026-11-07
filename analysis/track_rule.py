@@ -3,7 +3,7 @@
   sharp_split_v1, fade90_v1  (table split_picks, locked 2026-10-21)
   kalshi_book_fade_v1  (table book_picks; also shows "bet every underdog" on the same games,
                         since fading book money is mostly an underdog bet)
-  luck_fade_v1, early_rlm_v1  (locked 2026-11-06; see forward_rules.py)
+  luck_fade_v1, early_rlm_v1  (locked 2026-11-06), luck_fade_fcs_v1 (locked 2026-11-07); see forward_rules.py
 
 fade90_v1 is INFO ONLY since 2026-11-06: its closing line value is negative (-0.18 pts) and it
 was 14-19 live, so it stays logged and graded but is not a bet.

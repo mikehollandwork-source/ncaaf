@@ -4,6 +4,9 @@
                  (luck = actual margin minus the margin its play-by-play success rate predicts,
                  129.5 pts per 1.0 of success-rate differential, frozen). Both teams need 3+
                  games with play-by-play. Held in both seasons out of sample (54.5% / 57.3%).
+  luck_fade_fcs_v1  The same rule in FCS games only (locked 2026-11-07, after the noon kickoffs).
+                 The luck edge lives in FCS: 7+ gap 56.5% (2025) / 64.4% (2026), while FBS games
+                 were 52.1% / 51.8%. Tracked alongside v1; v1 is not edited.
   early_rlm_v1   DraftKings spread moved 1+ pt toward a team, most of that move came earlier than
                  24h before kickoff, and under 50% of the spread money is on that team.
                  2026 only (63.5%, n=53), so it is the weaker of the two.
@@ -32,6 +35,9 @@ import patterns as P  # noqa: E402
 from ncaaf_tracker.matching import Matcher  # noqa: E402
 
 LOCK = pd.Timestamp("2026-11-06T04:00:00Z")
+FCS_LOCK = pd.Timestamp("2026-11-07T17:30:00Z")    # after the Nov 7 noon kickoffs it was chosen from
+RULE_LOCK = {"luck_fade_v1": LOCK, "early_rlm_v1": LOCK, "luck_fade_fcs_v1": FCS_LOCK}
+RULES = tuple(RULE_LOCK)
 LUCK_SLOPE = 129.5          # frozen; fit on 2025+2026 to Nov 6 (127.4 and 132.3 by season)
 LUCK_GAP = 7.0
 LUCK_MIN_GAMES = 3
@@ -90,6 +96,8 @@ def luck_rule(D: Path, G: pd.DataFrame) -> pd.DataFrame:
         side = "away" if gap >= LUCK_GAP else ("home" if gap <= -LUCK_GAP else None)
         rows.append({"espn_id": g.espn_id, "rule": "luck_fade_v1", "pick_side": side,
                      "fires": side is not None, "note": f"luck gap {abs(gap):.1f} pts/g"})
+        if g.division == "FCS":
+            rows.append({**rows[-1], "rule": "luck_fade_fcs_v1"})
     return pd.DataFrame(rows)
 
 
@@ -159,6 +167,9 @@ def build(D: Path, since: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame]:
     PIN = spreads(D, m, "pinnacle_odds", ["pinnacle"], lo)
     picks = pd.concat([luck_rule(D, G), early_rlm_rule(G, L, money(D, m, lo))], ignore_index=True)
     picks = picks[picks.fires]
+    if len(picks):                                    # each rule counts only games after its own lock
+        ko = G.set_index("espn_id").kickoff_dt
+        picks = picks[[ko[e] >= RULE_LOCK[r] for e, r in zip(picks.espn_id, picks.rule)]]
     picks = price_picks(picks, G, L, PIN) if len(picks) else picks
     if len(picks):
         name = G.set_index("espn_id")
@@ -192,9 +203,9 @@ def report(D: Path, hours: float = 48) -> None:
     picks, _ = build(D, LOCK)
     done = grade(picks, D) if len(picks) else picks
     now = pd.Timestamp.now(tz="UTC")
-    for rule in ("luck_fade_v1", "early_rlm_v1"):
+    for rule in RULES:
         b = done[done.rule == rule] if len(done) else done
-        print(f"\nrule {rule} since {LOCK:%Y-%m-%d}: {len(b)} graded bets")
+        print(f"\nrule {rule} since {RULE_LOCK[rule]:%Y-%m-%d %H:%M}Z: {len(b)} graded bets")
         if len(b):
             w, l_, p_ = (b.result == "win").sum(), (b.result == "loss").sum(), (b.result == "push").sum()
             bw, bl = (b.best_res > 0).sum(), (b.best_res < 0).sum()
