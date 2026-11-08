@@ -7,6 +7,11 @@
   luck_fade_fcs_v1  The same rule in FCS games only (locked 2026-11-07, after the noon kickoffs).
                  The luck edge lives in FCS: 7+ gap 56.5% (2025) / 64.4% (2026), while FBS games
                  were 52.1% / 51.8%. Tracked alongside v1; v1 is not edited.
+  late_surge_fade_v1  INFO ONLY (locked 2026-11-08 03:00Z). One side's share of the spread money
+                 jumped 20+ pts to 60%+ in the final 24h (last valid split 24h+ out vs the last
+                 one before kickoff) but the DraftKings line did not move toward it: bet the other
+                 side. 2026 backtest 10-6 on only 16 games; random samples matched it 36% of the
+                 time, so it is tracked, not bet.
   early_rlm_v1   DraftKings spread moved 1+ pt toward a team, most of that move came earlier than
                  24h before kickoff, and under 50% of the spread money is on that team.
                  2026 only (63.5%, n=53), so it is the weaker of the two.
@@ -36,7 +41,10 @@ from ncaaf_tracker.matching import Matcher  # noqa: E402
 
 LOCK = pd.Timestamp("2026-11-06T04:00:00Z")
 FCS_LOCK = pd.Timestamp("2026-11-07T17:30:00Z")    # after the Nov 7 noon kickoffs it was chosen from
-RULE_LOCK = {"luck_fade_v1": LOCK, "early_rlm_v1": LOCK, "luck_fade_fcs_v1": FCS_LOCK}
+SURGE_LOCK = pd.Timestamp("2026-11-08T03:00:00Z")
+RULE_LOCK = {"luck_fade_v1": LOCK, "early_rlm_v1": LOCK, "luck_fade_fcs_v1": FCS_LOCK,
+             "late_surge_fade_v1": SURGE_LOCK}
+INFO_ONLY = {"late_surge_fade_v1"}
 RULES = tuple(RULE_LOCK)
 LUCK_SLOPE = 129.5          # frozen; fit on 2025+2026 to Nov 6 (127.4 and 132.3 by season)
 LUCK_GAP = 7.0
@@ -103,6 +111,34 @@ def luck_rule(D: Path, G: pd.DataFrame) -> pd.DataFrame:
 
 # ------------------------------------------------------------------ early_rlm_v1
 
+def late_surge_rule(G: pd.DataFrame, L: pd.DataFrame, M: pd.DataFrame) -> pd.DataFrame:
+    ko = G.set_index("espn_id").kickoff_dt
+    M = M[M.money_pct.between(3, 96)]
+    dk = L[L.book == "draftkings"]
+    rows = []
+    for (gid, side), mm in M.groupby(["espn_id", "eside"]):
+        k0 = ko.get(gid)
+        if k0 is None:
+            continue
+        mm = mm[mm.t < k0].sort_values("t")
+        early = mm[mm.t <= k0 - pd.Timedelta(hours=24)]
+        if early.empty or len(mm) < 2:
+            continue
+        e, c = early.iloc[-1], mm.iloc[-1]
+        ln = dk[(dk.espn_id == gid) & (dk.eside == side) & (dk.t < k0)].sort_values("t")
+        le = ln[ln.t <= e.t]
+        if ln.empty or le.empty:
+            continue
+        toward = -(ln.point.iloc[-1] - le.point.iloc[-1])   # > 0: line moved toward the surge side
+        surge = c.money_pct - e.money_pct
+        fires = surge >= 20 and c.money_pct >= 60 and toward <= 0
+        if fires:
+            rows.append({"espn_id": gid, "rule": "late_surge_fade_v1", "pick_side": "away" if side == "home" else "home",
+                         "fires": True, "note": f"money on the other side {e.money_pct:.0f}% -> {c.money_pct:.0f}%, "
+                                                f"line moved {toward + 0.0:+g} toward it (INFO ONLY)"})
+    return pd.DataFrame(rows, columns=["espn_id", "rule", "pick_side", "fires", "note"])
+
+
 def early_rlm_rule(G: pd.DataFrame, L: pd.DataFrame, M: pd.DataFrame) -> pd.DataFrame:
     ko = G.set_index("espn_id").kickoff_dt
     dk = L[(L.book == "draftkings") & (L.eside == "home")]
@@ -165,7 +201,8 @@ def build(D: Path, since: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame]:
     lo = since - pd.Timedelta(days=10)
     L = spreads(D, m, "an_odds", SOFT, lo)
     PIN = spreads(D, m, "pinnacle_odds", ["pinnacle"], lo)
-    picks = pd.concat([luck_rule(D, G), early_rlm_rule(G, L, money(D, m, lo))], ignore_index=True)
+    M = money(D, m, lo)
+    picks = pd.concat([luck_rule(D, G), early_rlm_rule(G, L, M), late_surge_rule(G, L, M)], ignore_index=True)
     picks = picks[picks.fires]
     if len(picks):                                    # each rule counts only games after its own lock
         ko = G.set_index("espn_id").kickoff_dt
@@ -205,7 +242,8 @@ def report(D: Path, hours: float = 48) -> None:
     now = pd.Timestamp.now(tz="UTC")
     for rule in RULES:
         b = done[done.rule == rule] if len(done) else done
-        print(f"\nrule {rule} since {RULE_LOCK[rule]:%Y-%m-%d %H:%M}Z: {len(b)} graded bets")
+        tag = " (INFO ONLY, not a bet)" if rule in INFO_ONLY else ""
+        print(f"\nrule {rule}{tag} since {RULE_LOCK[rule]:%Y-%m-%d %H:%M}Z: {len(b)} graded bets")
         if len(b):
             w, l_, p_ = (b.result == "win").sum(), (b.result == "loss").sum(), (b.result == "push").sum()
             bw, bl = (b.best_res > 0).sum(), (b.best_res < 0).sum()
