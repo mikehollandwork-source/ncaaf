@@ -1,0 +1,82 @@
+name: collect-loop
+
+# Continuous snapshots. GitHub's own cron fired the hourly collector only 3-5 times a day,
+# so this job keeps its own clock instead: one long run (about 5h45m) that snapshots
+#   - every game, all sources ("full")           every FULL_EVERY minutes
+#   - games kicking off soon ("closing")         every TICK minutes in between
+# commits after each snapshot, then starts its own next run before it ends.
+# The cron below only restarts the chain if a hand-off ever fails; the concurrency group
+# keeps at most one loop running (a queued start just waits for the current one).
+on:
+  schedule:
+    - cron: "41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: collect-loop
+  cancel-in-progress: false
+
+env:
+  TICK: 10            # minutes between snapshots
+  FULL_EVERY: 30      # minutes between full snapshots
+  BUDGET: 345         # minutes this run keeps looping (jobs are capped at 6h)
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - run: pip install -r requirements.txt
+
+      - name: Check out data branch
+        run: |
+          git fetch --depth=1 origin data:refs/remotes/origin/data
+          git worktree add -B data store origin/data
+
+      - name: Snapshot loop
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          ODDS_API_REGIONS: ${{ vars.ODDS_API_REGIONS }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          start=$(date +%s); last_full=0; handed_off=0
+          commit() {
+            cd store
+            git add -A -- data 2>/dev/null || true
+            if ! git diff --cached --quiet; then
+              git -c user.name="ncaaf-collector" -c user.email="actions@users.noreply.github.com" \
+                commit -q -m "snapshot $(date -u +%Y-%m-%dT%H:%MZ) ($1)"
+              for i in 1 2 3 4 5; do
+                git pull -q --rebase origin data && git push -q origin HEAD:data && break
+                sleep $((2 ** i))
+              done
+            fi
+            cd ..
+          }
+          while :; do
+            now=$(date +%s); used=$(( (now - start) / 60 ))
+            if [ $used -ge $BUDGET ]; then break; fi
+            # queue the next run ~20 min before the end; it waits in the concurrency group and starts when this one exits
+            if [ $handed_off -eq 0 ] && [ $used -ge $((BUDGET - 20)) ]; then
+              gh workflow run collect-loop.yml --ref "${{ github.ref_name }}" && handed_off=1 || true
+            fi
+            if [ $(( now - last_full )) -ge $(( FULL_EVERY * 60 - 60 )) ]; then mode=full; last_full=$now; else mode=closing; fi
+            timeout 25m python -m ncaaf_tracker.collect --mode $mode --data-dir store/data || echo "collector failed ($mode), continuing"
+            commit $mode
+            # sleep to the next tick, measured from the start of this iteration
+            nap=$(( TICK * 60 - ($(date +%s) - now) ))
+            if [ $nap -gt 0 ]; then sleep $nap; fi
+          done
+          if [ $handed_off -eq 0 ]; then gh workflow run collect-loop.yml --ref "${{ github.ref_name }}" || true; fi

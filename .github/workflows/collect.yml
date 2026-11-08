@@ -1,14 +1,9 @@
 name: collect
 
-# All times UTC. GitHub cron can be delayed 5-30 min under load, so the mode
-# is chosen from which schedule fired, not from the wall clock.
+# Manual runs only (backfill / history / probe). Scheduled snapshots moved to
+# collect-loop.yml, which keeps its own clock because GitHub's cron fired this
+# workflow only 3-5 times a day.
 on:
-  schedule:
-    - cron: "7 * * * *"                # hourly full snapshot, every game
-    - cron: "22,37,52 15-23 * * 6"     # Saturday: 15-min closing-line polling (11am-8pm ET)
-    - cron: "22,37,52 0-4 * * 0"       # Saturday night games (8pm-midnight ET)
-    - cron: "22,37,52 22-23 * * 2-5"   # Tue-Fri night games
-    - cron: "22,37,52 0-3 * * 3-6"
   workflow_dispatch:
     inputs:
       mode:
