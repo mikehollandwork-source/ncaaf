@@ -8,11 +8,15 @@ name: collect-loop
 # Hand-off: ~35 min before its budget ends a run starts its successor, keeps collecting
 # until it has seen the successor running on two checks, and starts another if that one
 # died (a successor once failed on startup and the chain stopped for 5 hours).
-# Watchdog: the cron fires a few times an hour; a scheduled or manual run exits at once
-# when a loop is already alive, and otherwise becomes the loop.
+# Watchdog: the hourly cron restarts the chain; a scheduled or manual run exits at once
+# when a loop is already alive.
+# BUDGET GUARD: the nonstop loop is only for a PUBLIC repo (free minutes). While the repo
+# is private it would burn the 2,000 free minutes a month in under two days (it did, on
+# Nov 9), so a private repo gets one full snapshot per run, and only when the last
+# snapshot is 100+ minutes old: at most ~12 short runs a day.
 on:
   schedule:
-    - cron: "3,18,33,48 * * * *"
+    - cron: "41 * * * *"
   workflow_dispatch:
     inputs:
       parent:
@@ -36,14 +40,21 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Exit if a loop is already alive
+      - name: Decide what this run does
         id: guard
         run: |
           others=$(gh run list --workflow collect-loop.yml --limit 30 --json databaseId,status \
             --jq "[.[] | select(.status != \"completed\" and .databaseId != $GITHUB_RUN_ID)] | length" || echo 0)
-          if [ -z "${{ inputs.parent }}" ] && [ "${others:-0}" -gt 0 ]; then
-            echo "a loop is already running; nothing to do"; echo "skip=1" >> "$GITHUB_OUTPUT"
-          fi
+          private=$(gh api "repos/$GH_REPO" --jq .private || echo true)
+          last=$(gh api "repos/$GH_REPO/commits/data" --jq .commit.committer.date || echo 1970-01-01T00:00:00Z)
+          age=$(( ($(date +%s) - $(date -d "$last" +%s)) / 60 ))
+          if [ "$private" != "false" ]; then
+            if [ "$age" -ge 100 ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then run=once; else run=skip; fi
+          elif [ -z "${{ inputs.parent }}" ] && [ "${others:-0}" -gt 0 ]; then run=skip
+          else run=loop; fi
+          echo "private=$private last snapshot ${age} min ago, other runs=$others -> $run"
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          if [ "$run" = skip ]; then echo "skip=1" >> "$GITHUB_OUTPUT"; fi
 
       - uses: actions/checkout@v4
         if: steps.guard.outputs.skip != '1'
@@ -69,6 +80,7 @@ jobs:
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           ODDS_API_REGIONS: ${{ vars.ODDS_API_REGIONS }}
+          RUN: ${{ steps.guard.outputs.run }}
         run: |
           start=$(date +%s); last_full=0
           commit() {
@@ -88,6 +100,11 @@ jobs:
             gh run list --workflow collect-loop.yml --limit 30 --json databaseId,status \
               --jq "[.[] | select(.status == \"in_progress\" and .databaseId > $GITHUB_RUN_ID)] | length" || echo 0
           }
+          if [ "$RUN" = once ]; then
+            timeout 25m python -m ncaaf_tracker.collect --mode full --data-dir store/data
+            commit full
+            exit 0
+          fi
           last_dispatch=0; seen=0
           while :; do
             now=$(date +%s); used=$(( (now - start) / 60 ))
