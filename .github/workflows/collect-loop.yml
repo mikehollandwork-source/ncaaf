@@ -4,21 +4,24 @@ name: collect-loop
 # so this job keeps its own clock instead: one long run (about 5h45m) that snapshots
 #   - every game, all sources ("full")           every FULL_EVERY minutes
 #   - games kicking off soon ("closing")         every TICK minutes in between
-# commits after each snapshot, then starts its own next run before it ends.
-# The cron below only restarts the chain if a hand-off ever fails; the concurrency group
-# keeps at most one loop running (a queued start just waits for the current one).
+# and commits after each snapshot.
+# Hand-off: ~35 min before its budget ends a run starts its successor, keeps collecting
+# until it has seen the successor running on two checks, and starts another if that one
+# died (a successor once failed on startup and the chain stopped for 5 hours).
+# Watchdog: the cron fires a few times an hour; a scheduled or manual run exits at once
+# when a loop is already alive, and otherwise becomes the loop.
 on:
   schedule:
-    - cron: "41 * * * *"
+    - cron: "3,18,33,48 * * * *"
   workflow_dispatch:
+    inputs:
+      parent:
+        description: "run id of the loop handing off (set by the loop itself; leave empty)"
+        default: ""
 
 permissions:
   contents: write
   actions: write
-
-concurrency:
-  group: collect-loop
-  cancel-in-progress: false
 
 env:
   TICK: 10            # minutes between snapshots
@@ -29,29 +32,45 @@ jobs:
   loop:
     runs-on: ubuntu-latest
     timeout-minutes: 358
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
+      - name: Exit if a loop is already alive
+        id: guard
+        run: |
+          others=$(gh run list --workflow collect-loop.yml --limit 30 --json databaseId,status \
+            --jq "[.[] | select(.status != \"completed\" and .databaseId != $GITHUB_RUN_ID)] | length" || echo 0)
+          if [ -z "${{ inputs.parent }}" ] && [ "${others:-0}" -gt 0 ]; then
+            echo "a loop is already running; nothing to do"; echo "skip=1" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.guard.outputs.skip != '1'
 
       - uses: actions/setup-python@v5
+        if: steps.guard.outputs.skip != '1'
         with:
           python-version: "3.11"
           cache: pip
           cache-dependency-path: requirements.txt
 
       - run: pip install -r requirements.txt
+        if: steps.guard.outputs.skip != '1'
 
       - name: Check out data branch
+        if: steps.guard.outputs.skip != '1'
         run: |
           git fetch --depth=1 origin data:refs/remotes/origin/data
           git worktree add -B data store origin/data
 
       - name: Snapshot loop
+        if: steps.guard.outputs.skip != '1'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           ODDS_API_REGIONS: ${{ vars.ODDS_API_REGIONS }}
-          GH_TOKEN: ${{ github.token }}
         run: |
-          start=$(date +%s); last_full=0; handed_off=0
+          start=$(date +%s); last_full=0
           commit() {
             cd store
             git add -A -- data 2>/dev/null || true
@@ -65,12 +84,20 @@ jobs:
             fi
             cd ..
           }
+          successor() {   # newer runs of this workflow that are running right now
+            gh run list --workflow collect-loop.yml --limit 30 --json databaseId,status \
+              --jq "[.[] | select(.status == \"in_progress\" and .databaseId > $GITHUB_RUN_ID)] | length" || echo 0
+          }
+          last_dispatch=0; seen=0
           while :; do
             now=$(date +%s); used=$(( (now - start) / 60 ))
             if [ $used -ge $BUDGET ]; then break; fi
-            # queue the next run ~20 min before the end; it waits in the concurrency group and starts when this one exits
-            if [ $handed_off -eq 0 ] && [ $used -ge $((BUDGET - 20)) ]; then
-              gh workflow run collect-loop.yml --ref "${{ github.ref_name }}" && handed_off=1 || true
+            if [ $used -ge $((BUDGET - 35)) ]; then
+              if [ "$(successor)" -gt 0 ]; then
+                seen=$((seen + 1)); if [ $seen -ge 2 ]; then echo "successor is running; done"; break; fi
+              elif [ $(( now - last_dispatch )) -ge 480 ]; then
+                seen=0; gh workflow run collect-loop.yml --ref "${{ github.ref_name }}" -f parent=$GITHUB_RUN_ID && last_dispatch=$now || true
+              fi
             fi
             if [ $(( now - last_full )) -ge $(( FULL_EVERY * 60 - 60 )) ]; then mode=full; last_full=$now; else mode=closing; fi
             timeout 25m python -m ncaaf_tracker.collect --mode $mode --data-dir store/data || echo "collector failed ($mode), continuing"
@@ -79,4 +106,3 @@ jobs:
             nap=$(( TICK * 60 - ($(date +%s) - now) ))
             if [ $nap -gt 0 ]; then sleep $nap; fi
           done
-          if [ $handed_off -eq 0 ]; then gh workflow run collect-loop.yml --ref "${{ github.ref_name }}" || true; fi
