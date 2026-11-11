@@ -39,7 +39,7 @@ from ncaaf_tracker.matching import Matcher  # noqa: E402
 SURFACE, INK, INK2, MUTED, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#8a8984", "#e6e5e1"
 DK, PIN, AN = "#2a78d6", "#eb6834", "#1baf7a"           # source colors, fixed everywhere
 SEASON = {2025: "#2a78d6", 2026: "#eb6834"}
-RULE_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#8a5cd6", "#d6457e", "#4a4a4a", "#8c6d1f"]  # fixed slots, never cycled
+RULE_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#8a5cd6", "#d6457e", "#4a4a4a", "#8c6d1f", "#2f8f9d", "#b0413e"]  # fixed slots, never cycled
 ET = ZoneInfo("America/New_York")
 
 
