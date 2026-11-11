@@ -12,6 +12,11 @@
                  one before kickoff) but the DraftKings line did not move toward it: bet the other
                  side. 2026 backtest 10-6 on only 16 games; random samples matched it 36% of the
                  time, so it is tracked, not bet.
+  tight_fbs_fade_v1, tight_fcs_back_v1  INFO ONLY (locked 2026-11-11 17:00Z). Games with a
+                 DraftKings spread under 7 where one team has 70%+ of the spread money at the last
+                 snapshot before kickoff. FBS: bet the OTHER team (56.1% in 2025, 63.3% in 2026).
+                 FCS: bet the heavy team (57.7% / 59.4%). One of ~20 cuts and only ~30 games
+                 a side in 2026, so both are tracked, not bet.
   early_rlm_v1   DraftKings spread moved 1+ pt toward a team, most of that move came earlier than
                  24h before kickoff, and under 50% of the spread money is on that team.
                  2026 only (63.5%, n=53), so it is the weaker of the two.
@@ -44,7 +49,9 @@ FCS_LOCK = pd.Timestamp("2026-11-07T17:30:00Z")    # after the Nov 7 noon kickof
 SURGE_LOCK = pd.Timestamp("2026-11-08T03:00:00Z")
 RULE_LOCK = {"luck_fade_v1": LOCK, "early_rlm_v1": LOCK, "luck_fade_fcs_v1": FCS_LOCK,
              "late_surge_fade_v1": SURGE_LOCK}
-INFO_ONLY = {"late_surge_fade_v1"}
+TIGHT_LOCK = pd.Timestamp("2026-11-11T17:00:00Z")
+RULE_LOCK.update({"tight_fbs_fade_v1": TIGHT_LOCK, "tight_fcs_back_v1": TIGHT_LOCK})
+INFO_ONLY = {"late_surge_fade_v1", "tight_fbs_fade_v1", "tight_fcs_back_v1"}
 RULES = tuple(RULE_LOCK)
 LUCK_SLOPE = 129.5          # frozen; fit on 2025+2026 to Nov 6 (127.4 and 132.3 by season)
 LUCK_GAP = 7.0
@@ -110,6 +117,30 @@ def luck_rule(D: Path, G: pd.DataFrame) -> pd.DataFrame:
 
 
 # ------------------------------------------------------------------ early_rlm_v1
+
+def tight_heavy_rule(G: pd.DataFrame, L: pd.DataFrame, M: pd.DataFrame) -> pd.DataFrame:
+    g = G.set_index("espn_id")
+    M = M[M.money_pct.between(3, 96)]
+    dk = L[L.book == "draftkings"]
+    rows = []
+    for (gid, side), mm in M.groupby(["espn_id", "eside"]):
+        if gid not in g.index:
+            continue
+        k0, div = g.kickoff_dt[gid], g.division[gid]
+        mm = mm[mm.t < k0].sort_values("t")
+        ln = dk[(dk.espn_id == gid) & (dk.eside == side) & (dk.t < k0)].sort_values("t")
+        if mm.empty or ln.empty or div not in ("FBS", "FCS"):
+            continue
+        mon, line = mm.money_pct.iloc[-1], ln.point.iloc[-1]
+        if mon < 70 or abs(line) >= 7:
+            continue
+        fade = div == "FBS"
+        rows.append({"espn_id": gid, "rule": "tight_fbs_fade_v1" if fade else "tight_fcs_back_v1",
+                     "pick_side": ("away" if side == "home" else "home") if fade else side, "fires": True,
+                     "note": f"{mon:.0f}% of spread money on the {'other' if fade else 'picked'} team, "
+                             f"spread {abs(line):g} (INFO ONLY)"})
+    return pd.DataFrame(rows, columns=["espn_id", "rule", "pick_side", "fires", "note"])
+
 
 def late_surge_rule(G: pd.DataFrame, L: pd.DataFrame, M: pd.DataFrame) -> pd.DataFrame:
     ko = G.set_index("espn_id").kickoff_dt
@@ -202,7 +233,8 @@ def build(D: Path, since: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame]:
     L = spreads(D, m, "an_odds", SOFT, lo)
     PIN = spreads(D, m, "pinnacle_odds", ["pinnacle"], lo)
     M = money(D, m, lo)
-    picks = pd.concat([luck_rule(D, G), early_rlm_rule(G, L, M), late_surge_rule(G, L, M)], ignore_index=True)
+    picks = pd.concat([luck_rule(D, G), early_rlm_rule(G, L, M), late_surge_rule(G, L, M),
+                       tight_heavy_rule(G, L, M)], ignore_index=True)
     picks = picks[picks.fires]
     if len(picks):                                    # each rule counts only games after its own lock
         ko = G.set_index("espn_id").kickoff_dt
