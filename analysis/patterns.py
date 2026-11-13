@@ -368,7 +368,7 @@ def team_stats(D: Path, slope: float | None = None) -> pd.DataFrame:
     off = p.groupby(["espn_id", "offense_id"]).agg(sr=("success", "mean"), plays=("success", "size"),
                                                   ypp=("yards", "mean")).reset_index()
     b = explosive.load(D, "box_team")
-    b = b[b.stat == "turnovers"]
+    b = b[b.stat == "turnovers"].drop_duplicates(["espn_id", "team_id"], keep="last")   # re-collected box scores repeat
     b["to"] = pd.to_numeric(b.value, errors="coerce")
     g = espn_games(D)
     g = g[g.completed == "True"]
