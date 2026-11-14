@@ -4,6 +4,9 @@
                  (luck = actual margin minus the margin its play-by-play success rate predicts,
                  129.5 pts per 1.0 of success-rate differential, frozen). Both teams need 3+
                  games with play-by-play. Held in both seasons out of sample (54.5% / 57.3%).
+                 INFO ONLY since 2026-11-14: luck_lab found no luck signal at all in FBS games
+                 (every version near zero, both seasons; 0-4 live), so only the FCS version
+                 below counts as a play. Still logged and graded, definition unchanged.
   luck_fade_fcs_v1  The same rule in FCS games only (locked 2026-11-07, after the noon kickoffs).
                  The luck edge lives in FCS: 7+ gap 56.5% (2025) / 64.4% (2026), while FBS games
                  were 52.1% / 51.8%. Tracked alongside v1; v1 is not edited.
@@ -51,7 +54,7 @@ RULE_LOCK = {"luck_fade_v1": LOCK, "early_rlm_v1": LOCK, "luck_fade_fcs_v1": FCS
              "late_surge_fade_v1": SURGE_LOCK}
 TIGHT_LOCK = pd.Timestamp("2026-11-11T17:00:00Z")
 RULE_LOCK.update({"tight_fbs_fade_v1": TIGHT_LOCK, "tight_fcs_back_v1": TIGHT_LOCK})
-INFO_ONLY = {"late_surge_fade_v1", "tight_fbs_fade_v1", "tight_fcs_back_v1"}
+INFO_ONLY = {"luck_fade_v1", "late_surge_fade_v1", "tight_fbs_fade_v1", "tight_fcs_back_v1"}
 RULES = tuple(RULE_LOCK)
 LUCK_SLOPE = 129.5          # frozen; fit on 2025+2026 to Nov 6 (127.4 and 132.3 by season)
 LUCK_GAP = 7.0

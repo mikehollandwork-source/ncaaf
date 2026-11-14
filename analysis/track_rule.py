@@ -3,7 +3,7 @@
   sharp_split_v1, fade90_v1  (table split_picks, locked 2026-10-21)
   kalshi_book_fade_v1  (table book_picks; also shows "bet every underdog" on the same games,
                         since fading book money is mostly an underdog bet)
-  luck_fade_v1, early_rlm_v1  (locked 2026-11-06), luck_fade_fcs_v1 (locked 2026-11-07),
+  luck_fade_v1 (INFO ONLY since 2026-11-14), early_rlm_v1  (locked 2026-11-06), luck_fade_fcs_v1 (locked 2026-11-07),
                         late_surge_fade_v1 (INFO ONLY, locked 2026-11-08),
                         tight_fbs_fade_v1, tight_fcs_back_v1 (INFO ONLY, locked 2026-11-11); see forward_rules.py
 
