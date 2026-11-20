@@ -83,6 +83,16 @@ def edges(a: pd.DataFrame, p: pd.DataFrame) -> pd.DataFrame:
     return j
 
 
+def latest_edges(a: pd.DataFrame, p: pd.DataFrame) -> pd.DataFrame:
+    """Edges at each game and market's most recent snapshot that has both a soft book and Pinnacle.
+    A single snapshot can miss a market (feed gaps), so the newest one overall is not enough."""
+    j = edges(a, p)
+    if j.empty:
+        return j
+    newest = j.groupby(["espn_id", "market"]).snapshot_ts.transform("max")
+    return j[j.snapshot_ts == newest]
+
+
 def results(D: Path) -> pd.DataFrame:
     r = explosive.load(D, "results").drop_duplicates("espn_id", keep="last").set_index("espn_id")
     return r[["home_score", "away_score"]].astype(float)
@@ -185,17 +195,16 @@ def live(D: Path, min_ev: float) -> None:
     if a.empty or p.empty:
         print("no snapshot in the last 6 hours")
         return
-    ts = min(a.snapshot_ts.max(), p.snapshot_ts.max())
-    j = edges(a[a.snapshot_ts == ts], p[p.snapshot_ts == ts])
+    j = latest_edges(a, p)
     j = j[j.ev >= min_ev / 100].sort_values("ev", ascending=False).groupby(["espn_id", "market", "side"]).head(1)
     nm = g.set_index("espn_id")
-    print(f"price edges at {ts} (EV >= {min_ev:g}% vs Pinnacle no-vig): {len(j)}")
+    print(f"price edges, each game's latest snapshot up to {a.snapshot_ts.max()} (EV >= {min_ev:g}% vs Pinnacle no-vig): {len(j)}")
     for r in j.sort_values("ev", ascending=False).itertuples():
         e = nm.loc[r.espn_id]
         who = {"home": e.home_short, "away": e.away_short}.get(r.side, r.side)
         pt = "" if r.market == "h2h" else f" {r.point:+g}" if r.market == "spreads" else f" {r.point:g}"
         pin = "" if r.market == "h2h" else f" {r.pin_point:+g}" if r.market == "spreads" else f" {r.pin_point:g}"
-        print(f"  EV {100 * r.ev:4.1f}%  {e.kickoff_dt.tz_convert('America/New_York'):%a %-I:%M %p}  {e.away_short} @ {e.home_short}: "
+        print(f"  EV {100 * r.ev:4.1f}%  [{r.snapshot_ts[11:16]}Z]  {e.kickoff_dt.tz_convert('America/New_York'):%a %-I:%M %p}  {e.away_short} @ {e.home_short}: "
               f"{who}{pt} ({r.price:+.0f}) at {r.book} | Pinnacle{pin} ({r.pin_price:+.0f}), fair {100 * r.p_fair:.1f}%")
 
 

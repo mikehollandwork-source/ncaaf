@@ -267,6 +267,14 @@ def board(D: Path, out: Path, hours: float) -> list[Path]:
 
     import forward_rules as fr
     picks, _ = fr.build(D, now - pd.Timedelta(hours=1))
+    # price edges vs Pinnacle at the latest snapshot: the signal that has been winning live
+    import price_edge as pe
+    since = (now - pd.Timedelta(hours=6)).isoformat()
+    pa, pp = pe.snaps(D, m, "an_odds", pe.SOFT, since), pe.snaps(D, m, "pinnacle_odds", ["pinnacle"], since)
+    edges = pd.DataFrame()
+    if len(pa) and len(pp):
+        edges = pe.latest_edges(pa, pp)
+        edges = edges[edges.ev >= 0.02].sort_values("ev", ascending=False).groupby(["espn_id", "market", "side"]).head(1)
     best = fr.spreads(D, m, "an_odds", fr.SOFT, pd.Timestamp(lo))
 
     def shop(gid, ko, side, name):
@@ -328,9 +336,17 @@ def board(D: Path, out: Path, hours: float) -> list[Path]:
         fig.suptitle(f"{away} @ {home}  ·  {ko.tz_convert(ET):%a %b %-d, %-I:%M %p} ET", x=0.01, ha="left",
                      fontweight="bold", fontsize=13)
         fired = picks[picks.espn_id == gid] if len(picks) else picks
-        rules = "; ".join(f"{r.rule} → {home if r.pick_side == 'home' else away}" for r in fired.itertuples())
+        rules = "; ".join(f"{r.rule}{' (info only)' if r.rule in fr.INFO_ONLY else ''} → "
+                          f"{home if r.pick_side == 'home' else away}" for r in fired.itertuples())
+        ge = edges[edges.espn_id == gid] if len(edges) else edges
+        mk_name = {"spreads": "", "totals": "total ", "h2h": "ML "}
+        pe_txt = "; ".join(
+            f"{ {'home': home, 'away': away}.get(e.side, e.side) } {mk_name[e.market]}"
+            f"{'' if e.market == 'h2h' else (f'{e.point:+g} ' if e.market == 'spreads' else f'{e.point:g} ')}"
+            f"({e.price:+.0f}) at {e.book}, {100 * e.ev:.1f}% vs Pinnacle" for e in ge.itertuples())
         lines2 = [verdict,
                   "Best line: " + " · ".join(x for x in (shop(gid, ko, "home", home), shop(gid, ko, "away", away)) if x),
+                  "Price edge: " + (pe_txt or "none"),
                   "Rules firing: " + (rules or "none")]
         a1.set_title("\n".join(x for x in lines2 if x), loc="left", fontsize=9.5, color=INK2, fontweight="normal")
         last = max(L.t.max(), S.t.max() if len(S) else L.t.max(), K.t.max() if len(K) else L.t.max())
